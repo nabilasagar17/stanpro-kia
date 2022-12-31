@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\User;
 
 
 class LoginController extends Controller
@@ -22,17 +23,23 @@ class LoginController extends Controller
     public function process_login(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
         $credentials = $request->except(['_token']);
 
-        $user = User::where('name',$request->name)->first();
+        $user = User::where('email',$request->email)->first();
 
         if (auth()->attempt($credentials)) {
+            if(Auth::user()->role = 'admin'){
+                return redirect('admin/dashboard');
+            }elseif(Auth::user()->role = 'tentor'){
+                return redirect('tentor/dashboard'.'/'.get(Auth::user()->email));
+            }else{
+                return redirect('siswa/dashboard'.'/'.get(Auth::user()->email));
 
-            return redirect()->route('home');
+            }
 
         }else{
             session()->flash('message', 'Invalid credentials');

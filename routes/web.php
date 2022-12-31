@@ -15,7 +15,7 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
-    return view('layouts/index');
+    return view('template/index');
 });
 
 Route::prefix('admin')->group(function () {
@@ -26,13 +26,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
     Route::get('/absensi',[AdminController::class,'absensi']);
     Route::get('/materi',[AdminController::class,'materi']);
+    Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
+    Route::get('/program_belajar',[AdminController::class,'program_belajar']);
+    Route::get('/siswa',[AdminController::class,'siswa']);
+    Route::get('/tentor',[AdminController::class,'tentor']);
 });
 
 
 
 
 Route::get('/login', [LoginController::class, 'show_login_form'])->name('login');
-Route::post('/login','LoginController@process_login')->name('login');
+Route::post('/login',[LoginController::class, 'process_login'])->name('login');
 Route::get('/register','LoginController@show_signup_form')->name('register');
 Route::post('/register','LoginController@process_signup');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
