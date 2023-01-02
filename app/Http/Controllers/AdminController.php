@@ -32,7 +32,8 @@ class AdminController extends Controller
     }
 
     public function view_mapel(){
-        return view('admin/mata_pelajaran');
+        $data = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','DESC')->paginate(15);
+        return view('admin/mata_pelajaran',['data'=>$data]);
     }
 
     public function detail_mapel(){
@@ -44,7 +45,9 @@ class AdminController extends Controller
     }
 
     public function view_kelas(){
-        return view('admin/view_kelas');
+        $data = DB::table('sp_kelas')->select("*")->orderby('created_at','DESC')->paginate(15);
+
+        return view('admin/view_kelas',['data'=>$data]);
     }
 
     public function absensi(){
@@ -56,16 +59,16 @@ class AdminController extends Controller
     }
 
     public function tentor(){
-        $data = DB::table('sp_tentor')->select("*")->orderby('nama','DESC')->paginate(15);
+        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/tentor',['data'=>$data]);
     }
     public function siswa(){
-        $data = DB::table('sp_siswa')->select("*")->orderby('nama','DESC')->paginate(15);
+        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/siswa',['data'=>$data]);
     }
 
     public function program_belajar(){
-        $data = DB::table('sp_program')->select("*")->orderby('nama_program','DESC')->paginate(15);
+        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/program_belajar',['data'=>$data]);
     }
 }
