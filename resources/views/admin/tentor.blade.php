@@ -19,17 +19,80 @@
     </div>
     <!-- end page title -->
 
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row  my-2 ">
-                        <div class="col-xl-12">
-                            <h4 class="header-title">List Data Tentor <button type="button"
-                                    class="btn btn-success float-right "><i class="mdi mdi-plus "></i>
-                                    <span>Tambah</span> </button></h4>
+                        <div class="col-lg-10">
+                            <h4 class="header-title">Table Data Tentor</h4>
+                        </div>
+                        <div class="col-lg-2 float-right">
+                            <button class="btn btn-success btn-sm header-title" data-toggle="modal"
+                                data-target="#tambah_data" type="button" class="btn btn-primary float-right"
+                                title="Detail"><i class="mdi mdi-plus "></i>
+                                <span>Tambah</span>
+                            </button>
                         </div>
                     </div>
+
+                    <div id="tambah_data" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Modal Heading</h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×</button>
+                                </div>
+                                <form action="{{url('admin/tambah_tentor_proses')}}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+
+                                        <div class="form-group m-form__group row">
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Nama Tentor</label>
+                                                <input type="text" name="nama" id="simpleinput" class="form-control">
+                                            </div>
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Pendidikan Terakhir</label>
+                                                <select class="form-control" id="example-select"
+                                                    name="pendidikan_terakhir">
+                                                    <option value="SMA">SMA</option>
+                                                    <option value="S1">S1</option>
+                                                    <option value="S2">S2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Telp</label>
+                                                <input type="text" name="telp" id="simpleinput" class="form-control">
+                                            </div>
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Email</label>
+                                                <input type="email" id="email" name="email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group row">
+                                            <div class="col-lg-12 my-2">
+                                                <label for="simpleinput">Alamat</label>
+                                                <textarea class="form-control" id="example-textarea" name="alamat"
+                                                    rows="2"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
@@ -39,61 +102,40 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
-                                            <th>Nama Mapel</th>
-                                            <th>Status</th>
+                                            <th>Email</th>
+                                            <th>Pendidikan Terakhir</th>
+                                            <th>Alamat</th>
+                                            <th>Telp</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
                                             <th>Updated By</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>M022</td>
-                                            <td class="text-bold-500">Matematika</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
+                                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                        @foreach($data as $datas)
+                                        <tr data-row="{{ $no}}">
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{$datas->nama}}</td>
+                                            <td>{{$datas->email}}</td>
+                                            <td>{{$datas->pendidikan_terakhir}}</td>
+                                            <td>{{$datas->alamat}}</td>
+                                            <td>{{$datas->telp}}</td>
+                                            <td>{{$datas->created_at}}</td>
+                                            <td>{{$datas->created_by}}</td>
+                                            <td>{{$datas->updated_at}}</td>
+                                            <td>{{$datas->updated_by}}</td>
                                             <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
                                                     data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
                                                     </i>
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>B002</td>
-                                            <td class="text-bold-500">B.Jepang</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>I002</td>
-                                            <td class="text-bold-500">B. Inggris</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->

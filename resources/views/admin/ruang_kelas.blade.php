@@ -10,10 +10,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Mata Pelajaran</li>
+                        <li class="breadcrumb-item active">Ruang Kelas</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Mata Pelajaran</h4>
+                <h4 class="page-title">Ruang Kelas</h4>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                 <div class="card-body">
                     <div class="row  my-2 ">
                         <div class="col-lg-10">
-                            <h4 class="header-title">Table Mata Pelajaran </h4>
+                            <h4 class="header-title">List Kelas </h4>
                         </div>
                         <div class="col-lg-2 float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
@@ -76,12 +76,12 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Mapel</th>
+                                            <th>Kode Kelas</th>
+                                            <th>Ruangan</th>
+                                            <th>Kuota</th>
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
-                                            <th>Updated At</th>
-                                            <th>Updated By</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -90,7 +90,9 @@
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
-                                            <td class="text-bold-500">Matematika</td>
+                                            <td>{{$datas->kode_ruang}}</td>
+                                            <td>{{$datas->nama_ruang}}</td>
+                                            <td>{{$datas->kuota}}</td>
                                             @if($datas->status == 1)
                                             <td><span class="badge badge-success">Aktif</span></td>
                                             @else
@@ -98,13 +100,12 @@
                                             @endif
                                             <td>{{$datas->created_at}}</td>
                                             <td>{{$datas->created_by}}</td>
-                                            <td>{{$datas->updated_at}}</td>
-                                            <td>{{$datas->updated_by}}</td>
-                                            <td><a type="button" href="{{url('admin/detail_mapel')}}"
-                                                    class="btn btn-success btn-sm" type="button" class="btn btn-primary"
-                                                    title="Detail"> <i class="mdi mdi-eye">
+
+                                            <td><button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                                    data-target="#modal_tambah_stock_master" type="button"
+                                                    class="btn btn-primary" title="Detail"> <i class="mdi mdi-eye">
                                                     </i>
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
