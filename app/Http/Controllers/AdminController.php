@@ -59,20 +59,47 @@ class AdminController extends Controller
         return view('admin/detail_mapel',['data'=>$data,'mapel'=>$mapel,'tentor'=>$tentor]);
     }
 
-    public function detail_mapel_proses(){ 
-        DB::insert('sp_detail_mapel')->insert([
+    public function tambah_detail_mapel_proses(Request $request){ 
+        DB::table('sp_detail_mapel')->insert([
             'id_mapel' => $request->input('id_mapel'),
             'id_tentor' => $request->input('id_tentor'),
             'created_at' => Carbon::now(),
-            'created_by' => Auth::user()->email
+            'created_by' => Auth::user()->email,
+            'status' => 1
         ]);
         return redirect()->back()->with('message', 'Mapel Berhasil Ditambahkan!');
     }
     
     public function jadwal_mapel(){
+        $detail_mapel = DB::table('view_detail_mapel')->select("*")->get();
+        $ruangan =  DB::table('sp_ruangan')->select("*")->get();
         $data= DB::table('view_jadwal_mapel')->select("*")->paginate(15);
 
-        return view('admin/jadwal_mapel',['data'=>$data]);
+        return view('admin/jadwal_mapel',['data'=>$data,'detail_mapel'=>$detail_mapel,'ruangan'=>$ruangan]);
+    }
+
+    public function tambah_jadwal_proses(Request $request){
+
+        $string = date("Y/m/d", strtotime($request->input('tanggal')));
+        
+        $tanggal =str_replace('/', '-', $string);
+        $dates = $tanggal;
+        $jam_mulai = $request->input('time_start');
+        $jam_selesai = $request->input('time_end');
+        $jadwal_mulai =  $dates . ' ' . $jam_mulai . ':00';
+        $jadwal_selesai =  $dates . ' ' . $jam_selesai . ':00';
+        // dd($jadwal_mulai);
+        DB::table('sp_jadwal')->insert([
+            'kode_ruang' => $request->input('ruangan'),
+            'id_detail_mapel' => $request->input('detail_mapel'), 
+            'id_tentor' => $request->input('id_tentor'),
+            'kuota_kelas' => $request->input('kuota'),
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->email,
+            'jadwal_mulai' => $jadwal_mulai,
+            'jadwal_selesai' => $jadwal_selesai
+        ]);
+        return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     }
 
     public function view_kelas(){
@@ -86,7 +113,20 @@ class AdminController extends Controller
     }
 
     public function materi(){
-        return view('admin/materi');
+        $data = DB::table('sp_materi_mapel')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $mapel = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','DESC')->get();
+        return view('admin/materi',['data'=>$data,'mapel'=>$mapel]);
+    }
+
+    public function tambah_materi_proses(Request $request){
+        DB::table('sp_materi_mapel')->insert([
+            'file_path' => $file_path,
+            'id_mapel' => $request->input('id_mapel'),
+            'nama_materi' => $request->input('nama_materi'),
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->email
+        ]);
     }
 
     public function tentor(){

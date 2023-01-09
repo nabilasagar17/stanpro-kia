@@ -24,10 +24,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/view_mapel',[AdminController::class,'view_mapel']);
     Route::post('/tambah_mapel_proses',[AdminController::class,'tambah_mapel_proses']);
     Route::get('/detail_mapel',[AdminController::class,'detail_mapel']);
+    Route::post('/tambah_detail_mapel_proses',[AdminController::class,'tambah_detail_mapel_proses']);
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
+    Route::post('/tambah_jadwal_proses',[AdminController::class,'tambah_jadwal_proses']);
+    
 
     /*Materi*/
     Route::get('/materi',[AdminController::class,'materi']);
+    Route::get('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
     Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
 

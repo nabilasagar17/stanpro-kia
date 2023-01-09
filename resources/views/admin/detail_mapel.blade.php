@@ -31,13 +31,13 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_mapel_proses')}}" method="post">
+                    <form action="{{url('admin/tambah_detail_mapel_proses')}}" method="post">
                         @csrf
                         <div class="form-group m-form__group row">
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Tentor</label>
-                                <select class="form-control" id="example-select">
+                                <select class="form-control" id="example-select" name="id_mapel">
                                     @foreach($mapel as $mapels)
                                     <option value="{{$mapels->id}}">{{$mapels->nama_mapel}}</option>
                                     @endforeach
@@ -46,7 +46,7 @@
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Tentor</label>
-                                <select class="form-control" id="example-select">
+                                <select class="form-control" id="example-select" name="id_tentor">
                                     @foreach($tentor as $tentors)
                                     <option value="{{$tentors->id}}">{{$tentors->nama . '-'. $tentors->email}}</option>
                                     @endforeach
@@ -87,8 +87,6 @@
                                             <th>No</th>
                                             <th>Nama Mapel</th>
                                             <th>Nama Tentor</th>
-                                            <th>Created At</th>
-                                            <th>Created By</th>
 
                                             <th>Aksi</th>
                                         </tr>
@@ -100,8 +98,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{$datas->nama_mapel}}</td>
                                             <td>{{$datas->nama_tentor}}</td>
-                                            <td>{{$datas->created_at}}</td>
-                                            <td>{{$datas->created_by}}</td>
+
                                             <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
                                                     data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
                                                     </i>

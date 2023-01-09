@@ -19,15 +19,65 @@
     </div>
     <!-- end page title -->
 
+    <!-- Standard modal content -->
+    <div class="modal fade" id="tambah_data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url('admin/tambah_materi_proses')}}" method="post">
+                        @csrf
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Nama Materi</label>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_materi">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Nama Mata Pelajaran</label>
+                                <select class="form-control" id="example-select" name="id_mapel">
+                                    @foreach($mapel as $mapels)
+                                    <option value="{{$mapels->id}}">{{$mapels->nama_mapel}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">File Materi</label>
+                                <input type="file" id="example-fileinput" class="form-control-file" name="file">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Keterangan</label>
+                                <textarea class="form-control" id="example-textarea" rows="2"
+                                    name="keterangan"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success  float-right">Save </button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row  my-2 ">
-                        <div class="col-xl-12">
-                            <h4 class="header-title">Daftar Materi<button type="button"
-                                    class="btn btn-success float-right "><i class="mdi mdi-plus "></i>
-                                    <span>Tambah</span> </button></h4>
+                        <div class="col-lg-10">
+                            <h4 class="header-title">Daftar Materi</h4>
+                        </div>
+                        <div class="col-lg-2 float-right">
+                            <button class="btn btn-success btn-sm header-title" data-toggle="modal"
+                                data-target="#tambah_data" type="button" class="btn btn-primary float-right"
+                                title="Detail"><i class="mdi mdi-plus "></i>
+                                <span>Tambah</span>
+                            </button>
                         </div>
                     </div>
 
@@ -38,9 +88,8 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode</th>
                                             <th>Nama Mapel</th>
-                                            <th>Status</th>
+                                            <th>Keterangan</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -49,51 +98,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>M022</td>
-                                            <td class="text-bold-500">Matematika</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
+                                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                        @foreach($data as $datas)
+                                        <tr data-row="{{ $no}}">
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $datas->id_mapel }}</td>
+                                            <td>{{ $datas->keterangan }}</td>
+                                            <td>{{ $datas->created_at }}</td>
+                                            <td>{{ $datas->created_by }}</td>
+                                            <td>{{ $datas->updated_at }}</td>
+                                            <td>{{ $datas->updated_by }}</td>
+
                                             <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
                                                     data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
                                                     </i>
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>B002</td>
-                                            <td class="text-bold-500">B.Jepang</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>I002</td>
-                                            <td class="text-bold-500">B. Inggris</td>
-                                            <td class="text-bold-500">Aktif</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 </table>
