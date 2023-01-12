@@ -119,14 +119,22 @@ class AdminController extends Controller
     }
 
     public function tambah_materi_proses(Request $request){
+
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlx,csv|max:2048',
+        ]);
+        $file_name = time().'.'.$request->file->extension();  
+        $request->file->move(public_path('materi'), $file_name);
+
         DB::table('sp_materi_mapel')->insert([
-            'file_path' => $file_path,
+            'file_path' => $file_name,
             'id_mapel' => $request->input('id_mapel'),
             'nama_materi' => $request->input('nama_materi'),
             'status' => 1,
             'created_at' => Carbon::now(),
             'created_by' => Auth::user()->email
         ]);
+        return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     }
 
     public function tentor(){
@@ -199,5 +207,22 @@ class AdminController extends Controller
     public function ruang_kelas(){
         $data = DB::table('sp_ruangan')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/ruang_kelas',['data'=>$data]);
+    }
+
+    public function tambah_ruang_proses(Request $request){
+        DB::table('sp_ruangan')->insert([
+            'nama_ruang' => $request->input('nama_ruang'),
+            'kuota' => $request->input('kuota'),
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->email
+        ]);
+
+        return redirect()->back()->with('message', 'Data Siswa Berhasil Ditambahkan!');
+    }
+
+    public function nilai_skd(){
+        $data = DB::table('view_nilai_skd')->select("*")->paginate(15);
+        return view('admin/nilai',['data'=>$data]);
     }
 }

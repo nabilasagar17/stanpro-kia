@@ -30,7 +30,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_materi_proses')}}" method="post">
+                    <form action="{{url('admin/tambah_materi_proses')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
@@ -89,11 +89,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Mapel</th>
+                                            <th>Nama Materi</th>
                                             <th>Keterangan</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
-                                            <th>Updated At</th>
-                                            <th>Updated By</th>
+                                          
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -102,12 +102,12 @@
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $datas->id_mapel }}</td>
+                                            <td>{{Helpers::get_mapel( $datas->id_mapel,'nama_mapel') }}</td>
+                                            <td>{{ $datas->nama_materi}}</td>
                                             <td>{{ $datas->keterangan }}</td>
                                             <td>{{ $datas->created_at }}</td>
                                             <td>{{ $datas->created_by }}</td>
-                                            <td>{{ $datas->updated_at }}</td>
-                                            <td>{{ $datas->updated_by }}</td>
+                                         
 
                                             <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
                                                     data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">

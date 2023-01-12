@@ -55,6 +55,7 @@
                 <!--- Sidemenu -->
                 <ul class="metismenu side-nav">
 
+                    @if(Auth::user()->role == 'admin')
                     <li class="side-nav-title side-nav-item">Dashboard</li>
 
                     <!-- <li class="side-nav-item">
@@ -84,8 +85,6 @@
                             <span> Dashboard </span>
                         </a>
                     </li>
-
-
                     <li class="side-nav-title side-nav-item">Materi & Kelas</li>
                     <li class="side-nav-item">
                         <a href="{{url('admin/view_mapel')}}" class="side-nav-link">
@@ -161,7 +160,64 @@
                             {{ csrf_field() }}
                         </form>
                     </li>
+                    @elseif(Auth::user()->role =='tentor')
+                    <li class="side-nav-title side-nav-item">Dashboard</li>
 
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/dashboard')}}" class="side-nav-link">
+                            <i class=" uil-home-alt"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+                    <li class="side-nav-title side-nav-item">Materi & Kelas</li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/view_mapel')}}" class="side-nav-link">
+                            <i class=" uil-book-alt"></i>
+                            <span> Mata Pelajaran </span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/jadwal_mapel')}}" class="side-nav-link">
+                            <i class=" uil-clock-eight"></i>
+                            <span>Jadwal Mata Pelajaran </span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('tentor/absensi')}}" class="side-nav-link">
+                            <i class=" uil-list-ul"></i>
+                            <span>Absensi</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/materi')}}" class="side-nav-link">
+                            <i class=" uil-book-open"></i>
+                            <span>Materi</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/nilai')}}" class="side-nav-link">
+                            <i class="  uil-medal"></i>
+                            <span>Nilai SKD & UTBK</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-title side-nav-item">User & Account</li>
+
+
+                    <li class="side-nav-item">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"
+                            class="side-nav-link">
+                            <i class=" uil-user"></i>
+                            <span>Logout</span>
+                        </a>
+                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+
+                    @else
+
+                    @endif
                 </ul>
 
 

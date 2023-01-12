@@ -30,18 +30,18 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_mapel_proses')}}" method="post">
+                    <form action="{{url('admin/tambah_ruang_proses')}}" method="post">
                         @csrf
                         <div class="form-group m-form__group row">
 
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Mata Pelajaran</label>
-                                <input type="text" name="nama_mapel" id="simpleinput" class="form-control">
+                                <label for="simpleinput">Nama Ruangan</label>
+                                <input type="text" name="nama_ruang" id="simpleinput" class="form-control">
                             </div>
 
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Lama Belajar (Menit)</label>
-                                <input type="number" name="lama_mapel" id="simpleinput" class="form-control">
+                                <label for="simpleinput">Banyak Kuota</label>
+                                <input type="number" name="kuota" id="simpleinput" class="form-control">
                             </div>
 
                         </div>
@@ -76,7 +76,6 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Kelas</th>
                                             <th>Ruangan</th>
                                             <th>Kuota</th>
                                             <th>Status</th>
@@ -90,7 +89,6 @@
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
-                                            <td>{{$datas->kode_ruang}}</td>
                                             <td>{{$datas->nama_ruang}}</td>
                                             <td>{{$datas->kuota}}</td>
                                             @if($datas->status == 1)

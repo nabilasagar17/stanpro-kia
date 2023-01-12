@@ -31,9 +31,11 @@ Route::prefix('admin')->group(function () {
 
     /*Materi*/
     Route::get('/materi',[AdminController::class,'materi']);
-    Route::get('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
+    Route::post('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
     Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
+    Route::post('/tambah_ruang_proses',[AdminController::class,'tambah_ruang_proses']);
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
+    Route::get('/nilai',[AdminController::class,'nilai_skd']);
 
     /*User Management*/
     Route::get('/user_management',[AdminController::class,'user_management']);

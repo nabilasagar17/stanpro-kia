@@ -12,6 +12,11 @@ class Helpers{
         return $data[0]->$field;
     }
 
+    public function get_mapel($id,$field){
+        $data = DB::table('sp_mata_pelajaran')->select($field)->get(1);
+        return $data[0]->$field;
+    }
+
 }
 
  ?>
