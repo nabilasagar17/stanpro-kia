@@ -32,12 +32,12 @@ class LoginController extends Controller
         $user = User::where('email',$request->email)->first();
 
         if (auth()->attempt($credentials)) {
-            if(Auth::user()->role = 'admin'){
+            if(Auth::user()->role == 'admin'){
                 return redirect('admin/dashboard');
-            }elseif(Auth::user()->role = 'tentor'){
-                return redirect('tentor/dashboard'.'/'.get(Auth::user()->email));
+            }elseif(Auth::user()->role == 'tentor'){
+                return redirect('admin/dashboard');
             }else{
-                return redirect('siswa/dashboard'.'/'.get(Auth::user()->email));
+                return redirect('admin/dashboard');
 
             }
 

@@ -25,72 +25,78 @@
                 <div class="card-body">
                     <div class="row  my-2 ">
                         <div class="col-xl-12">
-                            <h4 class="header-title">Table Mata Pelajaran <button type="button"
-                                    class="btn btn-success float-right "><i class="mdi mdi-plus "></i>
-                                    <span>Tambah</span> </button></h4>
+                            <h4 class="header-title">Table Absensi</h4>
                         </div>
                     </div>
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
                             <div class="table-responsive-sm">
-                                <table class="table table-striped table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Email</th>
-                                            <th>Nama Mapel</th>
-                                            <th>Nama Tentor</th>
-                                            <th>Ruangan</th>
-                                            <th>Keterangan</th>
-                                            <th>Created At</th>
-                                            <th>Created By</th>
-                                            <th>Updated At</th>
-                                            <th>Updated By</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="text-bold-500">Randi</td>
-                                            <td>randi@gmail.com</td>
-                                            <td>Matematika</td>
-                                            <td class="text-bold-500">Indri</td>
-                                            <td>A22</td>
-                                            <td>Absen</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td class="text-bold-500">Rindi</td>
-                                            <td>rindi@gmail.com</td>
-                                            <td>Matematika</td>
-                                            <td class="text-bold-500">Indri</td>
-                                            <td>A22</td>
-                                            <td>Absen</td>
-                                            <td>27 Desember 2022</td>
-                                            <td>System</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                </table>
+                                <form action="{{url('admin/tambah_absensi_proses')}}" method="post">
+                                    @csrf
+                                    <table class="table table-striped table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Email</th>
+                                                <th>Nama Mapel</th>
+                                                <th>Nama Tentor</th>
+                                                <th>Ruangan</th>
+                                                <th>Keterangan</th>
+                                                <th>Created At</th>
+                                                <th>Created By</th>
+                                                <th>Updated At</th>
+                                                <th>Updated By</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+
+                                            @foreach($data as $datas)
+                                            <tr data-row="{{ $no}}">
+                                                <td>{{ $no++ }}</td>
+                                                <td class="text-bold-500">{{$datas->nama}}
+                                                    <input value="{{$datas->id_siswa}}" name="id_siswa[]" hidden>
+                                                    <input value="{{$datas->id}}" name="id_jadwal[]" hidden>
+                                                </td>
+                                                <td>{{$datas->email}}</td>
+                                                <td>{{$datas->nama_mapel}}</td>
+                                                <td class="text-bold-500">{{$datas->nama_tentor}}</td>
+                                                <td>{{$datas->nama_ruang}}</td>
+                                                <td>
+                                                    <select class="form-control" id="example-select"
+                                                        name="keterangan[]">
+                                                        <option value="1" selected>Tidak Hadir</option>
+                                                        <option value="2">Hadir</option>
+                                                        <option value="3">Sakit</option>
+                                                        <option value="4">Izin</option>
+
+                                                    </select>
+
+                                                </td>
+                                                <td>{{$datas->created_at}}</td>
+                                                <td>{{$datas->created_by}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
+                                                        data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
+                                                        </i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+
+                                    </table>
+                                    <button class="btn btn-success btn-sm header-title" type="submit"
+                                        class="btn btn-primary float-right" title="Detail">
+                                        <span>Simpan</span>
+                                    </button>
+                                </form>
                             </div> <!-- end table-responsive-->
                         </div> <!-- end preview-->
 

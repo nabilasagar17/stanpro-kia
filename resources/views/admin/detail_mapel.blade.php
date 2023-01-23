@@ -31,18 +31,18 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_detail_mapel_proses')}}" method="post">
+                    <form action="{{url('admin/tambah_detail_mapel_proses/'.(Request::segment(3)))}}" method="post">
                         @csrf
                         <div class="form-group m-form__group row">
 
-                            <div class="col-lg-12 my-2">
+                            <!-- <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Tentor</label>
                                 <select class="form-control" id="example-select" name="id_mapel">
                                     @foreach($mapel as $mapels)
                                     <option value="{{$mapels->id}}">{{$mapels->nama_mapel}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Tentor</label>

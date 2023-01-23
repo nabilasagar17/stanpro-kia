@@ -14,10 +14,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Jadwal Mata Pelajaran</li>
+                        <li class="breadcrumb-item active">Jadwal Siswa</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Jadwal Mata Pelajaran</h4>
+                <h4 class="page-title">Jadwal Siswa</h4>
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div id="tambah_jadwal_siswa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+    <div id="update_jadwal_siswas" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,14 +102,14 @@
                     <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <form action="{{url('siswa/tambah_jadwal')}}" method="post">
+                <form action="{{url('siswa/update_jadwal_siswa')}}" method="post">
                     @csrf
                     <div class="modal-body">
 
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
-                                <h4> Tambahkan ke jadwal kamu?</h4>
-                                <input type="text" name="id_mapel" hidden>
+                                <h4> Sudah Selesai Mengikuti Kelas?</h4>
+                                <input type="text" name="id_jadwal" hidden>
                             </div>
 
                         </div>
@@ -119,12 +119,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Ya, Tambahkan</button>
+                        <button type="submit" class="btn btn-primary">Ya, Sudah!</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 
     <div class="row">
         <div class="col-xl-12">
@@ -135,7 +136,7 @@
                 <div class="card-body">
                     <div class="row  my-2 ">
                         <div class="col-lg-10">
-                            <h4 class="header-title">Jadwal Mata Pelajaran</h4>
+                            <h4 class="header-title">Jadwal Siswa</h4>
                         </div>
                         @if(Auth::user()->role =='admin')
                         <div class="col-lg-2 float-right">
@@ -160,8 +161,7 @@
                                             <th>Jadwal Selesai</th>
                                             <th>Ruangan </th>
                                             <th>Tentor</th>
-                                            <th>Kuota Tersedia</th>
-
+                                            <th>Selesai</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -179,30 +179,24 @@
                                             <td>{{$datas->jadwal_selesai}}</td>
                                             <td>{{$datas->nama_ruang}}</td>
                                             <td>{{$datas->nama_tentor}} </td>
-                                            <td>{{$datas->kuota_kelas}} </td>
+                                            @if($datas->selesai == 1)
+                                            <td><span class="badge badge-success">Selesai</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Belum Selesai</span></td>
+                                            @endif
                                             <td>{{$datas->created_at}} </td>
                                             <td>{{$datas->created_by}} </td>
                                             <td>{{$datas->updated_at}} </td>
                                             <td>{{$datas->updated_by}} </td>
 
-                                            <td>@if(Auth::user()->role == 'siswa')
-                                                <button type="button" class="btn btn-primary" title="Ikuti Kelas"
-                                                    onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
+                                            <td>
+                                                @if($datas->selesai == null)
+                                                <button type="button" class="btn btn-success" title="Ikuti Kelas"
+                                                    onClick="update_jadwal_siswa('{{ $datas->id}}' )">Selesai
                                                 </button>
                                                 @else
-                                                <a type="button" href="{{url('admin/detail_absensi'.'/'.($datas->id))}}"
-                                                    class="btn btn-success btn-sm" title="Input Absensi"> <i
-                                                        class="mdi mdi-pen">
-                                                    </i>
-                                                </a>
-                                                <a type="button"
-                                                    href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
-                                                    class="btn btn-primary btn-sm" title="Lihat Absen"> <i
-                                                        class="mdi mdi-eye">
-                                                    </i>
-                                                </a>
-
-                                                @endif
+                                            <td></td>
+                                            @endif
                                             </td>
                                         </tr>
                                         @endforeach

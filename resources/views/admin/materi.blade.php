@@ -72,6 +72,7 @@
                         <div class="col-lg-10">
                             <h4 class="header-title">Daftar Materi</h4>
                         </div>
+                        @if(Auth::user()->role == 'admin')
                         <div class="col-lg-2 float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
@@ -79,6 +80,7 @@
                                 <span>Tambah</span>
                             </button>
                         </div>
+                        @endif
                     </div>
 
                     <div class="tab-content">
@@ -91,9 +93,9 @@
                                             <th>Nama Mapel</th>
                                             <th>Nama Materi</th>
                                             <th>Keterangan</th>
+                                            <th>File</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
-                                          
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -105,9 +107,13 @@
                                             <td>{{Helpers::get_mapel( $datas->id_mapel,'nama_mapel') }}</td>
                                             <td>{{ $datas->nama_materi}}</td>
                                             <td>{{ $datas->keterangan }}</td>
+                                            <td><a href="{{url('admin/download_materi/'.($datas->file_path))}}">
+                                                    {{ $datas->file_path}}
+                                                </a>
+                                            </td>
                                             <td>{{ $datas->created_at }}</td>
                                             <td>{{ $datas->created_by }}</td>
-                                         
+
 
                                             <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
                                                     data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
@@ -118,23 +124,17 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                </table>
+
                             </div> <!-- end table-responsive-->
                         </div> <!-- end preview-->
-
-
                     </div> <!-- end tab-content-->
-
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->
-
     </div>
     <!-- end row-->
 
 
-
-    <!-- end row-->
 
 </div> <!-- End Content -->
 @endsection
