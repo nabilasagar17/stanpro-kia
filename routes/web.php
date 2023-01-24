@@ -39,7 +39,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/tambah_ruang_proses',[AdminController::class,'tambah_ruang_proses']);
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
     Route::get('/nilai_skd',[AdminController::class,'nilai_skd']);
+    Route::post('/tambah_nilai_skd_proses',[AdminController::class,'tambah_nilai_skd_proses']);
     Route::get('/nilai_utbk',[AdminController::class,'nilai_utbk']);
+    Route::post('/tambah_nilai_utbk_proses',[AdminController::class,'tambah_nilai_utbk_proses']);
 
     /*User Management*/
     Route::get('/user_management',[AdminController::class,'user_management']);
@@ -60,6 +62,7 @@ Route::prefix('admin')->group(function () {
 
     //tentor only
     Route::get('/nilai',[AdminController::class,'nilai_skd']);
+
 
     //siswa
     Route::get('/program',[AdminController::class,'program']);

@@ -25,29 +25,37 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Data SKD</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_materi_proses')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('admin/tambah_nilai_skd_proses')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Nama Materi</label>
-                                <input type="text" id="simpleinput" class="form-control" name="nama_materi">
+                                <label for="simpleinput">Nama Siswa</label>
+                                <select class="form-control select2" data-toggle="select2" name="id_siswa">
+                                    <option>Select</option>
+                                    @foreach($siswa as $siswas)
+                                    <option value="{{$siswas->id}}">{{$siswas->id .'-' . $siswas->nama}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">TWK</label>
+                                <input type="number" id="simpleinput" class="form-control" name="twk">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">TIU</label>
+                                <input type="number" id="simpleinput" class="form-control" name="tiu">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">TKP</label>
+                                <input type="number" id="simpleinput" class="form-control" name="tkp">
                             </div>
 
-
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">File Materi</label>
-                                <input type="file" id="example-fileinput" class="form-control-file" name="file">
-                            </div>
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Keterangan</label>
-                                <textarea class="form-control" id="example-textarea" rows="2"
-                                    name="keterangan"></textarea>
-                            </div>
                         </div>
                         <button type="submit" class="btn btn-success  float-right">Save </button>
                     </form>
@@ -84,8 +92,11 @@
                                             <th>No</th>
                                             <th>Nama Siswa</th>
                                             <th>TWK</th>
+                                            <th>Ket.TWK</th>
                                             <th>TIU</th>
+                                            <th>Ket.TIU</th>
                                             <th>TKP</th>
+                                            <th>Ket.TKP</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -100,8 +111,23 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{$datas->nama}}</td>
                                             <td>{{ $datas->twk}}</td>
+                                            @if($datas->ket_twk == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
                                             <td>{{ $datas->tiu}}</td>
+                                            @if($datas->ket_tiu == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
                                             <td>{{ $datas->tkp}}</td>
+                                            @if($datas->ket_tkp == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
                                             <td>{{ $datas->created_at}}</td>
                                             <td>{{ $datas->created_by}}</td>
                                             <td>{{ $datas->updated_at }}</td>

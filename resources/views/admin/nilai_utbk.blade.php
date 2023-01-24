@@ -10,10 +10,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Nilai SKD</li>
+                        <li class="breadcrumb-item active">Nilai UTBK</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Nilai SKD</h4>
+                <h4 class="page-title">Nilai UTBK</h4>
             </div>
         </div>
     </div>
@@ -30,24 +30,29 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_materi_proses')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('admin/tambah_nilai_utbk_proses')}}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Nama Materi</label>
-                                <input type="text" id="simpleinput" class="form-control" name="nama_materi">
+                                <label for="simpleinput">Nama Siswa</label>
+                                <select class="form-control select2" data-toggle="select2" name="id_siswa">
+                                    <option>Select</option>
+                                    @foreach($siswa as $siswas)
+                                    <option value="{{$siswas->id}}">{{$siswas->id .'-' . $siswas->nama}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Benar TPS</label>
+                                <input type="number" id="simpleinput" class="form-control" name="tps">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Benar TBI</label>
+                                <input type="number" id="simpleinput" class="form-control" name="tbi">
                             </div>
 
-
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">File Materi</label>
-                                <input type="file" id="example-fileinput" class="form-control-file" name="file">
-                            </div>
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Keterangan</label>
-                                <textarea class="form-control" id="example-textarea" rows="2"
-                                    name="keterangan"></textarea>
-                            </div>
                         </div>
                         <button type="submit" class="btn btn-success  float-right">Save </button>
                     </form>
@@ -85,8 +90,11 @@
                                             <th>Nama Siswa</th>
                                             <th>Benar TPS</th>
                                             <th>TPS(%)</th>
+                                            <th>Ket. TPS</th>
                                             <th>Benar TBI</th>
                                             <th>TBI(%)</th>
+                                            <th>Ket. TBI</th>
+                                            <th>Rata-Rata</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -102,8 +110,19 @@
                                             <td>{{$datas->nama}}</td>
                                             <td>{{ $datas->benar_tps}}</td>
                                             <td>{{ $datas->persen_tps}}</td>
+                                            @if($datas->ket_tps == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
                                             <td>{{ $datas->benar_tbi}}</td>
                                             <td>{{ $datas->persen_tbi}}</td>
+                                            @if($datas->ket_tbi == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
+                                            <td>{{ $datas->avg}}</td>
                                             <td>{{ $datas->created_at}}</td>
                                             <td>{{ $datas->created_by}}</td>
                                             <td>{{ $datas->updated_at }}</td>

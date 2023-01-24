@@ -287,24 +287,103 @@ class AdminController extends Controller
     }
 
     public function nilai_skd(){
+        $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();    
         if(Auth::user()->role == 'siswa'){
             $id = Helpers::get_siswa(Auth::user()->email,'id');
             $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->paginate(15);
         }else{
             $data = DB::table('view_nilai_skd')->select("*")->paginate(15);           
         }
-        return view('admin/nilai_skd',['data'=>$data]);
+        return view('admin/nilai_skd',['data'=>$data, 'siswa'=>$siswa]);
+    }
+
+    public function tambah_nilai_skd_proses(Request $request){
+        $twk = $request->input('twk');
+        $tiu = $request->input('tiu');
+        $tkp = $request->input('tkp');
+
+        if($twk >= 65){
+            $ket_twk = 1;
+        }else{
+            $ket_twk = 0;
+        }
+
+        if($tiu >= 80){
+            $ket_tiu = 1;
+        }else{
+            $ket_tiu = 0;
+        }
+
+        if($tkp >= 166){
+            $ket_tkp = 1;
+        }else{
+            $ket_tkp = 0;
+        }
+
+       DB::table('sp_nilai_skd')->insert([
+        'id_siswa' => $request->input('id_siswa'),
+        'twk' => $twk,
+        'ket_twk' => $ket_twk,
+        'tiu' => $tiu,
+        'ket_tiu' => $ket_tiu,
+        'tkp' => $tkp,
+        'ket_tkp' => $ket_tkp,
+        'created_at' => Carbon::now(),
+        'created_by' => Auth::user()->email,
+       ]);
+
+       return redirect()->back()->with('message', 'Data Nilai SKD Siswa Berhasil Ditambahkan!');
     }
 
     public function nilai_utbk(){
+        $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();  
         if(Auth::user()->role == 'siswa'){
             $id = Helpers::get_siswa(Auth::user()->email,'id');
             $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->paginate(15);
         }else{
             $data = DB::table('view_nilai_utbk')->select("*")->paginate(15);           
         }
-        return view('admin/nilai_utbk',['data'=>$data]);
+        return view('admin/nilai_utbk',['data'=>$data,'siswa'=>$siswa]);
     }
+
+    public function tambah_nilai_utbk_proses(Request $request){
+        $tps = $request->input('tps');
+        $tbi = $request->input('tbi');
+        $persen_tps = (100/60)*$tps;
+        $persen_tbi = (100/20)*$tbi;
+        $avg = ($persen_tps + $persen_tbi)/2;
+
+        if($persen_tps >= 50){
+            $ket_tps = 1;
+        }else{
+            $ket_tps = 0;
+        }
+
+        if($persen_tbi >= 40){
+            $ket_tbi = 1;
+        }else{
+            $ket_tbi = 0;
+        }
+
+        
+
+       DB::table('sp_nilai_utbk')->insert([
+        'id_siswa' => $request->input('id_siswa'),
+        'benar_tps' => $tps,
+        'persen_tps' => $persen_tps,
+        'ket_tps' => $ket_tps,
+        'benar_tbi' => $tbi,
+        'persen_tbi' => $persen_tbi,
+        'ket_tbi' => $ket_tbi,
+        'avg' => $avg,
+        'created_at' => Carbon::now(),
+        'created_by' => Auth::user()->email,
+       ]);
+
+       return redirect()->back()->with('message', 'Data Nilai UTBK Siswa Berhasil Ditambahkan!');
+    }
+
+  
 
     public function agenda(){
         $data = DB::table('sp_agenda')->select('*')->orderby('created_at','desc')->paginate(15);
