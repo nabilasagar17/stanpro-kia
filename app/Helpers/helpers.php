@@ -37,6 +37,11 @@ class Helpers{
         return $ruangan;
     }
 
+    public function get_kelas(){
+        $kelas =  DB::table('sp_kelas')->select("*")->get();
+        return $kelas;
+    }
+
     public function cek_jadwal_is_null($id_mapel,$id_siswa){
         $jadwal = DB::table('sp_preview_jadwal')->select("*")->where('id_jadwal_mapel',$id_mapel)->where('id_siswa',$id_siswa)->get();
         return @$jadwal;

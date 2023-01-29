@@ -22,3 +22,10 @@ function update_program_siswa(id, nama) {
     $('#nama_program').text(nama);
 
 }
+
+function update_data_users(id) {
+    $('#edit_mapel').modal('show');
+    $('input[name="id"]').val(id);
+
+
+}

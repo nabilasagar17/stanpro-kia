@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('template/index');
 });
 
+Route::get('/home',[AdminController::class,'dashboard']);
+
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard',[AdminController::class,'dashboard']);
     /*Mapel*/
@@ -37,11 +39,17 @@ Route::prefix('admin')->group(function () {
     Route::post('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
     Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
     Route::post('/tambah_ruang_proses',[AdminController::class,'tambah_ruang_proses']);
+    Route::get('/kelas',[AdminController::class,'kelas']);
+    Route::post('/tambah_kelas_proses',[AdminController::class,'tambah_kelas_proses']);
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
-    Route::get('/nilai_skd',[AdminController::class,'nilai_skd']);
-    Route::post('/tambah_nilai_skd_proses',[AdminController::class,'tambah_nilai_skd_proses']);
-    Route::get('/nilai_utbk',[AdminController::class,'nilai_utbk']);
-    Route::post('/tambah_nilai_utbk_proses',[AdminController::class,'tambah_nilai_utbk_proses']);
+    Route::get('/jadwal_nilai_skd',[AdminController::class,'list_jadwal_skd']);
+    Route::post('/tambah_jadwal_skd_proses',[AdminController::class,'tambah_jadwal_skd_proses']);
+    Route::get('/nilai_skd/{id_jadwal}',[AdminController::class,'nilai_skd']);
+    Route::post('/tambah_nilai_skd_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_skd_proses']);
+    Route::get('/jadwal_nilai_utbk',[AdminController::class,'list_jadwal_utbk']);
+    Route::post('/tambah_jadwal_utbk_proses',[AdminController::class,'tambah_jadwal_utbk_proses']);
+    Route::get('/nilai_utbk/{id_jadwal}',[AdminController::class,'nilai_utbk']);
+    Route::post('/tambah_nilai_utbk_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_utbk_proses']);
 
     /*User Management*/
     Route::get('/user_management',[AdminController::class,'user_management']);
@@ -63,6 +71,10 @@ Route::prefix('admin')->group(function () {
     //tentor only
     Route::get('/nilai',[AdminController::class,'nilai_skd']);
 
+
+    // admin only
+    Route::get('/admin',[AdminController::class,'admin']);
+    Route::post('/tambah_admin_proses',[AdminController::class,'tambah_admin_proses']);
 
     //siswa
     Route::get('/program',[AdminController::class,'program']);

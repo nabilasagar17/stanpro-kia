@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <div class="col-lg-6 my-2">
+                            <div class="col-lg-4 my-2">
                                 <label for="simpleinput">Ruangan</label>
                                 <select class="form-control" id="example-select" name="ruangan">
                                     @foreach(Helpers::get_ruangan() as $ruangans)
@@ -75,11 +75,20 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-lg-6 my-2">
+                            <div class="col-lg-4 my-2">
                                 <label for="simpleinput">Kuota Siswa</label>
                                 <input type="number" min="1" value="1" name="kuota" class="form-control"
                                     placeholder="Qty" style="width: 90px;">
 
+                            </div>
+                            <div class="col-lg-4 my-2">
+                                <label for="simpleinput">Ruangan</label>
+                                <select class="form-control" id="example-select" name="kelas">
+                                    @foreach(Helpers::get_kelas() as $kelas)
+                                    <option value="{{$kelas->id}}">
+                                        {{$kelas->nama_kelas}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>

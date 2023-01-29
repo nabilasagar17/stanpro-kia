@@ -30,7 +30,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_nilai_skd_proses')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('admin/tambah_nilai_skd_proses').'/'.(Request::segment(3))}}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
@@ -43,6 +44,7 @@
 
                                 </select>
                             </div>
+
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TWK</label>
                                 <input type="number" id="simpleinput" class="form-control" name="twk">
@@ -72,7 +74,7 @@
                         <div class="col-lg-10">
                             <h4 class="header-title">Nilai SKD</h4>
                         </div>
-
+                        @if(Auth::user()->role == 'tentor')
                         <div class="col-lg-2 float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
@@ -80,7 +82,7 @@
                                 <span>Tambah</span>
                             </button>
                         </div>
-
+                        @endif
                     </div>
 
                     <div class="tab-content">

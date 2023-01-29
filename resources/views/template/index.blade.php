@@ -91,15 +91,27 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/nilai')}}" class="side-nav-link">
+                        <a href="{{url('admin/jadwal_nilai_skd')}}" class="side-nav-link">
                             <i class="  uil-medal"></i>
-                            <span>Nilai SKD & UTBK</span>
+                            <span>Nilai SKD</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/jadwal_nilai_utbk')}}" class="side-nav-link">
+                            <i class="  uil-medal"></i>
+                            <span>Nilai UTBK</span>
                         </a>
                     </li>
                     <li class="side-nav-item">
                         <a href="{{url('admin/ruang_kelas')}}" class="side-nav-link">
                             <i class=" uil-home"></i>
                             <span>Ruang Kelas</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/kelas')}}" class="side-nav-link">
+                            <i class=" uil-home"></i>
+                            <span>Kelas</span>
                         </a>
                     </li>
                     <li class="side-nav-item">
@@ -115,7 +127,12 @@
                         </a>
                     </li>
                     <li class="side-nav-title side-nav-item">User & Account</li>
-
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/admin')}}" class="side-nav-link">
+                            <i class="  dripicons-user"></i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
                     <li class="side-nav-item">
                         <a href="{{url('admin/siswa')}}" class="side-nav-link">
                             <i class=" uil-book-reader"></i>
@@ -180,20 +197,25 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/nilai_skd')}}" class="side-nav-link">
+                        <a href="{{url('admin/jadwal_nilai_skd')}}" class="side-nav-link">
                             <i class="  uil-medal"></i>
                             <span>Nilai SKD</span>
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/nilai_utbk')}}" class="side-nav-link">
+                        <a href="{{url('admin/jadwal_nilai_utbk')}}" class="side-nav-link">
                             <i class="  uil-medal"></i>
                             <span>Nilai UTBK</span>
                         </a>
                     </li>
                     <li class="side-nav-title side-nav-item">User & Account</li>
 
-
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/user_management')}}" class="side-nav-link">
+                            <i class=" uil-users-alt"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
                     <li class="side-nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"
@@ -239,9 +261,15 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/nilai')}}" class="side-nav-link">
+                        <a href="{{url('admin/jadwal_nilai_skd')}}" class="side-nav-link">
                             <i class="  uil-medal"></i>
-                            <span>Nilai SKD & UTBK</span>
+                            <span>Nilai SKD</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/jadwal_nilai_utbk')}}" class="side-nav-link">
+                            <i class="  uil-medal"></i>
+                            <span>Nilai UTBK</span>
                         </a>
                     </li>
 
@@ -253,7 +281,12 @@
                     </li>
 
                     <li class="side-nav-title side-nav-item">User & Account</li>
-
+                    <li class="side-nav-item">
+                        <a href="{{url('admin/user_management')}}" class="side-nav-link">
+                            <i class=" uil-users-alt"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
 
                     <li class="side-nav-item">
                         <a href="{{ route('logout') }}"

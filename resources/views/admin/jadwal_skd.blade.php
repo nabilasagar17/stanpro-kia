@@ -10,10 +10,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Nilai UTBK</li>
+                        <li class="breadcrumb-item active">Jadwal SKD</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Nilai UTBK</h4>
+                <h4 class="page-title">Jadwal SKD</h4>
             </div>
         </div>
     </div>
@@ -25,34 +25,22 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Jadwal SKD</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/tambah_nilai_utbk_proses').'/'.(Request::segment(3))}}" method="post"
+                    <form action="{{url('admin/tambah_jadwal_skd_proses')}}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Nama Siswa</label>
-                                <select class="form-control select2" data-toggle="select2" name="id_siswa">
-                                    <option>Select</option>
-                                    @foreach($siswa as $siswas)
-                                    <option value="{{$siswas->id}}">{{$siswas->id .'-' . $siswas->nama}}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
 
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Benar TPS</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tps">
+                                <label for="simpleinput">Tanggal Ujian</label>
+                                <input type="text" class="form-control date" id="birthdatepicker"
+                                    data-toggle="date-picker" data-single-date-picker="true" name="tgl_ujian">
                             </div>
-                            <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Benar TBI</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tbi">
-                            </div>
+
 
                         </div>
                         <button type="submit" class="btn btn-success  float-right">Save </button>
@@ -68,7 +56,7 @@
                 <div class="card-body">
                     <div class="row  my-2 ">
                         <div class="col-lg-10">
-                            <h4 class="header-title">Nilai UTBK</h4>
+                            <h4 class="header-title">Nilai SKD</h4>
                         </div>
                         @if(Auth::user()->role == 'tentor')
                         <div class="col-lg-2 float-right">
@@ -88,14 +76,8 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Benar TPS</th>
-                                            <th>TPS(%)</th>
-                                            <th>Ket. TPS</th>
-                                            <th>Benar TBI</th>
-                                            <th>TBI(%)</th>
-                                            <th>Ket. TBI</th>
-                                            <th>Rata-Rata</th>
+                                            <th>Tgl.Ujian</th>
+
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -108,29 +90,16 @@
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
-                                            <td>{{$datas->nama}}</td>
-                                            <td>{{ $datas->benar_tps}}</td>
-                                            <td>{{ $datas->persen_tps}}</td>
-                                            @if($datas->ket_tps == 1)
-                                            <td><span class="badge badge-success">Lulus</span></td>
-                                            @else
-                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
-                                            @endif
-                                            <td>{{ $datas->benar_tbi}}</td>
-                                            <td>{{ $datas->persen_tbi}}</td>
-                                            @if($datas->ket_tbi == 1)
-                                            <td><span class="badge badge-success">Lulus</span></td>
-                                            @else
-                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
-                                            @endif
-                                            <td>{{ $datas->avg}}</td>
+                                            <td>{{$datas->tgl_ujian}}</td>
+
                                             <td>{{ $datas->created_at}}</td>
                                             <td>{{ $datas->created_by}}</td>
                                             <td>{{ $datas->updated_at }}</td>
                                             <td>{{ $datas->updated_by }}</td>
 
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
+                                            <td><a type="button" href="{{url('admin/nilai_skd/'.($datas->id))}}"
+                                                    class="btn btn-primary btn-sm" type="button" class="btn btn-primary"
+                                                    title="Detail"> <i class="mdi mdi-eye">
                                                     </i>
                                                 </a>
                                             </td>
