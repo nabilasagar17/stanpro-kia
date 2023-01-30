@@ -59,7 +59,7 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td class="text-bold-500">{{$datas->nama}}
                                                     <input value="{{$datas->id_siswa}}" name="id_siswa[]" hidden>
-                                                    <input value="{{$datas->id}}" name="id_jadwal[]" hidden>
+                                                    <input value="{{$datas->id_jadwal}}" name="id_jadwal[]" hidden>
                                                 </td>
                                                 <td>{{$datas->email}}</td>
                                                 <td>{{$datas->nama_mapel}}</td>

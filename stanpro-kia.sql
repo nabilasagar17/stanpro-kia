@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 24, 2023 at 02:10 AM
+-- Generation Time: Jan 30, 2023 at 01:27 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -47,6 +47,34 @@ CREATE TABLE IF NOT EXISTS `sp_absensi_siswa` (
 
 INSERT INTO `sp_absensi_siswa` (`id`, `id_siswa`, `id_jadwal`, `keterangan`, `pembahasan_kelas`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 1, 1, 1, NULL, '2023-01-23 08:50:55', 'audrey@gmail.com', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sp_admin`
+--
+
+DROP TABLE IF EXISTS `sp_admin`;
+CREATE TABLE IF NOT EXISTS `sp_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(120) DEFAULT NULL,
+  `nama` varchar(150) DEFAULT NULL,
+  `alamat` text,
+  `created_at` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `telp` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_admin`
+--
+
+INSERT INTO `sp_admin` (`id`, `email`, `nama`, `alamat`, `created_at`, `created_by`, `updated_at`, `updated_by`, `status`, `telp`) VALUES
+(1, 'nabila@gmail.com', 'Nabila', NULL, '2023-01-29', 'admin@gmail.com', NULL, NULL, 1, '0812456654');
 
 -- --------------------------------------------------------
 
@@ -141,15 +169,17 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
   `updated_by` varchar(100) DEFAULT NULL,
   `jadwal_mulai` datetime DEFAULT NULL,
   `jadwal_selesai` datetime DEFAULT NULL,
+  `id_kelas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_jadwal`
 --
 
-INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`) VALUES
-(1, '1', 1, NULL, 1, NULL, NULL, '2023-01-08 06:44:19', 'admin@gmail.com', NULL, NULL, '2022-11-28 14:44:00', '2022-11-28 16:44:00');
+INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`, `id_kelas`) VALUES
+(1, '1', 1, NULL, 1, NULL, NULL, '2023-01-08 06:44:19', 'admin@gmail.com', NULL, NULL, '2022-11-28 14:44:00', '2022-11-28 16:44:00', NULL),
+(2, '1', 4, NULL, 3, NULL, NULL, '2023-01-29 15:06:29', 'admin@gmail.com', NULL, NULL, '2022-11-28 22:06:00', '2022-11-28 22:06:00', 1);
 
 -- --------------------------------------------------------
 
@@ -177,6 +207,78 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_siswa` (
 INSERT INTO `sp_jadwal_siswa` (`id`, `id_jadwal`, `id_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`, `selesai`) VALUES
 (1, 1, 1, '2023-01-23 04:39:43', 'dimas@gmail.com', '2023-01-23 06:35:45', 'dimas@gmail.com', 1),
 (2, 1, 2, '2023-01-23 10:58:12', 'rukiah@gmail.com', '2023-01-23 10:58:49', 'rukiah@gmail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sp_jadwal_ujian_skd`
+--
+
+DROP TABLE IF EXISTS `sp_jadwal_ujian_skd`;
+CREATE TABLE IF NOT EXISTS `sp_jadwal_ujian_skd` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tgl_ujian` date DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_jadwal_ujian_skd`
+--
+
+INSERT INTO `sp_jadwal_ujian_skd` (`id`, `tgl_ujian`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, '2023-01-29', '2023-01-29', 'audrey@gmail.com', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sp_jadwal_ujian_utbk`
+--
+
+DROP TABLE IF EXISTS `sp_jadwal_ujian_utbk`;
+CREATE TABLE IF NOT EXISTS `sp_jadwal_ujian_utbk` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tgl_ujian` date DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_jadwal_ujian_utbk`
+--
+
+INSERT INTO `sp_jadwal_ujian_utbk` (`id`, `tgl_ujian`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, '2023-01-29', '2023-01-29', 'audrey@gmail.com', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sp_kelas`
+--
+
+DROP TABLE IF EXISTS `sp_kelas`;
+CREATE TABLE IF NOT EXISTS `sp_kelas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kelas` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_kelas`
+--
+
+INSERT INTO `sp_kelas` (`id`, `nama_kelas`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 'Reguler (2H)', '2023-01-29', 'admin@gmail.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -254,16 +356,18 @@ CREATE TABLE IF NOT EXISTS `sp_nilai_skd` (
   `created_by` varchar(100) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
+  `id_jadwal_skd` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_nilai_skd`
 --
 
-INSERT INTO `sp_nilai_skd` (`id`, `id_siswa`, `twk`, `ket_twk`, `tiu`, `ket_tiu`, `tkp`, `ket_tkp`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, NULL, '60', 0, '120', 1, '120', 0, '2023-01-24 01:24:20', 'audrey@gmail.com', NULL, NULL),
-(2, 1, '60', 0, '120', 1, '120', 0, '2023-01-24 01:25:45', 'audrey@gmail.com', NULL, NULL);
+INSERT INTO `sp_nilai_skd` (`id`, `id_siswa`, `twk`, `ket_twk`, `tiu`, `ket_tiu`, `tkp`, `ket_tkp`, `created_at`, `created_by`, `updated_at`, `updated_by`, `id_jadwal_skd`) VALUES
+(1, NULL, '60', 0, '120', 1, '120', 0, '2023-01-24 01:24:20', 'audrey@gmail.com', NULL, NULL, NULL),
+(2, 1, '60', 0, '120', 1, '120', 0, '2023-01-24 01:25:45', 'audrey@gmail.com', NULL, NULL, NULL),
+(3, 1, '50', 0, '50', 0, '50', 0, '2023-01-29 12:42:46', 'audrey@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -286,15 +390,17 @@ CREATE TABLE IF NOT EXISTS `sp_nilai_utbk` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
   `avg` decimal(10,6) DEFAULT NULL,
+  `id_jadwal_utbk` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_nilai_utbk`
 --
 
-INSERT INTO `sp_nilai_utbk` (`id`, `id_siswa`, `benar_tps`, `persen_tps`, `ket_tps`, `benar_tbi`, `persen_tbi`, `ket_tbi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `avg`) VALUES
-(2, 1, 20, '33.333333', 0, 20, '100.000000', 1, '2023-01-24 02:08:21', 'audrey@gmail.com', NULL, NULL, '66.666667');
+INSERT INTO `sp_nilai_utbk` (`id`, `id_siswa`, `benar_tps`, `persen_tps`, `ket_tps`, `benar_tbi`, `persen_tbi`, `ket_tbi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `avg`, `id_jadwal_utbk`) VALUES
+(2, 1, 20, '33.333333', 0, 20, '100.000000', 1, '2023-01-24 02:08:21', 'audrey@gmail.com', NULL, NULL, '66.666667', NULL),
+(3, 1, 50, '83.333333', 1, 50, '250.000000', 1, '2023-01-29 12:52:42', 'audrey@gmail.com', NULL, NULL, '166.666667', 1);
 
 -- --------------------------------------------------------
 
@@ -459,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_by` varchar(150) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -472,7 +578,8 @@ INSERT INTO `users` (`id`, `email`, `nama`, `password`, `role`, `created_at`, `c
 (7, 'dimas@gmail.com', 'Dimas', '$2y$10$XLTgF.px5cfbvckMkZhx1ec7Sz4OgfgE93VGTn93Oc1MOvpz9yE8e', 'siswa', '2023-01-04 02:08:23', 'admin@gmail.com', NULL, NULL, 1),
 (6, 'audrey@gmail.com', 'AUDREY FAUSTINA', '$2y$10$Yn62FRVdBadkFWRavRP56./BLUT6hNvtbHZcs3VzznHPpeqXig4/6', 'tentor', '2023-01-04 01:53:02', 'admin@gmail.com', NULL, NULL, 1),
 (8, NULL, NULL, '$2y$10$3f4dRyWLvwM6jsI/Z4XmluAn9kGBab5jFTiYSFEadLFpAW5wU.HHK', 'tentor', '2023-01-08 05:25:32', 'admin@gmail.com', NULL, NULL, 1),
-(9, 'rukiah@gmail.com', 'Rukiah', '$2y$10$5ELqxo1BSN7s9.uEjtRsrO1IH6W9DlDqJNzlv8p9U2vKLyXLzod2e', 'siswa', '2023-01-23 10:57:03', 'admin@gmail.com', NULL, NULL, 1);
+(9, 'rukiah@gmail.com', 'Rukiah', '$2y$10$5ELqxo1BSN7s9.uEjtRsrO1IH6W9DlDqJNzlv8p9U2vKLyXLzod2e', 'siswa', '2023-01-23 10:57:03', 'admin@gmail.com', NULL, NULL, 1),
+(10, 'nabila@gmail.com', 'Nabila', '$2y$10$UA7aDfS.T7JscUBUd9fn0ewUqqaIl21cgEblJvYnzw9XUWsJjAGuC', 'admin', '2023-01-29 05:21:15', 'admin@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -536,6 +643,8 @@ CREATE TABLE IF NOT EXISTS `view_jadwal_mapel` (
 ,`jadwal_selesai` datetime
 ,`updated_at` datetime
 ,`updated_by` varchar(100)
+,`id_kelas` int(11)
+,`nama_kelas` varchar(100)
 );
 
 -- --------------------------------------------------------
@@ -556,6 +665,8 @@ CREATE TABLE IF NOT EXISTS `view_jadwal_mapel_siswa` (
 ,`jadwal_mulai` datetime
 ,`jadwal_selesai` datetime
 ,`nama_mapel` varchar(150)
+,`id_kelas` int(11)
+,`nama_kelas` varchar(100)
 ,`nama_ruang` varchar(100)
 ,`created_at` datetime
 ,`created_by` varchar(100)
@@ -584,6 +695,8 @@ CREATE TABLE IF NOT EXISTS `view_nilai_skd` (
 ,`created_by` varchar(100)
 ,`updated_at` datetime
 ,`updated_by` varchar(100)
+,`id_jadwal_skd` int(11)
+,`tgl_ujian` date
 );
 
 -- --------------------------------------------------------
@@ -608,6 +721,8 @@ CREATE TABLE IF NOT EXISTS `view_nilai_utbk` (
 ,`created_by` varchar(100)
 ,`updated_at` datetime
 ,`updated_by` varchar(100)
+,`id_jadwal_utbk` int(11)
+,`tgl_ujian` date
 );
 
 -- --------------------------------------------------------
@@ -657,7 +772,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_jadwal_mapel`;
 
 DROP VIEW IF EXISTS `view_jadwal_mapel`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by` from ((`sp_jadwal` join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by`,`sp_jadwal`.`id_kelas` AS `id_kelas`,`sp_kelas`.`nama_kelas` AS `nama_kelas` from (((`sp_jadwal` join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) join `sp_kelas` on((`sp_kelas`.`id` = `sp_jadwal`.`id_kelas`))) ;
 
 -- --------------------------------------------------------
 
@@ -667,7 +782,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_jadwal_mapel_siswa`;
 
 DROP VIEW IF EXISTS `view_jadwal_mapel_siswa`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel_siswa`  AS  select `sp_jadwal_siswa`.`id` AS `id`,`sp_jadwal_siswa`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_siswa`.`email` AS `email`,`sp_jadwal_siswa`.`id_jadwal` AS `id_jadwal`,`sp_jadwal_siswa`.`selesai` AS `selesai`,`view_jadwal_mapel`.`nama_tentor` AS `nama_tentor`,`view_jadwal_mapel`.`jadwal_mulai` AS `jadwal_mulai`,`view_jadwal_mapel`.`jadwal_selesai` AS `jadwal_selesai`,`view_jadwal_mapel`.`nama_mapel` AS `nama_mapel`,`view_jadwal_mapel`.`nama_ruang` AS `nama_ruang`,`sp_jadwal_siswa`.`created_at` AS `created_at`,`sp_jadwal_siswa`.`created_by` AS `created_by`,`sp_jadwal_siswa`.`updated_at` AS `updated_at`,`sp_jadwal_siswa`.`updated_by` AS `updated_by` from ((`sp_jadwal_siswa` join `sp_siswa` on((`sp_siswa`.`id` = `sp_jadwal_siswa`.`id_siswa`))) join `view_jadwal_mapel` on((`view_jadwal_mapel`.`id` = `sp_jadwal_siswa`.`id_jadwal`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel_siswa`  AS  select `sp_jadwal_siswa`.`id` AS `id`,`sp_jadwal_siswa`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_siswa`.`email` AS `email`,`sp_jadwal_siswa`.`id_jadwal` AS `id_jadwal`,`sp_jadwal_siswa`.`selesai` AS `selesai`,`view_jadwal_mapel`.`nama_tentor` AS `nama_tentor`,`view_jadwal_mapel`.`jadwal_mulai` AS `jadwal_mulai`,`view_jadwal_mapel`.`jadwal_selesai` AS `jadwal_selesai`,`view_jadwal_mapel`.`nama_mapel` AS `nama_mapel`,`view_jadwal_mapel`.`id_kelas` AS `id_kelas`,`view_jadwal_mapel`.`nama_kelas` AS `nama_kelas`,`view_jadwal_mapel`.`nama_ruang` AS `nama_ruang`,`sp_jadwal_siswa`.`created_at` AS `created_at`,`sp_jadwal_siswa`.`created_by` AS `created_by`,`sp_jadwal_siswa`.`updated_at` AS `updated_at`,`sp_jadwal_siswa`.`updated_by` AS `updated_by` from ((`sp_jadwal_siswa` join `sp_siswa` on((`sp_siswa`.`id` = `sp_jadwal_siswa`.`id_siswa`))) join `view_jadwal_mapel` on((`view_jadwal_mapel`.`id` = `sp_jadwal_siswa`.`id_jadwal`))) ;
 
 -- --------------------------------------------------------
 
@@ -677,7 +792,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_nilai_skd`;
 
 DROP VIEW IF EXISTS `view_nilai_skd`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_nilai_skd`  AS  select `sp_nilai_skd`.`id` AS `id`,`sp_nilai_skd`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_nilai_skd`.`twk` AS `twk`,`sp_nilai_skd`.`ket_twk` AS `ket_twk`,`sp_nilai_skd`.`tiu` AS `tiu`,`sp_nilai_skd`.`ket_tiu` AS `ket_tiu`,`sp_nilai_skd`.`tkp` AS `tkp`,`sp_nilai_skd`.`ket_tkp` AS `ket_tkp`,`sp_nilai_skd`.`created_at` AS `created_at`,`sp_nilai_skd`.`created_by` AS `created_by`,`sp_nilai_skd`.`updated_at` AS `updated_at`,`sp_nilai_skd`.`updated_by` AS `updated_by` from (`sp_nilai_skd` join `sp_siswa` on((`sp_siswa`.`id` = `sp_nilai_skd`.`id_siswa`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_nilai_skd`  AS  select `sp_nilai_skd`.`id` AS `id`,`sp_nilai_skd`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_nilai_skd`.`twk` AS `twk`,`sp_nilai_skd`.`ket_twk` AS `ket_twk`,`sp_nilai_skd`.`tiu` AS `tiu`,`sp_nilai_skd`.`ket_tiu` AS `ket_tiu`,`sp_nilai_skd`.`tkp` AS `tkp`,`sp_nilai_skd`.`ket_tkp` AS `ket_tkp`,`sp_nilai_skd`.`created_at` AS `created_at`,`sp_nilai_skd`.`created_by` AS `created_by`,`sp_nilai_skd`.`updated_at` AS `updated_at`,`sp_nilai_skd`.`updated_by` AS `updated_by`,`sp_nilai_skd`.`id_jadwal_skd` AS `id_jadwal_skd`,`sp_jadwal_ujian_skd`.`tgl_ujian` AS `tgl_ujian` from ((`sp_nilai_skd` join `sp_siswa` on((`sp_siswa`.`id` = `sp_nilai_skd`.`id_siswa`))) join `sp_jadwal_ujian_skd` on((`sp_jadwal_ujian_skd`.`id` = `sp_nilai_skd`.`id_jadwal_skd`))) ;
 
 -- --------------------------------------------------------
 
@@ -687,7 +802,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_nilai_utbk`;
 
 DROP VIEW IF EXISTS `view_nilai_utbk`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_nilai_utbk`  AS  select `sp_nilai_utbk`.`id` AS `id`,`sp_nilai_utbk`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_nilai_utbk`.`benar_tps` AS `benar_tps`,`sp_nilai_utbk`.`persen_tps` AS `persen_tps`,`sp_nilai_utbk`.`ket_tps` AS `ket_tps`,`sp_nilai_utbk`.`benar_tbi` AS `benar_tbi`,`sp_nilai_utbk`.`persen_tbi` AS `persen_tbi`,`sp_nilai_utbk`.`ket_tbi` AS `ket_tbi`,`sp_nilai_utbk`.`avg` AS `avg`,`sp_nilai_utbk`.`created_at` AS `created_at`,`sp_nilai_utbk`.`created_by` AS `created_by`,`sp_nilai_utbk`.`updated_at` AS `updated_at`,`sp_nilai_utbk`.`updated_by` AS `updated_by` from (`sp_nilai_utbk` join `sp_siswa` on((`sp_siswa`.`id` = `sp_nilai_utbk`.`id_siswa`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_nilai_utbk`  AS  select `sp_nilai_utbk`.`id` AS `id`,`sp_nilai_utbk`.`id_siswa` AS `id_siswa`,`sp_siswa`.`nama` AS `nama`,`sp_nilai_utbk`.`benar_tps` AS `benar_tps`,`sp_nilai_utbk`.`persen_tps` AS `persen_tps`,`sp_nilai_utbk`.`ket_tps` AS `ket_tps`,`sp_nilai_utbk`.`benar_tbi` AS `benar_tbi`,`sp_nilai_utbk`.`persen_tbi` AS `persen_tbi`,`sp_nilai_utbk`.`ket_tbi` AS `ket_tbi`,`sp_nilai_utbk`.`avg` AS `avg`,`sp_nilai_utbk`.`created_at` AS `created_at`,`sp_nilai_utbk`.`created_by` AS `created_by`,`sp_nilai_utbk`.`updated_at` AS `updated_at`,`sp_nilai_utbk`.`updated_by` AS `updated_by`,`sp_nilai_utbk`.`id_jadwal_utbk` AS `id_jadwal_utbk`,`sp_jadwal_ujian_utbk`.`tgl_ujian` AS `tgl_ujian` from ((`sp_nilai_utbk` join `sp_siswa` on((`sp_siswa`.`id` = `sp_nilai_utbk`.`id_siswa`))) join `sp_jadwal_ujian_utbk` on((`sp_jadwal_ujian_utbk`.`id` = `sp_nilai_utbk`.`id_jadwal_utbk`))) ;
 
 -- --------------------------------------------------------
 
