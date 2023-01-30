@@ -64,10 +64,15 @@
                                             <td>{{$datas->nama_mapel}}</td>
                                             <td class="text-bold-500">{{$datas->nama_tentor}}</td>
                                             <td>{{$datas->nama_ruang}}</td>
-                                            <td>
-                                                {{$datas->keterangan}}
-
-                                            </td>
+                                            @if($datas->keterangan == 1)
+                                            <td><span class="badge badge-danger">Tidak Hadir</span></td>
+                                            @elseif($datas->keterangan == 2)
+                                            <td><span class="badge badge-success">Hadir</span></td>
+                                            @elseif($datas->keterangan == 3)
+                                            <td><span class="badge badge-info">Sakit</span></td>
+                                            @else
+                                            <td><span class="badge badge-primary">Izin</span></td>
+                                            @endif
                                             <td>{{$datas->created_at}}</td>
                                             <td>{{$datas->created_by}}</td>
                                             <td></td>
