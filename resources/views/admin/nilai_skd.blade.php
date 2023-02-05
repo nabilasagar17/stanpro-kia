@@ -215,6 +215,7 @@
                                             <td>{{ $datas->updated_by }}</td>
 
                                             <td>
+                                                @if(Auth::user()->role == 'tentor')
                                                 <button
                                                     onClick="edit_nilai_skd('{{ $datas->id}}','{{ $datas->twk}}','{{ $datas->tiu}}','{{ $datas->tkp}}')"
                                                     class="btn btn-success btn-sm" title="Edit Nilai"> <i
@@ -223,11 +224,7 @@
                                                 <button onClick="hapus_data_skd('{{ $datas->id}}')"
                                                     class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i></button>
-                                                <!-- <a type="button" href="{{url('admin/detail_mapel')}}"
-                                                    class="btn btn-danger btn-sm" type="button" class="btn btn-primary"
-                                                    title="Hapus"> <i class="mdi mdi-trash-can-outline">
-                                                    </i>
-                                                </a> -->
+                                                @endif
 
                                             </td>
                                         </tr>

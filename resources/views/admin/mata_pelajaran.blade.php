@@ -88,6 +88,7 @@
                         <div class="col-lg-10">
                             <h4 class="header-title">Table Mata Pelajaran </h4>
                         </div>
+                        @if(Auth::user()->role == 'admin')
                         <div class="col-lg-2 float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
@@ -95,6 +96,7 @@
                                 <span>Tambah</span>
                             </button>
                         </div>
+                        @endif
                     </div>
 
                     <div class="tab-content">
@@ -150,13 +152,14 @@
                                                     title="Detail"> <i class="mdi mdi-eye">
                                                     </i>
                                                 </a>
+                                                @if(Auth::user()->role == 'admin')
                                                 <button type="button"
                                                     onClick="edit_mapel('{{ $datas->id}}','{{ $datas->nama_mapel}}' )"
                                                     class="btn btn-success btn-sm" type="button" class="btn btn-primary"
                                                     title="Edit"> <i class="mdi mdi-pen">
                                                     </i>
                                                 </button>
-
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

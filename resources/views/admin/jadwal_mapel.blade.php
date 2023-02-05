@@ -195,9 +195,16 @@
                                             <td>{{$datas->updated_by}} </td>
 
                                             <td>@if(Auth::user()->role == 'siswa')
+                                                @if(Helpers::cek_jadwal_is_null($datas->id,Helpers::get_siswa(Auth::user()->email,'id'))
+                                                == 'null')
                                                 <button type="button" class="btn btn-primary" title="Ikuti Kelas"
                                                     onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
                                                 </button>
+                                                @else
+                                                <button type="button" class="btn btn-success"
+                                                    title="Sedang Mengikuti">Sedang Mengikuti
+                                                </button>
+                                                @endif
                                                 @else
                                                 @if(Request::segment(2) != 'jadwal_mapel')
                                                 @if(Auth::user()->role == 'tentor')

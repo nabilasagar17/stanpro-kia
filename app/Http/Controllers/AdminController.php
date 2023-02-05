@@ -83,9 +83,14 @@ class AdminController extends Controller
     }
 
     public function detail_mapel($id){ 
-        $data= DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->paginate(15);
+       
         $mapel = DB::table('sp_mata_pelajaran')->select("*")->get();
         $tentor =  DB::table('sp_tentor')->select("*")->get();
+        if(Auth::user()->role == 'admin' ){
+        $data= DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->paginate(15);
+        }else{
+            $data= DB::table('view_detail_mapel')->select("*")->where('id_tentor',$id)->paginate(15);
+        }
         return view('admin/detail_mapel',['data'=>$data,'mapel'=>$mapel,'tentor'=>$tentor]);
     }
 
@@ -506,9 +511,8 @@ class AdminController extends Controller
     public function nilai_skd($id_jadwal){
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();    
         if(Auth::user()->role == 'siswa'){
-            $id = Helpers::get_siswa(Auth::user()->email,'id');
-            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->where('id_jadwal_skd',$id_jadwal)->orderby('twk','desc')->orderby('tiu','desc')
-            ->orderby('tkp','desc')->paginate(15);
+            // $id = Helpers::get_siswa(Auth::user()->email,'id');
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(15);
         }else{
             $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id_jadwal)->orderby('twk','desc')->orderby('tiu','desc')
             ->orderby('tkp','desc')->paginate(15);           
@@ -635,8 +639,7 @@ class AdminController extends Controller
     public function nilai_utbk($id_jadwal){
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();  
         if(Auth::user()->role == 'siswa'){
-            $id = Helpers::get_siswa(Auth::user()->email,'id');
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(15);
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(15);
         }else{
             $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id_jadwal)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(15);           
         }

@@ -154,10 +154,13 @@
                                             <td>{{ $datas->created_by }}</td>
 
 
-                                            <td><button
+                                            <td>
+                                                @if(Auth::user()->role != 'siswa')
+                                                <button
                                                     onClick="edit_detail_mapel( '{{ $datas->id}}','{{ $datas->id_mapel}}','{{ $datas->file_path}}','{{ $datas->nama_materi}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
                                                     </i></button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

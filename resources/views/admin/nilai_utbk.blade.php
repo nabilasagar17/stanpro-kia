@@ -204,7 +204,9 @@
                                             <td>{{ $datas->updated_at }}</td>
                                             <td>{{ $datas->updated_by }}</td>
 
-                                            <td> <button
+                                            <td>
+                                                @if(Auth::user()->role == 'tentor')
+                                                <button
                                                     onClick="edit_nilai_utbk('{{ $datas->id}}','{{ $datas->benar_tps}}','{{ $datas->benar_tbi}}')"
                                                     class="btn btn-success btn-sm" title="Edit Nilai"> <i
                                                         class="mdi mdi-pencil">
@@ -212,6 +214,7 @@
                                                 <button onClick="hapus_data_utbk('{{ $datas->id}}')"
                                                     class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i></button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

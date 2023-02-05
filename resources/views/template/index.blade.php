@@ -173,7 +173,8 @@
                     </li>
                     <li class="side-nav-title side-nav-item">Materi & Kelas</li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/view_mapel')}}" class="side-nav-link">
+                        <a href="{{url('admin/detail_mapel').'/'.(Helpers::get_tentor(Auth::user()->email,'id'))}}"
+                            class="side-nav-link">
                             <i class=" uil-book-alt"></i>
                             <span> Mata Pelajaran </span>
                         </a>
@@ -261,13 +262,15 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/jadwal_nilai_skd')}}" class="side-nav-link">
+                        <a href="{{url('admin/nilai_skd').'/'.(Helpers::get_siswa(Auth::user()->email,'id'))}}"
+                            class="side-nav-link">
                             <i class="  uil-medal"></i>
                             <span>Nilai SKD</span>
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="{{url('admin/jadwal_nilai_utbk')}}" class="side-nav-link">
+                        <a href="{{url('admin/nilai_utbk').'/'.(Helpers::get_siswa(Auth::user()->email,'id'))}}"
+                            class="side-nav-link">
                             <i class="  uil-medal"></i>
                             <span>Nilai UTBK</span>
                         </a>
