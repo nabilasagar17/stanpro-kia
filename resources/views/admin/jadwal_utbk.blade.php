@@ -102,6 +102,16 @@
                                                     title="Detail"> <i class="mdi mdi-eye">
                                                     </i>
                                                 </a>
+                                                <a type="button" href="{{url('admin/nilai_skd/'.($datas->id))}}"
+                                                    class="btn btn-success btn-sm" type="button" title="Edit Jadwal"> <i
+                                                        class="mdi mdi-pen">
+                                                    </i>
+                                                </a>
+                                                <a type="button" href="{{url('admin/nilai_skd/'.($datas->id))}}"
+                                                    class="btn btn-danger btn-sm" type="button" title="Hapus Jadwal"> <i
+                                                        class="mdi  mdi-trash-can-outline">
+                                                    </i>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

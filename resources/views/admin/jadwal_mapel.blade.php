@@ -199,18 +199,21 @@
                                                     onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
                                                 </button>
                                                 @else
+                                                @if(Request::segment(2) != 'jadwal_mapel')
+                                                @if(Auth::user()->role == 'tentor')
                                                 <a type="button" href="{{url('admin/detail_absensi'.'/'.($datas->id))}}"
                                                     class="btn btn-success btn-sm" title="Input Absensi"> <i
                                                         class="mdi mdi-pen">
                                                     </i>
                                                 </a>
+                                                @endif
                                                 <a type="button"
                                                     href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
                                                     class="btn btn-primary btn-sm" title="Lihat Absen"> <i
                                                         class="mdi mdi-eye">
                                                     </i>
                                                 </a>
-
+                                                @endif
                                                 @endif
                                             </td>
                                         </tr>

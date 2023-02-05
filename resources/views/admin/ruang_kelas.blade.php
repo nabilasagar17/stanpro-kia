@@ -39,9 +39,32 @@
                                 <input type="text" name="nama_ruang" id="simpleinput" class="form-control">
                             </div>
 
+                        </div>
+                        <button type="submit" class="btn btn-success  float-right">Save </button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="edit_ruang" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url('admin/edit_ruang')}}" method="post">
+                        @csrf
+                        <div class="form-group m-form__group row">
+
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Banyak Kuota</label>
-                                <input type="number" name="kuota" id="simpleinput" class="form-control">
+                                <label for="simpleinput">Nama Ruangan</label>
+                                <input type="text" name="nama_ruang" id="simpleinput" class="form-control">
+                                <input type="text" name="id_ruang" hidden id="simpleinput" class="form-control">
                             </div>
 
                         </div>
@@ -71,6 +94,15 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
+                            @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('message') }}
+                            </div>
+                            @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
@@ -99,11 +131,11 @@
                                             <td>{{$datas->created_at}}</td>
                                             <td>{{$datas->created_by}}</td>
 
-                                            <td><button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                                    data-target="#modal_tambah_stock_master" type="button"
-                                                    class="btn btn-primary" title="Detail"> <i class="mdi mdi-eye">
-                                                    </i>
-                                                </button>
+                                            <td><button
+                                                    onClick="edit_ruangan('{{ $datas->id}}','{{ $datas->nama_ruang}}')"
+                                                    class="btn btn-success btn-sm" title="Edit Ruang"> <i
+                                                        class="mdi mdi-pencil">
+                                                    </i></button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -129,3 +161,13 @@
 
 </div> <!-- End Content -->
 @endsection
+
+
+<script>
+function edit_ruangan(id, nama_ruang) {
+    $('#edit_ruang').modal('show');
+    $('input[name="id_ruang"]').val(id);
+    $('input[name="nama_ruang"]').val(nama_ruang);
+
+}
+</script>

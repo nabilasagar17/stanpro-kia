@@ -51,6 +51,39 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div class="modal fade" id="edit_agendas" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Agenda</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url('admin/edit_agenda')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Nama Agenda</label>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_agenda">
+                                <input type="text" id="simpleinput" class="form-control" name="id_agenda" hidden>
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Jadwal Mulai</label>
+                                <input type="text" class="form-control" data-provide="datepicker" name="jadwal_mulai">
+
+                            </div>
+
+
+                        </div>
+                        <button type="submit" class="btn btn-success  float-right">Save </button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -72,6 +105,15 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
+                            @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('message') }}
+                            </div>
+                            @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
@@ -95,10 +137,13 @@
 
                                             <td>{{ $datas->created_at }}</td>
                                             <td>{{ $datas->created_by }}</td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
+                                            <td>
+                                            <td><button
+                                                    onClick="edit_agenda('{{ $datas->id}}','{{ $datas->nama_agenda}}','{{ $datas->jadwal_mulai}}')"
+                                                    class="btn btn-success btn-sm" title="Edit Ruang"> <i
+                                                        class="mdi mdi-pencil">
+                                                    </i></button>
+                                            </td>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -118,3 +163,12 @@
 
 </div> <!-- End Content -->
 @endsection
+
+<script>
+function edit_agenda(id, nama_agenda, jadwal) {
+    $('#edit_agendas').modal('show');
+    $('input[name="id_agenda"]').val(id);
+    $('input[name="nama_agenda"]').val(nama_agenda);
+    $('input[name="jadwal_mulai"]').val(jadwal);
+}
+</script>

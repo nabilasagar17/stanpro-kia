@@ -50,8 +50,8 @@ class AdminController extends Controller
     public function tambah_mapel_proses(Request $request){
         $nama_mapel = $request->input('nama_mapel');
         $cek_data = DB::table('sp_mata_pelajaran')->select('nama_mapel')->where('nama_mapel',$nama_mapel)->get(1);
-        if($cek_data == null){
-            return redirect()->back()->with('message', 'Nama Mapel Sudah Ada!');
+        if(!$cek_data->isEmpty()){
+            return redirect()->back()->with('error', 'Nama Mapel Sudah Ada!');
         }else{
             DB::table('sp_mata_pelajaran')->insert([
                 'nama_mapel' => $nama_mapel,
@@ -90,14 +90,37 @@ class AdminController extends Controller
     }
 
     public function tambah_detail_mapel_proses(Request $request,$id_mapel){ 
-        DB::table('sp_detail_mapel')->insert([
-            'id_mapel' => $id_mapel,
-            'id_tentor' => $request->input('id_tentor'),
-            'created_at' => Carbon::now(),
-            'created_by' => Auth::user()->email,
-            'status' => 1
-        ]);
-        return redirect()->back()->with('message', 'Mapel Berhasil Ditambahkan!');
+        $id_tentor = $request->input('id_tentor');
+        $cek_data = DB::table('sp_detail_mapel')->select("*")->where('id_mapel',$id_mapel)->where('id_tentor',$id_tentor)->get(1);
+        if($cek_data->isEmpty()){
+            DB::table('sp_detail_mapel')->insert([
+                'id_mapel' => $id_mapel,
+                'id_tentor' => $id_tentor,
+                'created_at' => Carbon::now(),
+                'created_by' => Auth::user()->email,
+                'status' => 1
+            ]);
+            return redirect()->back()->with('message', 'Tentor Dengan Mapel Ini Berhasil Ditambahkan!');
+        }else{
+            return redirect()->back()->with('error', 'Data Tentor Dengan Mapel Ini Sudah Ada!');
+        }
+    }
+
+    public function edit_detail_mapel(Request $request){
+        $id = $request->input('id_detail_mapel');
+        
+        $id_tentor = $request->input('id_tentor');
+        $cek_data = DB::table('sp_detail_mapel')->select("*")->where('id',$id)->where('id_tentor',$id_tentor)->get(1);
+        if($cek_data->isEmpty()){
+            DB::table('sp_detail_mapel')->where('id',$id)->update([
+                'id_tentor' => $id_tentor,
+                'updated_at' => Carbon::now(),
+                'updated_by' => Auth::user()->email
+            ]);
+            return redirect()->back()->with('message', 'Tentor Dengan Mapel Ini Berhasil Diedit!');
+        }else{
+            return redirect()->back()->with('error', 'Data Tentor Dengan Mapel Ini Sudah Ada!');
+        }
     }
     
     public function jadwal_mapel(){
@@ -168,6 +191,31 @@ class AdminController extends Controller
         return view('admin/laporan_absensi',['data'=>$data]);
     }
 
+    public function edit_absensi_siswa(Request $request){
+        $id = $request->input('id_absensi_siswa');
+        DB::table('sp_absensi_siswa')->where('id',$id)->update([
+            'keterangan' => $request->input('keterangan'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::user()->email
+        ]);
+        return redirect()->back()->with('message', 'Keterangan Absensi Berhasil Diupdate!');
+    }
+
+    public function hapus_absensi_siswa(Request $request){
+        $id = $request->input('id_absensi_siswa');
+        DB::table('sp_absensi_siswa')->where('id',$id)->delete();
+        return redirect()->back()->with('message', 'Absensi Berhasil Dihapus!');
+    }
+
+    public function hapus_jadwal_siswa(Request $request){
+        $id_siswa = $request->input('id_siswa');
+        $id_jadwal = $request->input('id_jadwal');
+       
+        DB::table('sp_jadwal_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id)->delete();
+        DB::table('sp_absensi_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id)->delete();
+        return redirect()->back()->with('message', 'Data Berhasil Dihapus!');
+    }
+
     public function tambah_absensi_proses(Request $request){
         $inputvalue = [];
         $id_jadwal = $request->input('id_jadwal');
@@ -223,6 +271,27 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     }
 
+
+    public function edit_materi(Request $request){
+        $nama_mapel = Helpers::get_mapel($request->input('id_mapel'), 'nama_mapel');
+        $id = $request->input('id_materi');
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlx,csv|max:2048',
+        ]);
+        $file_name = $nama_mapel.'_'.$request->input('nama_materi').'.'.$request->file->extension();  
+        $request->file->move(public_path('materi'), $file_name);
+
+        DB::table('sp_materi_mapel')->where('id',$id)->update([
+            'file_path' => $file_name,
+            'id_mapel' => $request->input('id_mapel'),
+            'nama_materi' => $request->input('nama_materi'),
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->email
+        ]);
+        return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
+    }
+
     public function tentor(){
         $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/tentor',['data'=>$data]);
@@ -252,6 +321,21 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data Tentor Berhasil Ditambahkan!');
     }
 
+    public function edit_tentor(Request $request){
+        $id = $request->input('id_tentor');
+        DB::table('sp_tentor')->where('id',$id)->update([
+            'nama'=> $request->input('nama'),
+            'alamat'=> $request->input('alamat'),
+            'telp'=> $request->input('telp'),
+            'updated_at'=> Carbon::now(),
+            'updated_by'=> Auth::user()->email,
+            'status'=>$request->input('status')
+        ]);
+        
+       
+        return redirect()->back()->with('message', 'Data tentor berhasil diedit!');
+    }
+
     public function admin(){
         $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/admin',['data'=>$data]);
@@ -278,6 +362,34 @@ class AdminController extends Controller
             'status' => 1
         ]);
         return redirect()->back()->with('message', 'Data Admin Berhasil Ditambahkan!');
+    }
+
+    public function edit_admin(Request $request){
+        $id = $request->input('id_admin');
+        DB::table('sp_admin')->where('id',$id)->update([
+            'nama'=> $request->input('nama'),
+           
+            'alamat'=> $request->input('alamat'),
+            'telp'=> $request->input('telp'),
+            'updated_at'=> Carbon::now(),
+            'updated_by'=> Auth::user()->email,
+            'status'=>$request->input('status')
+        ]);
+        
+       
+        return redirect()->back()->with('message', 'Data admin berhasil diedit!');
+    }
+
+    public function edit_user(Request $request){
+      
+      
+        $id = $request->input('id');
+        DB::table('users')->where('id',$id)->update([
+            'password'=>bcrypt($request->input('password')),
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::user()->email
+        ]);
+        return redirect()->back()->with('message', 'Data user berhasil diedit!');
     }
 
 
@@ -313,6 +425,22 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data Siswa Berhasil Ditambahkan!');
     }
 
+    public function edit_siswa(Request $request){
+        $id = $request->input('id_siswa');
+        DB::table('sp_siswa')->where('id',$id)->update([
+            'nama'=> $request->input('nama'),
+           
+            'alamat'=> $request->input('alamat'),
+            'telp'=> $request->input('telp'),
+            'updated_at'=> Carbon::now(),
+            'updated_by'=> Auth::user()->email,
+            'status'=>$request->input('status')
+        ]);
+        
+       
+        return redirect()->back()->with('message', 'Data siswa berhasil diedit!');
+    }
+
     public function program_belajar(){
         $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/program_belajar',['data'=>$data]);
@@ -332,7 +460,28 @@ class AdminController extends Controller
             'created_by' => Auth::user()->email
         ]);
 
-        return redirect()->back()->with('message', 'Data Siswa Berhasil Ditambahkan!');
+        return redirect()->back()->with('message', 'Data ruangan berhasil ditambahkan!');
+    }
+
+    public function edit_ruang(Request $request){
+        $id = $request->input('id_ruang');
+        DB::table('sp_ruangan')->where('id',$id)->update([
+            'nama_ruang' => $request->input('nama_ruang'),
+           
+        ]);
+
+        return redirect()->back()->with('message', 'Data ruangan berhasil diedit!');
+    }
+
+    public function edit_kelas(Request $request){
+        $id = $request->input('id_kelas');
+      
+        DB::table('sp_kelas')->where('id',$id)->update([
+            'nama_kelas' => $request->input('nama_kelas'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::user()->email
+        ]);
+        return redirect()->back()->with('message', 'Data kelas berhasil diupdate!');
     }
 
     public function list_jadwal_skd(){
@@ -358,9 +507,11 @@ class AdminController extends Controller
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();    
         if(Auth::user()->role == 'siswa'){
             $id = Helpers::get_siswa(Auth::user()->email,'id');
-            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->where('id_jadwal_skd',$id_jadwal)->paginate(15);
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->where('id_jadwal_skd',$id_jadwal)->orderby('twk','desc')->orderby('tiu','desc')
+            ->orderby('tkp','desc')->paginate(15);
         }else{
-            $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id_jadwal)->paginate(15);           
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id_jadwal)->orderby('twk','desc')->orderby('tiu','desc')
+            ->orderby('tkp','desc')->paginate(15);           
         }
         return view('admin/nilai_skd',['data'=>$data, 'siswa'=>$siswa]);
     }
@@ -416,6 +567,53 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_nilai_skd(Request $request){
+        $id = $request->input('id_nilai_skd');
+        $tiu = $request->input('tiu');
+        $twk = $request->input('twk');
+       
+        $tkp = $request->input('tkp');
+        
+            if($twk >= 65){
+                $ket_twk = 1;
+            }else{
+                $ket_twk = 0;
+            }
+
+            if($tiu >= 80){
+                $ket_tiu = 1;
+            }else{
+                $ket_tiu = 0;
+            }
+
+            if($tkp >= 166){
+                $ket_tkp = 1;
+            }else{
+                $ket_tkp = 0;
+            }
+
+            DB::table('sp_nilai_skd')->where('id',$id)->update([
+               
+                'twk' => $twk,
+                'ket_twk' => $ket_twk,
+                'tiu' => $tiu,
+                'ket_tiu' => $ket_tiu,
+                'tkp' => $tkp,
+                'ket_tkp' => $ket_tkp,
+               
+                'updated_at' => Carbon::now(),
+                'updated_by' => Auth::user()->email,
+            ]);
+            return redirect()->back()->with('message', 'Data nilai SKD siswa berhasil Diedit!');
+
+    }
+
+    public function hapus_nilai_skd(Request $request){
+        $id = $request->input('id_nilai_skd');
+        DB::table('sp_nilai_skd')->where('id',$id)->delete();
+        return redirect()->back()->with('message', 'Data berhasil dihapus!');
+    }
+
     public function list_jadwal_utbk(){
      
         $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->get(15);
@@ -438,9 +636,9 @@ class AdminController extends Controller
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();  
         if(Auth::user()->role == 'siswa'){
             $id = Helpers::get_siswa(Auth::user()->email,'id');
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->paginate(15);
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(15);
         }else{
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id_jadwal)->paginate(15);           
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id_jadwal)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(15);           
         }
         return view('admin/nilai_utbk',['data'=>$data,'siswa'=>$siswa]);
     }
@@ -489,6 +687,53 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_nilai_utbk(Request $request){
+      
+            $id = $request->input('id_nilai_utbk'); 
+            $tps = $request->input('tps');
+            $tbi = $request->input('tbi');
+            $persen_tps = (100/60)*$tps;
+            $persen_tbi = (100/20)*$tbi;
+            $avg = ($persen_tps + $persen_tbi)/2;
+
+
+            if($persen_tps >= 50){
+                $ket_tps = 1;
+            }else{
+                $ket_tps = 0;
+            }
+
+            if($persen_tbi >= 40){
+                $ket_tbi = 1;
+            }else{
+                $ket_tbi = 0;
+            }
+
+            
+            DB::table('sp_nilai_utbk')->where('id',$id)->update([
+               
+                'benar_tps' => $tps,
+                'persen_tps' => $persen_tps,
+                'ket_tps' => $ket_tps,
+                'benar_tbi' => $tbi,
+                'persen_tbi' => $persen_tbi,
+                'ket_tbi' => $ket_tbi,
+                'avg' => $avg,
+                
+                'updated_at' => Carbon::now(),
+                'updated_by' => Auth::user()->email,
+            ]);
+
+            return redirect()->back()->with('message', 'Data nilai UTBK siswa berhasil Diedit!');
+        
+    }
+
+    public function hapus_nilai_utbk(Request $request){
+        $id = $request->input('id_nilai_utbk');
+        DB::table('sp_nilai_utbk')->where('id',$id)->delete();
+        return redirect()->back()->with('message', 'Data berhasil dihapus!');
+    }
+
   
 
     public function agenda(){
@@ -509,6 +754,21 @@ class AdminController extends Controller
             'created_by' => Auth::user()->email
         ]);
         return redirect()->back()->with('message', 'Data Siswa Berhasil Ditambahkan!');
+
+    }
+
+    public function edit_agenda(Request $request){
+
+        $string = date("Y/m/d", strtotime($request->input('jadwal_mulai')));
+        $jadwal_mulai =str_replace('/', '-', $string);
+        $id = $request->input('id_agenda');
+      
+        DB::table('sp_agenda')->where('id',$id)->update([
+            'nama_agenda' => $request->input('nama_agenda'),
+            'jadwal_mulai' => $jadwal_mulai
+        ]);
+
+        return redirect()->back()->with('message', 'Data agenda berhasil diedit!');
 
     }
 

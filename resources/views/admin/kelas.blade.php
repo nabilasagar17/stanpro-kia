@@ -48,6 +48,38 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- Standard modal content -->
+    <div class="modal fade" id="edit_kelass" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Kelas</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url('admin/edit_kelas')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Kelas</label>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_kelas">
+                                <input type="text" name="id_kelas" hidden>
+                            </div>
+
+
+                        </div>
+                        <button type="submit" class="btn btn-success  float-right">Save </button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -69,6 +101,15 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
+                            @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('message') }}
+                            </div>
+                            @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
@@ -93,11 +134,11 @@
                                             <td>{{ $datas->updated_at }}</td>
                                             <td>{{ $datas->updated_by }}</td>
 
-                                            <td><a type="button" href="{{url('admin/nilai_utbk/'.($datas->id))}}"
-                                                    class="btn btn-primary btn-sm" type="button" class="btn btn-primary"
-                                                    title="Detail"> <i class="mdi mdi-eye">
-                                                    </i>
-                                                </a>
+                                            <td><button
+                                                    onClick="edit_kelas('{{ $datas->id}}','{{ $datas->nama_kelas}}')"
+                                                    class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                                    </i></button>
+
                                             </td>
                                         </tr>
                                         @endforeach
@@ -117,3 +158,19 @@
 
 </div> <!-- End Content -->
 @endsection
+
+
+<script>
+function edit_kelas(id, nama_kelas) {
+    $('#edit_kelass').modal('show');
+    $('input[name="id_kelas"]').val(id);
+    $('input[name="nama_kelas"]').val(nama_kelas);
+
+}
+
+function hapus_kelas(id) {
+    $('#hapus_kelass').modal('show');
+    $('input[name="id_kelas"]').val(id);
+
+}
+</script>

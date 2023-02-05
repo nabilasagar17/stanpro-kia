@@ -94,6 +94,64 @@
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
+                    <!-- Standard modal content -->
+                    <div id="edit_tentors" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Edit Data Tentor</h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×</button>
+                                </div>
+                                <form action="{{url('admin/edit_tentor')}}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+
+                                        <div class="form-group m-form__group row">
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Nama Tentor</label>
+                                                <input type="text" name="nama" id="simpleinput" class="form-control">
+                                                <input type="text" name="id_tentor" id="simpleinput"
+                                                    class="form-control" hidden>
+                                            </div>
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Telp</label>
+                                                <input type="text" name="telp" id="simpleinput" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Alamat</label>
+                                                <textarea class="form-control" id="example-textarea" name="alamat"
+                                                    rows="2"></textarea>
+                                            </div>
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Status</label>
+                                                <select class="form-control" id="example-select" name="status">
+                                                    <option value="1">Aktif</option>
+                                                    <option value="2">Deactive</option>
+
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
                             <div class="table-responsive-sm">
@@ -128,11 +186,19 @@
                                             <td>{{$datas->created_by}}</td>
                                             <td>{{$datas->updated_at}}</td>
                                             <td>{{$datas->updated_by}}</td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
+                                            @if($datas->status == 1)
+                                            <td><span class="badge badge-success">Aktif</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Deactive</span></td>
+                                            @endif
+
+                                            <td><button
+                                                    onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}')"
+                                                    class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
                                                     </i>
-                                                </a>
+                                                </button>
                                             </td>
+
                                         </tr>
                                         @endforeach
 
@@ -157,3 +223,16 @@
 
 </div> <!-- End Content -->
 @endsection
+
+
+<script>
+function edit_user(id, nama, alamat, telp, status) {
+    $('#edit_tentors').modal('show');
+    $('input[name="id_tentor"]').val(id);
+    $('input[name="nama"]').val(nama);
+    $('input[name="alamat"]').val(alamat);
+    $('input[name="telp"]').val(telp);
+    $('input[name="status"]').val(status);
+
+}
+</script>

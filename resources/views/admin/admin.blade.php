@@ -24,7 +24,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="standard-modalLabel">Modal Heading</h4>
+                    <h4 class="modal-title" id="standard-modalLabel">Input Data Admin</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <form action="{{url('admin/tambah_admin_proses')}}" method="post">
@@ -66,6 +66,61 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- Standard modal content -->
+    <div id="edit_admins" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Edit Data Admin</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/edit_admin')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6 my-2">
+                                <label for="simpleinput">Nama Admin</label>
+                                <input type="text" name="nama" id="simpleinput" class="form-control">
+                                <input type="text" name="id_admin" id="simpleinput" class="form-control" hidden>
+                            </div>
+                            <div class="col-lg-6 my-2">
+                                <label for="simpleinput">Telp</label>
+                                <input type="text" name="telp" id="simpleinput" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+
+                            <div class="col-lg-6 my-2">
+                                <label for="simpleinput">Alamat</label>
+                                <textarea class="form-control" id="example-textarea" name="alamat" rows="2"></textarea>
+                            </div>
+                            <div class="col-lg-6 my-2">
+                                <label for="simpleinput">Status</label>
+                                <select class="form-control" id="example-select" name="status">
+                                    <option value="1">Aktif</option>
+                                    <option value="2">Deactive</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -87,6 +142,15 @@
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
                             <div class="table-responsive-sm">
+                                @if(session()->has('message'))
+                                <div class="alert alert-success alert-dismissible">
+                                    <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                        data-dismiss="alert" aria-hidden="true"></button>
+                                    <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    {{ session()->get('message') }}
+                                </div>
+                                @endif
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
                                         <tr>
@@ -120,7 +184,11 @@
                                             @endif
                                             <td>{{$datas->created_at}}</td>
                                             <td>{{$datas->created_by}}</td>
-                                            <td>
+                                            <td><button
+                                                    onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}')"
+                                                    class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                                    </i>
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -145,3 +213,15 @@
 
 </div> <!-- End Content -->
 @endsection
+
+<script>
+function edit_user(id, nama, alamat, telp, status) {
+    $('#edit_admins').modal('show');
+    $('input[name="id_admin"]').val(id);
+    $('input[name="nama"]').val(nama);
+    $('input[name="alamat"]').val(alamat);
+    $('input[name="telp"]').val(telp);
+    $('input[name="status"]').val(status);
+
+}
+</script>

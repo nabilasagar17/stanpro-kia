@@ -64,6 +64,45 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+    <div class="modal fade" id="edit_materi" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Detail Mapel</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{url('admin/edit_materi')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Nama Materi</label>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_materi">
+                                <input type="text" id="simpleinput" class="form-control" name="id_materi" hidden>
+                            </div>
+
+
+
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">File Materi</label>
+                                <input type="file" id="example-fileinput" class="form-control-file" name="file">
+                            </div>
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Keterangan</label>
+                                <textarea class="form-control" id="example-textarea" rows="2"
+                                    name="keterangan"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success  float-right">Save </button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -115,10 +154,10 @@
                                             <td>{{ $datas->created_by }}</td>
 
 
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
+                                            <td><button
+                                                    onClick="edit_detail_mapel( '{{ $datas->id}}','{{ $datas->id_mapel}}','{{ $datas->file_path}}','{{ $datas->nama_materi}}')"
+                                                    class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                                    </i></button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -138,3 +177,17 @@
 
 </div> <!-- End Content -->
 @endsection
+
+<script>
+function edit_detail_mapel(id, id_mapel, file_path, nama_materi) {
+    $('#edit_detail_mapels').modal('show');
+    $('input[name="id_materi"]').val(id);
+    $('input[name="id_mapel"]').val(id_mapel);
+    $('input[name="file_path"]').val(file_path);
+    $('input[name="nama_materi"]').val(nama_materi);
+    $('#nama_tentor').text(nama);
+
+
+
+}
+</script>

@@ -24,19 +24,27 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Edit Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Password</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/edit_mapel_proses')}}" method="post">
+                    <form action="{{url('admin/edit_user')}}" method="post">
                         @csrf
                         <div class="form-group m-form__group row">
 
                             <div class="col-lg-12 my-2">
-                                <label for="simpleinput">Mata Pelajaran</label>
-                                <input type="text" name="nama_mapel" id="simpleinput" class="form-control">
-                                <input type="text" name="id_mapel" hidden id="simpleinput" class="form-control">
+                                <label for="simpleinput">Password Baru</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" class="form-control"
+                                        placeholder="Enter your password" name="password">
+                                    <div class="input-group-append" data-password="false">
+                                        <div class="input-group-text">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" name="id" hidden id="simpleinput" class="form-control">
                             </div>
 
                         </div>
@@ -128,3 +136,10 @@
 
 </div> <!-- End Content -->
 @endsection
+<script>
+function update_data_users(email) {
+    $('#edit_users').modal('show');
+    $('input[name="id"]').val(id);
+
+}
+</script>
