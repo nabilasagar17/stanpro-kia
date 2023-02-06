@@ -55,12 +55,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/tambah_nilai_skd_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_skd_proses']);
     Route::post('/edit_nilai_skd',[AdminController::class,'edit_nilai_skd']);
     Route::post('/hapus_nilai_skd',[AdminController::class,'hapus_nilai_skd']);
+    Route::get('/report_nilai_skd/{id}',[AdminController::class,'report_nilai_skd']);  
     Route::get('/jadwal_nilai_utbk',[AdminController::class,'list_jadwal_utbk']);
     Route::post('/tambah_jadwal_utbk_proses',[AdminController::class,'tambah_jadwal_utbk_proses']);
     Route::post('/edit_nilai_utbk',[AdminController::class,'edit_nilai_utbk']);
     Route::get('/nilai_utbk/{id_jadwal}',[AdminController::class,'nilai_utbk']);
     Route::post('/tambah_nilai_utbk_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_utbk_proses']);
     Route::post('/hapus_nilai_utbk',[AdminController::class,'hapus_nilai_utbk']);
+    Route::get('/report_nilai_utbk/{id}',[AdminController::class,'report_nilai_utbk']);  
 
     /*User Management*/
     Route::get('/user_management',[AdminController::class,'user_management']);
@@ -70,6 +72,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/absensi',[AdminController::class,'jadwal_mapel']);
     Route::get('/detail_absensi/{id}',[AdminController::class,'detail_absensi']);   
     Route::get('/laporan_absensi/{id}',[AdminController::class,'laporan_absensi']);  
+    Route::get('/report_absensi/{id}',[AdminController::class,'report_absensi']);  
     Route::post('/tambah_absensi_proses',[AdminController::class,'tambah_absensi_proses']);   
     Route::post('/edit_absensi_siswa',[AdminController::class,'edit_absensi_siswa']);   
     Route::post('/hapus_absensi_siswa',[AdminController::class,'hapus_absensi_siswa']);   

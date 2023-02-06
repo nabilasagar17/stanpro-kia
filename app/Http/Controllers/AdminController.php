@@ -196,6 +196,18 @@ class AdminController extends Controller
         return view('admin/laporan_absensi',['data'=>$data]);
     }
 
+    public function report_absensi($id)
+    {
+        $data = DB::table('view_absensi_siswa')->select("*")->where('id_jadwal',$id)->get();
+        $jadwal =  DB::table('sp_jadwal')->select("jadwal_mulai")->where('id',$id)->get(1);
+        $mapel =  DB::table('view_jadwal_mapel')->select("*")->where('id',$id)->get(1);
+        $date =  date('d-m-Y', strtotime($jadwal[0]->jadwal_mulai));
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_absensi', compact('data', 'date'));
+        return $pdf->stream("laporan_absensi-".$mapel[0]->nama_kelas.'-'.$mapel[0]->nama_mapel."-".$date.'pdf');
+    }
+
     public function edit_absensi_siswa(Request $request){
         $id = $request->input('id_absensi_siswa');
         DB::table('sp_absensi_siswa')->where('id',$id)->update([
@@ -618,6 +630,17 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data berhasil dihapus!');
     }
 
+    public function report_nilai_skd ($id)
+    {
+        $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id)->get();
+      
+        $date =  date('d-m-Y', strtotime($data[0]->tgl_ujian));
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_nilai_skd', compact('data', 'date'));
+        return $pdf->stream("Laporan_SKD-".$date.'pdf');
+    }
+
     public function list_jadwal_utbk(){
      
         $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->get(15);
@@ -737,6 +760,16 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data berhasil dihapus!');
     }
 
+    public function report_nilai_utbk($id)
+    {
+        $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id)->get();
+      
+        $date =  date('d-m-Y', strtotime($data[0]->tgl_ujian));
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_nilai_utbk', compact('data', 'date'));
+        return $pdf->stream("Laporan_UTBK-".$date.'pdf');
+    }
   
 
     public function agenda(){

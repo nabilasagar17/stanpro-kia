@@ -59,10 +59,9 @@
                             <h4 class="header-title">Nilai SKD</h4>
                         </div>
                         @if(Auth::user()->role == 'tentor')
-                        <div class="col-lg-2 float-right">
+                        <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
-                                data-target="#tambah_data" type="button" class="btn btn-primary float-right"
-                                title="Detail"><i class="mdi mdi-plus "></i>
+                                data-target="#tambah_data" type="button" title="Detail"><i class="mdi mdi-plus "></i>
                                 <span>Tambah</span>
                             </button>
                         </div>

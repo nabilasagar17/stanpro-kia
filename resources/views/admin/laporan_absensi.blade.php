@@ -88,9 +88,18 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row  my-2 ">
-                        <div class="col-xl-12">
+                        <div class="col-xl-10">
                             <h4 class="header-title">Table Absensi</h4>
                         </div>
+
+                        <div class="col-lg-2 float-right">
+                            <a class="btn btn-primary btn-sm  float-right" type="button"
+                                href="{{url('admin/report_absensi').'/'.(Request::segment(3))}}" title="Detail"><i
+                                    class="mdi mdi-printer "></i>
+                                <span>Print</span>
+                            </a>
+                        </div>
+
                     </div>
 
                     <div class="tab-content">
