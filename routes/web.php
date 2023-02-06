@@ -33,6 +33,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/edit_detail_mapel',[AdminController::class,'edit_detail_mapel']);
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
     Route::post('/tambah_jadwal_proses',[AdminController::class,'tambah_jadwal_proses']);
+    Route::get('/report_jadwal_mapel',[AdminController::class,'report_jadwal_mapel']);  
 
     /*Jadwal Siswa*/
     Route::post('/hapus_jadwal_siswa',[AdminController::class,'hapus_jadwal_siswa']);
@@ -51,6 +52,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
     Route::get('/jadwal_nilai_skd',[AdminController::class,'list_jadwal_skd']);
     Route::post('/tambah_jadwal_skd_proses',[AdminController::class,'tambah_jadwal_skd_proses']);
+    Route::post('/hapus_jadwal_skd',[AdminController::class,'hapus_jadwal_skd']);
     Route::get('/nilai_skd/{id_jadwal}',[AdminController::class,'nilai_skd']);
     Route::post('/tambah_nilai_skd_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_skd_proses']);
     Route::post('/edit_nilai_skd',[AdminController::class,'edit_nilai_skd']);
@@ -58,6 +60,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/report_nilai_skd/{id}',[AdminController::class,'report_nilai_skd']);  
     Route::get('/jadwal_nilai_utbk',[AdminController::class,'list_jadwal_utbk']);
     Route::post('/tambah_jadwal_utbk_proses',[AdminController::class,'tambah_jadwal_utbk_proses']);
+    Route::post('/hapus_jadwal_utbk',[AdminController::class,'hapus_jadwal_utbk']);
     Route::post('/edit_nilai_utbk',[AdminController::class,'edit_nilai_utbk']);
     Route::get('/nilai_utbk/{id_jadwal}',[AdminController::class,'nilai_utbk']);
     Route::post('/tambah_nilai_utbk_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_utbk_proses']);

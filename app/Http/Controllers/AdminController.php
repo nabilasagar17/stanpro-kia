@@ -168,6 +168,24 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     }
 
+    public function report_jadwal_mapel()
+    {
+        if(Auth::user()->email == 'siswa'){
+            $id =  Helpers::get_siswa(Auth::user()->email,'id');
+            $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa',$id)->orderby('created_at','desc')->get();
+        }elseif(Auth::user()->email == 'siswa'){
+            $data = DB::table('view_jadwal_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
+ 
+        }else{
+            $data = DB::table('view_jadwal_mapel')->select("*")->orderby('created_at','desc')->get();
+        }
+       
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_jadwal_mapel', compact('data'));
+        return $pdf->stream("Laporan_Jadwal".'pdf');
+    }
+
     public function kelas(){
         $data = DB::table('sp_kelas')->select("*")->orderby('created_at','DESC')->paginate(15);
 
@@ -520,6 +538,14 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Ditambahkan!');
     }
 
+    public function hapus_jadwal_skd(Request $request){
+        $id = $request->input('id_jadwal_skd');
+        DB::table('sp_nilai_skd')->where('id_jadwal_skd',$id)->delete();
+        DB::table('sp_jadwal_ujian_skd')->where('id',$id)->delete();
+
+        return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Dihapus!');
+    }
+
     public function nilai_skd($id_jadwal){
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();    
         if(Auth::user()->role == 'siswa'){
@@ -657,6 +683,15 @@ class AdminController extends Controller
             'created_by' => Auth::user()->email
         ]);
         return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Ditambahkan!');
+    }
+
+    public function hapus_jadwal_utbk(Request $request){
+        $id = $request->input('id_jadwal_utbk');
+      
+        DB::table('sp_nilai_utbk')->where('id_jadwal_utbk',$id)->delete();
+        DB::table('sp_jadwal_ujian_utbk')->where('id',$id)->delete();
+
+        return redirect()->back()->with('message', 'Data Jadwal UTBK Berhasil Dihapus!');
     }
 
     public function nilai_utbk($id_jadwal){

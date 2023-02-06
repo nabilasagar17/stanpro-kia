@@ -147,7 +147,7 @@
                             <h4 class="header-title">Jadwal Mata Pelajaran</h4>
                         </div>
                         @if(Auth::user()->role =='admin')
-                        <div class="col-lg-2 float-right">
+                        <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
                                 title="Detail"><i class="mdi mdi-plus "></i>
@@ -155,6 +155,12 @@
                             </button>
                         </div>
                         @endif
+                        <div class="col-lg-auto float-right">
+                            <a class="btn btn-primary  btn-sm header-title" type="button" title="Detail"
+                                href="{{url('admin/report_jadwal_mapel')}}"><i class="mdi mdi-printer "></i>
+                                <span>Print</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="tab-content">
@@ -170,7 +176,7 @@
                                             <th>Ruangan </th>
                                             <th>Tentor</th>
                                             <th>Kuota Tersedia</th>
-
+                                            <th>Nama Kelas</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -189,6 +195,7 @@
                                             <td>{{$datas->nama_ruang}}</td>
                                             <td>{{$datas->nama_tentor}} </td>
                                             <td>{{$datas->kuota_kelas}} </td>
+                                            <td>{{$datas->nama_kelas}} </td>
                                             <td>{{$datas->created_at}} </td>
                                             <td>{{$datas->created_by}} </td>
                                             <td>{{$datas->updated_at}} </td>
