@@ -28,6 +28,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/tambah_mapel_proses',[AdminController::class,'tambah_mapel_proses']);
     Route::post('/edit_mapel_proses',[AdminController::class,'edit_mapel_proses']);
     Route::get('/detail_mapel/{id}',[AdminController::class,'detail_mapel']);
+    Route::get('/report_detail_mapel/{id}',[AdminController::class,'report_detail_mapel']);  
+
     
     Route::post('/tambah_detail_mapel_proses/{id}',[AdminController::class,'tambah_detail_mapel_proses']);
     Route::post('/edit_detail_mapel',[AdminController::class,'edit_detail_mapel']);
@@ -52,6 +54,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
     Route::get('/jadwal_nilai_skd',[AdminController::class,'list_jadwal_skd']);
     Route::post('/tambah_jadwal_skd_proses',[AdminController::class,'tambah_jadwal_skd_proses']);
+    Route::post('/edit_jadwal_skd',[AdminController::class,'edit_jadwal_skd']);
     Route::post('/hapus_jadwal_skd',[AdminController::class,'hapus_jadwal_skd']);
     Route::get('/nilai_skd/{id_jadwal}',[AdminController::class,'nilai_skd']);
     Route::post('/tambah_nilai_skd_proses/{id_jadwal}',[AdminController::class,'tambah_nilai_skd_proses']);
@@ -60,6 +63,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/report_nilai_skd/{id}',[AdminController::class,'report_nilai_skd']);  
     Route::get('/jadwal_nilai_utbk',[AdminController::class,'list_jadwal_utbk']);
     Route::post('/tambah_jadwal_utbk_proses',[AdminController::class,'tambah_jadwal_utbk_proses']);
+    Route::post('/edit_jadwal_utbk',[AdminController::class,'edit_jadwal_utbk']);
     Route::post('/hapus_jadwal_utbk',[AdminController::class,'hapus_jadwal_utbk']);
     Route::post('/edit_nilai_utbk',[AdminController::class,'edit_nilai_utbk']);
     Route::get('/nilai_utbk/{id_jadwal}',[AdminController::class,'nilai_utbk']);
@@ -80,9 +84,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/edit_absensi_siswa',[AdminController::class,'edit_absensi_siswa']);   
     Route::post('/hapus_absensi_siswa',[AdminController::class,'hapus_absensi_siswa']);   
     Route::get('/siswa',[AdminController::class,'siswa']);
+    Route::get('/report_siswa',[AdminController::class,'report_siswa']);  
     Route::post('/tambah_siswa_proses',[AdminController::class,'tambah_siswa_proses']);
     Route::post('/edit_siswa',[AdminController::class,'edit_siswa']);
     Route::get('/tentor',[AdminController::class,'tentor']);
+    Route::get('/report_tentor',[AdminController::class,'report_tentor']);
     Route::post('/tambah_tentor_proses',[AdminController::class,'tambah_tentor_proses']);
     Route::post('/edit_tentor',[AdminController::class,'edit_tentor']);
 
@@ -97,6 +103,7 @@ Route::prefix('admin')->group(function () {
 
     // admin only
     Route::get('/admin',[AdminController::class,'admin']);
+    Route::get('/report_admin',[AdminController::class,'report_admin']);
     Route::post('/tambah_admin_proses',[AdminController::class,'tambah_admin_proses']);
     Route::post('/edit_admin',[AdminController::class,'edit_admin']);
     //siswa

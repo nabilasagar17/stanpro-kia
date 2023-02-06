@@ -155,7 +155,7 @@
 
 
                                             <td>
-                                                @if(Auth::user()->role != 'siswa')
+                                                @if(Auth::user()->role == 'admin')
                                                 <button
                                                     onClick="edit_detail_mapel( '{{ $datas->id}}','{{ $datas->id_mapel}}','{{ $datas->file_path}}','{{ $datas->nama_materi}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">

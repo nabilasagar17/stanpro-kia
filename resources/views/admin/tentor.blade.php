@@ -28,12 +28,18 @@
                         <div class="col-lg-10">
                             <h4 class="header-title">Table Data Tentor</h4>
                         </div>
-                        <div class="col-lg-2 float-right">
+                        <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
                                 title="Detail"><i class="mdi mdi-plus "></i>
                                 <span>Tambah</span>
                             </button>
+                        </div>
+                        <div class="col-lg-auto float-right">
+                            <a class="btn btn-primary  btn-sm header-title" type="button" title="Detail"
+                                href="{{url('admin/report_tentor')}}"><i class="mdi mdi-printer "></i>
+                                <span>Print</span>
+                            </a>
                         </div>
                     </div>
 

@@ -155,12 +155,14 @@
                             </button>
                         </div>
                         @endif
+                        @if(Request::segment(2) != 'absensi')
                         <div class="col-lg-auto float-right">
                             <a class="btn btn-primary  btn-sm header-title" type="button" title="Detail"
                                 href="{{url('admin/report_jadwal_mapel')}}"><i class="mdi mdi-printer "></i>
                                 <span>Print</span>
                             </a>
                         </div>
+                        @endif
                     </div>
 
                     <div class="tab-content">

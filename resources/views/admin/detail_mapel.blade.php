@@ -103,7 +103,7 @@
                             <h4 class="header-title">Table Detail Mata Pelajaran </h4>
                         </div>
                         @if(Auth::user()->role == 'admin')
-                        <div class="col-lg-2 float-right">
+                        <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
                                 title="Detail"><i class="mdi mdi-plus "></i>
@@ -111,6 +111,13 @@
                             </button>
                         </div>
                         @endif
+                        <div class="col-lg-auto float-right">
+                            <a class="btn btn-primary btn-sm  float-right" type="button"
+                                href="{{url('admin/report_detail_mapel').'/'.(Request::segment(3))}}" title="Detail"><i
+                                    class="mdi mdi-printer "></i>
+                                <span>Print</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="tab-content">
@@ -152,10 +159,12 @@
                                             <td>{{$datas->nama_tentor}}</td>
 
                                             <td>
+                                                @if(Auth::user()->role =='admin')
                                                 <button
                                                     onClick="edit_detail_mapel('{{ $datas->id}}','{{ $datas->id_tentor}}','{{ $datas->nama_tentor}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
                                                     </i></button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

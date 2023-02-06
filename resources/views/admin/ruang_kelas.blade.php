@@ -25,7 +25,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Input Ruang Kelas</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -36,7 +36,7 @@
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Ruangan</label>
-                                <input type="text" name="nama_ruang" id="simpleinput" class="form-control">
+                                <input type="text" name="nama_ruangan" id="simpleinput" class="form-control">
                             </div>
 
                         </div>
@@ -52,7 +52,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Input Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Ruang Kelas</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">

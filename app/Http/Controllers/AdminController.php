@@ -115,17 +115,31 @@ class AdminController extends Controller
         $id = $request->input('id_detail_mapel');
         
         $id_tentor = $request->input('id_tentor');
-        $cek_data = DB::table('sp_detail_mapel')->select("*")->where('id',$id)->where('id_tentor',$id_tentor)->get(1);
+        $cek_data = DB::table('sp_detail_mapel')->select("*")->where('id',$id)->where('id_tentor',$id_tentor)->get();
+        dd($cek_data);
         if($cek_data->isEmpty()){
             DB::table('sp_detail_mapel')->where('id',$id)->update([
-                'id_tentor' => $id_tentor,
-                'updated_at' => Carbon::now(),
-                'updated_by' => Auth::user()->email
+                'id_tentor' => $id_tentor
+             
             ]);
             return redirect()->back()->with('message', 'Tentor Dengan Mapel Ini Berhasil Diedit!');
         }else{
             return redirect()->back()->with('error', 'Data Tentor Dengan Mapel Ini Sudah Ada!');
         }
+    }
+
+    public function report_detail_mapel($id)
+    {
+        if(Auth::user()->email == 'tentor'){
+            $data = DB::table('view_detail_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
+        }else{
+            $data = DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->orderby('created_at','desc')->get();
+        }
+       
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_detail_mapel', compact('data'));
+        return $pdf->stream("Laporan_Detail_Mapel".'pdf');
     }
     
     public function jadwal_mapel(){
@@ -173,7 +187,7 @@ class AdminController extends Controller
         if(Auth::user()->email == 'siswa'){
             $id =  Helpers::get_siswa(Auth::user()->email,'id');
             $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa',$id)->orderby('created_at','desc')->get();
-        }elseif(Auth::user()->email == 'siswa'){
+        }elseif(Auth::user()->email == 'tentor'){
             $data = DB::table('view_jadwal_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
  
         }else{
@@ -332,6 +346,15 @@ class AdminController extends Controller
         return view('admin/tentor',['data'=>$data]);
     }
 
+    public function report_tentor()
+    {
+        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(15);
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_tentor', compact('data' ));
+        return $pdf->stream("Laporan_Tentor".'pdf');
+    }
+
     public function tambah_tentor_proses(Request $request){
         DB::table('sp_tentor')->insert([
             'nama'=> $request->input('nama'),
@@ -375,6 +398,16 @@ class AdminController extends Controller
         $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/admin',['data'=>$data]);
     }
+
+    public function report_admin ()
+    {
+        $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(15);
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_admin', compact('data' ));
+        return $pdf->stream("Laporan_Admin".'pdf');
+    }
+
 
     public function tambah_admin_proses(Request $request){
         DB::table('sp_admin')->insert([
@@ -434,6 +467,15 @@ class AdminController extends Controller
         return view('admin/siswa',['data'=>$data,'program'=>$program]);
     }
 
+    public function report_siswa ()
+    {
+        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(15);
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_siswa', compact('data' ));
+        return $pdf->stream("Laporan_Siswa".'pdf');
+    }
+
     public function tambah_siswa_proses(Request $request){
         DB::table('sp_siswa')->insert([
             'nama'=> $request->input('nama'),
@@ -488,7 +530,7 @@ class AdminController extends Controller
 
     public function tambah_ruang_proses(Request $request){
         DB::table('sp_ruangan')->insert([
-            'nama_ruang' => $request->input('nama_ruang'),
+            'nama_ruang' => $request->input('nama_ruangan'),
             'kuota' => $request->input('kuota'),
             'status' => 1,
             'created_at' => Carbon::now(),
@@ -529,13 +571,36 @@ class AdminController extends Controller
         $string = date("Y/m/d", strtotime($request->input('tgl_ujian')));
         
         $jadwal_mulai =str_replace('/', '-', $string);
-     
-        DB::table('sp_jadwal_ujian_skd')->insert([
-            'tgl_ujian' => $jadwal_mulai,
-            'created_at' => Carbon::now(),
-            'created_by' => Auth::user()->email
-        ]);
-        return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Ditambahkan!');
+        $cek_data = DB::table('sp_jadwal_ujian_skd')->select("*")->wheredate('tgl_ujian',$jadwal_mulai)->get();
+        if($cek_data->isEmpty()){
+            DB::table('sp_jadwal_ujian_skd')->insert([
+                'tgl_ujian' => $jadwal_mulai,
+                'created_at' => Carbon::now(),
+                'created_by' => Auth::user()->email
+            ]);
+            return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Ditambahkan!');
+        }else{
+            return redirect()->back()->with('error', 'Data Jadwal SKD Sudah Ada!');
+        }
+    }
+
+    public function edit_jadwal_skd(Request $request){
+        $string = date("Y/m/d", strtotime($request->input('tgl_ujian')));
+        
+        $jadwal_mulai =str_replace('/', '-', $string);
+        $id = $request->input('id_jadwal_skd');
+        $cek_data = DB::table('sp_jadwal_ujian_skd')->select("*")->wheredate('tgl_ujian',$jadwal_mulai)->get();
+
+        if($cek_data->isEmpty()){
+            DB::table('sp_jadwal_ujian_skd')->where('id',$id)->update([
+                'tgl_ujian' => $jadwal_mulai,
+                'updated_at' => Carbon::now(),
+                'updated_by' => Auth::user()->email
+            ]);
+            return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Diedit!');
+        }else{
+            return redirect()->back()->with('error', 'Data Jadwal SKD Sudah Ada!');
+        }
     }
 
     public function hapus_jadwal_skd(Request $request){
@@ -675,14 +740,39 @@ class AdminController extends Controller
 
     public function tambah_jadwal_utbk_proses(Request $request){
         $string = date("Y/m/d", strtotime($request->input('tgl_ujian')));
+        $jadwal_mulai =str_replace('/', '-', $string);
+        $cek_data = DB::table('sp_jadwal_ujian_utbk')->select("*")->wheredate('tgl_ujian',$jadwal_mulai)->get();
+     
+        if($cek_data->isEmpty()){
+           
+            DB::table('sp_jadwal_ujian_utbk')->insert([
+                'tgl_ujian' =>  $jadwal_mulai,
+                'created_at' => Carbon::now(),
+                'created_by' => Auth::user()->email
+            ]);
+            return redirect()->back()->with('message', 'Data Jadwal UTBK Berhasil Ditambahkan!');
+        }else{
+            return redirect()->back()->with('error', 'Data Jadwal UTBK Sudah Ada!');
+        }
+    }
+
+    public function edit_jadwal_utbk(Request $request){
+        $string = date("Y/m/d", strtotime($request->input('tgl_ujian')));
         
         $jadwal_mulai =str_replace('/', '-', $string);
-        DB::table('sp_jadwal_ujian_utbk')->insert([
-            'tgl_ujian' =>  $jadwal_mulai,
-            'created_at' => Carbon::now(),
-            'created_by' => Auth::user()->email
-        ]);
-        return redirect()->back()->with('message', 'Data Jadwal SKD Berhasil Ditambahkan!');
+        $id = $request->input('id_jadwal_utbk');
+        $cek_data = DB::table('sp_jadwal_ujian_utbk')->select("*")->wheredate('tgl_ujian',$jadwal_mulai)->get();
+
+        if($cek_data->isEmpty()){
+            DB::table('sp_jadwal_ujian_utbk')->where('id',$id)->update([
+                'tgl_ujian' => $jadwal_mulai,
+                'updated_at' => Carbon::now(),
+                'updated_by' => Auth::user()->email
+            ]);
+            return redirect()->back()->with('message', 'Data Jadwal UTBK Berhasil Diedit!');
+        }else{
+            return redirect()->back()->with('error', 'Data Jadwal UTBK Sudah Ada!');
+        }
     }
 
     public function hapus_jadwal_utbk(Request $request){
