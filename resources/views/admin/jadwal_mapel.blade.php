@@ -266,6 +266,12 @@
                                                     class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i>
                                                 </button>
+                                                <a type="button"
+                                                    href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
+                                                    class="btn btn-primary btn-sm" title="Lihat Absen"> <i
+                                                        class="mdi mdi-eye">
+                                                    </i>
+                                                </a>
                                                 @endif
                                             </td>
                                         </tr>
