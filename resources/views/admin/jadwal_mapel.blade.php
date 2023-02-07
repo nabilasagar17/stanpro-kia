@@ -233,9 +233,10 @@
                                             <td>{{$datas->updated_at}} </td>
                                             <td>{{$datas->updated_by}} </td>
 
-                                            <td>@if(Auth::user()->role == 'siswa')
+                                            <td>
+                                                @if(Auth::user()->role == 'siswa')
                                                 @if(Helpers::cek_jadwal_is_null($datas->id,Helpers::get_siswa(Auth::user()->email,'id'))
-                                                == 'null')
+                                                ->isEmpty())
                                                 <button type="button" class="btn btn-primary" title="Ikuti Kelas"
                                                     onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
                                                 </button>
@@ -244,9 +245,8 @@
                                                     title="Sedang Mengikuti">Sedang Mengikuti
                                                 </button>
                                                 @endif
-                                                @else
+                                                @elseif(Auth::user()->role == 'tentor')
                                                 @if(Request::segment(2) != 'jadwal_mapel')
-                                                @if(Auth::user()->role == 'tentor')
                                                 <a type="button" href="{{url('admin/detail_absensi'.'/'.($datas->id))}}"
                                                     class="btn btn-success btn-sm" title="Input Absensi"> <i
                                                         class="mdi mdi-pen">
@@ -260,11 +260,12 @@
                                                     </i>
                                                 </a>
 
-                                                @endif
+                                                @else
 
                                                 <button onClick="hapus_jadwal('{{ $datas->id}}')"
                                                     class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
-                                                    </i></button>
+                                                    </i>
+                                                </button>
                                                 @endif
                                             </td>
                                         </tr>

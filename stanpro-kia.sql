@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2023 at 09:23 AM
+-- Generation Time: Feb 07, 2023 at 04:07 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -46,24 +46,7 @@ CREATE TABLE IF NOT EXISTS `sp_absensi_siswa` (
 --
 
 INSERT INTO `sp_absensi_siswa` (`id`, `id_siswa`, `id_jadwal`, `keterangan`, `pembahasan_kelas`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 1, 1, NULL, '2023-01-23 08:50:55', 'audrey@gmail.com', NULL, NULL),
-(2, 1, 3, 1, NULL, '2023-01-30 02:20:53', 'audrey@gmail.com', NULL, NULL),
-(3, 1, 3, 1, NULL, '2023-01-30 02:21:50', 'audrey@gmail.com', NULL, NULL),
-(5, 1, 2, 2, NULL, '2023-01-30 08:46:13', 'admin@gmail.com', '2023-02-05 03:31:22', 'admin@gmail.com'),
-(7, 1, 2, 1, NULL, '2023-01-30 08:47:00', 'admin@gmail.com', NULL, NULL),
-(8, 1, 2, 1, NULL, '2023-01-30 08:49:13', 'admin@gmail.com', NULL, NULL),
-(9, 1, 2, 1, NULL, '2023-01-30 08:50:02', 'admin@gmail.com', NULL, NULL),
-(10, 1, 2, 1, NULL, '2023-01-30 08:50:04', 'admin@gmail.com', NULL, NULL),
-(11, 1, 2, 1, NULL, '2023-01-30 08:50:05', 'admin@gmail.com', NULL, NULL),
-(12, 1, 2, 1, NULL, '2023-01-30 08:50:06', 'admin@gmail.com', NULL, NULL),
-(13, 1, 2, 1, NULL, '2023-01-30 08:50:34', 'admin@gmail.com', NULL, NULL),
-(14, 1, 2, 1, NULL, '2023-01-30 08:53:12', 'admin@gmail.com', NULL, NULL),
-(15, 1, 2, 1, NULL, '2023-01-30 08:53:13', 'admin@gmail.com', NULL, NULL),
-(16, 1, 2, 1, NULL, '2023-01-30 08:53:15', 'admin@gmail.com', NULL, NULL),
-(17, 1, 2, 1, NULL, '2023-01-30 08:54:49', 'admin@gmail.com', NULL, NULL),
-(18, 1, 2, 1, NULL, '2023-01-30 08:54:51', 'admin@gmail.com', NULL, NULL),
-(19, 1, 2, 1, NULL, '2023-01-30 08:54:52', 'admin@gmail.com', NULL, NULL),
-(20, 1, 2, 1, NULL, '2023-01-30 08:54:58', 'admin@gmail.com', NULL, NULL);
+(1, 1, 1, 1, NULL, '2023-01-23 08:50:55', 'audrey@gmail.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `sp_agenda` (
   `jadwal_selesai` date DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
@@ -114,12 +98,12 @@ CREATE TABLE IF NOT EXISTS `sp_agenda` (
 -- Dumping data for table `sp_agenda`
 --
 
-INSERT INTO `sp_agenda` (`id`, `nama_agenda`, `jadwal_mulai`, `jadwal_selesai`, `created_at`, `created_by`) VALUES
-(1, 'Ujian 5', '2004-07-01', '2023-01-04', '2023-01-17 07:35:39', 'admin@gmail.com'),
-(2, 'Ujian', '2023-01-04', '2023-01-04', '2023-01-17 07:35:54', 'admin@gmail.com'),
-(3, 'Ujian', '2023-01-04', '2023-01-13', '2023-01-17 07:36:33', 'admin@gmail.com'),
-(4, 'Ujian', '2023-01-02', '2023-01-13', '2023-01-17 07:36:49', 'admin@gmail.com'),
-(5, 'Ujian s', '2023-11-09', NULL, '2023-02-05 15:55:22', 'admin@gmail.com');
+INSERT INTO `sp_agenda` (`id`, `nama_agenda`, `jadwal_mulai`, `jadwal_selesai`, `created_at`, `created_by`, `status`) VALUES
+(1, 'Ujian 5', '2004-07-01', '2023-01-04', '2023-01-17 07:35:39', 'admin@gmail.com', 1),
+(2, 'Ujian', '2023-01-04', '2023-01-04', '2023-01-17 07:35:54', 'admin@gmail.com', 1),
+(3, 'Ujian', '2023-01-04', '2023-01-13', '2023-01-17 07:36:33', 'admin@gmail.com', 1),
+(4, 'Ujian', '2023-01-02', '2023-01-13', '2023-01-17 07:36:49', 'admin@gmail.com', NULL),
+(5, 'Ujian s', '2020-06-03', NULL, '2023-02-05 15:55:22', 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -136,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `sp_detail_mapel` (
   `created_by` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_detail_mapel`
@@ -145,8 +129,9 @@ CREATE TABLE IF NOT EXISTS `sp_detail_mapel` (
 INSERT INTO `sp_detail_mapel` (`id`, `id_mapel`, `id_tentor`, `created_at`, `created_by`, `status`) VALUES
 (1, 1, 4, '2023-01-05 04:35:16', 'admin@gmail.com', 1),
 (2, 4, 4, '2023-01-23 11:53:08', 'admin@gmail.com', 1),
-(3, 8, 4, '2023-02-04 08:37:41', 'admin@gmail.com', 1),
-(4, 8, 4, '2023-02-04 08:38:18', 'admin@gmail.com', 1);
+(3, 8, 6, '2023-02-04 08:37:41', 'admin@gmail.com', 1),
+(4, 8, 6, '2023-02-04 08:38:18', 'admin@gmail.com', 1),
+(5, 8, 6, '2023-02-06 14:00:30', 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
   `jadwal_selesai` datetime DEFAULT NULL,
   `id_kelas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_jadwal`
@@ -199,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
 
 INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`, `id_kelas`) VALUES
 (1, '1', 1, NULL, 1, NULL, NULL, '2023-01-08 06:44:19', 'admin@gmail.com', NULL, NULL, '2022-11-28 14:44:00', '2022-11-28 16:44:00', NULL),
-(2, '1', 4, NULL, 3, NULL, NULL, '2023-01-29 15:06:29', 'admin@gmail.com', NULL, NULL, '2022-11-28 22:06:00', '2022-11-28 22:06:00', 1);
+(3, '1', 2, NULL, 16, NULL, NULL, '2023-02-07 03:25:45', 'admin@gmail.com', NULL, NULL, '2022-11-28 10:25:00', '2022-11-28 10:25:00', 1);
 
 -- --------------------------------------------------------
 
@@ -226,8 +211,7 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_siswa` (
 
 INSERT INTO `sp_jadwal_siswa` (`id`, `id_jadwal`, `id_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`, `selesai`) VALUES
 (1, 1, 1, '2023-01-23 04:39:43', 'dimas@gmail.com', '2023-01-23 06:35:45', 'dimas@gmail.com', 1),
-(2, 1, 2, '2023-01-23 10:58:12', 'rukiah@gmail.com', '2023-01-23 10:58:49', 'rukiah@gmail.com', 1),
-(3, 2, 1, '2023-01-30 02:14:09', 'dimas@gmail.com', NULL, NULL, NULL);
+(2, 1, 2, '2023-01-23 10:58:12', 'rukiah@gmail.com', '2023-01-23 10:58:49', 'rukiah@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -244,7 +228,14 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_ujian_skd` (
   `updated_at` date DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_jadwal_ujian_skd`
+--
+
+INSERT INTO `sp_jadwal_ujian_skd` (`id`, `tgl_ujian`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(2, '2023-02-07', '2023-02-06', 'audrey@gmail.com', '2023-02-06', 'audrey@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -268,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_ujian_utbk` (
 --
 
 INSERT INTO `sp_jadwal_ujian_utbk` (`id`, `tgl_ujian`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(2, '2023-02-06', '2023-02-06', 'audrey@gmail.com', NULL, NULL);
+(2, '2023-02-07', '2023-02-06', 'audrey@gmail.com', '2023-02-06', 'audrey@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -321,11 +312,7 @@ CREATE TABLE IF NOT EXISTS `sp_mata_pelajaran` (
 
 INSERT INTO `sp_mata_pelajaran` (`id`, `nama_mapel`, `lama_belajar`, `created_at`, `created_by`, `updated_at`, `updated_by`, `status`) VALUES
 (1, 'TIU', NULL, '2023-01-02 14:07:29', 'admin@gmail.com', NULL, NULL, 1),
-(3, 'Matematika', NULL, '2023-01-23 05:05:54', 'admin@gmail.com', '2023-01-23 05:49:32', 'admin@gmail.com', 1),
-(4, 'B.Inggris', NULL, '2023-01-23 11:33:05', 'admin@gmail.com', NULL, NULL, 1),
-(6, 'Matematika', NULL, '2023-02-04 08:31:51', 'admin@gmail.com', '2023-02-04 08:32:36', 'admin@gmail.com', 1),
-(7, 'Matematika', NULL, '2023-02-04 08:33:46', 'admin@gmail.com', NULL, NULL, 1),
-(8, 'B.Indonesia', NULL, '2023-02-04 08:37:01', 'admin@gmail.com', NULL, NULL, 1);
+(6, 'Matematika', NULL, '2023-02-04 08:31:51', 'admin@gmail.com', '2023-02-04 08:32:36', 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -443,7 +430,7 @@ INSERT INTO `sp_preview_jadwal` (`id`, `id_jadwal_mapel`, `id_siswa`, `created_a
 
 DROP TABLE IF EXISTS `sp_program`;
 CREATE TABLE IF NOT EXISTS `sp_program` (
-  `kode` char(5) NOT NULL,
+  `kode` int(11) NOT NULL AUTO_INCREMENT,
   `nama_program` varchar(100) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL,
@@ -452,18 +439,17 @@ CREATE TABLE IF NOT EXISTS `sp_program` (
   `harga` decimal(10,0) DEFAULT NULL,
   `kuota_jadwal` int(11) DEFAULT NULL,
   PRIMARY KEY (`kode`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_program`
 --
 
 INSERT INTO `sp_program` (`kode`, `nama_program`, `created_at`, `created_by`, `status`, `keterangan`, `harga`, `kuota_jadwal`) VALUES
-('eko01', 'Kelas Ekonomi', '2022-12-31 12:05:43', 'System', 1, 'Program Bimbel Kelas 12 SMA', '6000000', 60),
-('bis01', 'Kelas Bisnis', '2022-12-31 12:05:43', 'System', 1, NULL, '9000000', 100),
-('exe01', 'Kelas Executive', '2022-12-31 12:08:42', 'System', 1, NULL, '12000000', 150),
-('gar01', 'Kelas Garansi', '2022-12-31 12:10:30', 'System', 1, NULL, '25000000', 200),
-('bim01', 'Program Bimbel 2 Tahun Kelas 11 SMA', '2022-12-31 12:10:30', NULL, 1, 'Target 2024 Lulus', '22000000', 300);
+(1, 'Kelas Ekonomi', '2022-12-31 12:05:43', 'System', 1, 'Program Bimbel Kelas 12 SMA', '6000000', 60),
+(3, 'Kelas Executive', '2022-12-31 12:08:42', 'System', 1, NULL, '12000000', 150),
+(4, 'Kelas Garansi', '2022-12-31 12:10:30', 'System', 2, NULL, '25000000', 200),
+(5, 'Program Bimbel 2 Tahun Kelas 11 SMA', '2022-12-31 12:10:30', NULL, 2, NULL, '22000000', 300);
 
 -- --------------------------------------------------------
 
@@ -482,7 +468,7 @@ CREATE TABLE IF NOT EXISTS `sp_ruangan` (
   `kuota` int(11) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_ruangan`
@@ -491,7 +477,8 @@ CREATE TABLE IF NOT EXISTS `sp_ruangan` (
 INSERT INTO `sp_ruangan` (`id`, `kode_ruang`, `nama_ruang`, `lokasi`, `created_at`, `created_by`, `kuota`, `status`) VALUES
 (1, 'A', 'Ruang A', NULL, '2023-01-02 21:24:43', 'System', 14, 1),
 (2, 'B', 'Ruang BB', NULL, '2023-01-02 21:24:43', 'System', 14, 1),
-(3, NULL, 'Ruang B24', NULL, '2023-01-09 13:24:10', 'admin@gmail.com', 3, 1);
+(3, NULL, 'Ruang B24', NULL, '2023-01-09 13:24:10', 'admin@gmail.com', 3, 1),
+(4, NULL, 'H2', NULL, '2023-02-06 14:10:43', 'admin@gmail.com', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -522,8 +509,8 @@ CREATE TABLE IF NOT EXISTS `sp_siswa` (
 --
 
 INSERT INTO `sp_siswa` (`id`, `email`, `nama`, `alamat`, `telp`, `pendidikan_terakhir`, `kode_program`, `status`, `status_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'dimas@gmail.com', 'Dimas', 'jln.sutra', '081265558989', 'SMA', 'eko01', 1, 0, '2023-01-04 02:08:22', 'admin@gmail.com', '2023-01-23 07:00:25', 'dimas@gmail.com'),
-(2, 'rukiah@gmail.com', 'Rukiah Nasution', NULL, '081265524545', 'SMA', '', 1, 0, '2023-01-23 10:57:03', 'admin@gmail.com', '2023-02-05 21:25:13', 'admin@gmail.com');
+(1, 'dimas@gmail.com', 'Dimas', 'jln.sutra', '081265558989', 'SMA', '1', 1, 0, '2023-01-04 02:08:22', 'admin@gmail.com', '2023-01-23 07:00:25', 'dimas@gmail.com'),
+(2, 'rukiah@gmail.com', 'Rukiah Nasution', NULL, '081265524545', 'SMA', '1', 1, 0, '2023-01-23 10:57:03', 'admin@gmail.com', '2023-02-05 21:25:13', 'admin@gmail.com');
 
 -- --------------------------------------------------------
 

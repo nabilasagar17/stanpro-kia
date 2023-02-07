@@ -18,7 +18,7 @@ class AdminController extends Controller
         $siswa_aktif = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',0)->count();
         $tentor = DB::table('sp_tentor')->select("*")->where('status',1)->count();
         $siswa_lulus = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
-        $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->get();
+        $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
 
         return view('admin/dashboard',['siswa_aktif'=>$siswa_aktif,'tentor'=>$tentor,'siswa_lulus'=>$siswa_lulus,'agenda'=>$agenda]);
     }
@@ -93,6 +93,7 @@ class AdminController extends Controller
         $id_jadwal = DB::table('sp_jadwal')->select('*')->where('id_detail_mapel',@$id_detail_mapel[0]->id)->get(1);
         
         DB::table('sp_absensi_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_detail_mapel')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
         DB::table('sp_jadwal_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
         DB::table('sp_jadwal')->where('id_detail_mapel',$id)->delete();
         DB::table('sp_mata_pelajaran')->where('id',$id)->delete();

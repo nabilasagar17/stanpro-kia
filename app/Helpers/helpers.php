@@ -43,8 +43,9 @@ class Helpers{
     }
 
     public function cek_jadwal_is_null($id_mapel,$id_siswa){
-        $jadwal = DB::table('sp_preview_jadwal')->select("*")->where('id_jadwal_mapel',$id_mapel)->where('id_siswa',$id_siswa)->get();
-        return @$jadwal;
+        $jadwal = DB::table('sp_jadwal_siswa')->select("*")->where('id_jadwal',$id_mapel)->where('id_siswa',$id_siswa)->get();
+      
+        return $jadwal;
     }
 
 }
