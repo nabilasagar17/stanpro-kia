@@ -26,6 +26,7 @@ Route::prefix('admin')->group(function () {
     /*Mapel*/
     Route::get('/view_mapel',[AdminController::class,'view_mapel']);
     Route::post('/tambah_mapel_proses',[AdminController::class,'tambah_mapel_proses']);
+    Route::post('/hapus_mapel',[AdminController::class,'hapus_mapel']);
     Route::post('/edit_mapel_proses',[AdminController::class,'edit_mapel_proses']);
     Route::get('/detail_mapel/{id}',[AdminController::class,'detail_mapel']);
     Route::get('/report_detail_mapel/{id}',[AdminController::class,'report_detail_mapel']);  
@@ -34,6 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/tambah_detail_mapel_proses/{id}',[AdminController::class,'tambah_detail_mapel_proses']);
     Route::post('/edit_detail_mapel',[AdminController::class,'edit_detail_mapel']);
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
+    Route::post('/hapus_jadwal',[AdminController::class,'hapus_jadwal']);
     Route::post('/tambah_jadwal_proses',[AdminController::class,'tambah_jadwal_proses']);
     Route::get('/report_jadwal_mapel',[AdminController::class,'report_jadwal_mapel']);  
 
@@ -94,6 +96,7 @@ Route::prefix('admin')->group(function () {
 
     //agenda
     Route::get('/agenda',[AdminController::class,'agenda']);
+    Route::get('/report_program',[AdminController::class,'report_program']);
     Route::post('/tambah_agenda',[AdminController::class,'tambah_agenda']);
     Route::post('/edit_agenda',[AdminController::class,'edit_agenda']);
 
@@ -108,11 +111,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/edit_admin',[AdminController::class,'edit_admin']);
     //siswa
     Route::get('/program',[AdminController::class,'program']);
+    Route::post('/edit_program',[AdminController::class,'edit_program']);
+    Route::post('/hapus_program',[AdminController::class,'hapus_program']);
 
     
 });
 Route::prefix('siswa')->group(function () {
     Route::get('/program',[SiswaController::class,'program']);
+    Route::post('/tambah_program',[SiswaController::class,'tambah_program']);
     Route::post('/tambah_jadwal',[SiswaController::class,'tambah_jadwal']);
    
     Route::get('/jadwal_siswa',[SiswaController::class,'jadwal_siswa']);

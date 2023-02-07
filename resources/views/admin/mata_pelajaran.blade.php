@@ -80,6 +80,37 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="hapus_mapels" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_mapel')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Data Tentor, jadwal, dan absensi pada mata pelajaran ini akan dihapus. Anda yakin?
+                                </h4>
+                                <input type="text" name="id_mapel" hidden>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -159,6 +190,9 @@
                                                     title="Edit"> <i class="mdi mdi-pen">
                                                     </i>
                                                 </button>
+                                                <button onClick="hapus_mapel('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
+                                                    </i></button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -185,3 +219,10 @@
 
 </div> <!-- End Content -->
 @endsection
+<script>
+function hapus_mapel(id) {
+    $('#hapus_mapels').modal('show');
+    $('input[name="id_mapel"]').val(id);
+
+}
+</script>

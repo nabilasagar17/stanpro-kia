@@ -14,7 +14,7 @@ class SiswaController extends Controller
 {
     //
     public function program(){
-        $data = DB::table('sp_program')->select("*")->get();
+        $data = DB::table('sp_program')->select("*")->where('status',1)->get();
         return view('siswa/program',['data' => $data]);
     }
 

@@ -15,7 +15,12 @@ class AdminController extends Controller
     //
 
     public function dashboard(){
-        return view('admin/dashboard');
+        $siswa_aktif = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',0)->count();
+        $tentor = DB::table('sp_tentor')->select("*")->where('status',1)->count();
+        $siswa_lulus = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
+        $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->get();
+
+        return view('admin/dashboard',['siswa_aktif'=>$siswa_aktif,'tentor'=>$tentor,'siswa_lulus'=>$siswa_lulus,'agenda'=>$agenda]);
     }
 
     public function user_management(Request $request){
@@ -67,7 +72,7 @@ class AdminController extends Controller
     public function edit_mapel_proses(Request $request){
         $id = $request->input('id_mapel');
         $nama_mapel = $request->input('nama_mapel');
-      
+        $status = $request->input('status');
         $cek_data = DB::table('sp_mata_pelajaran')->select('nama_mapel')->where('nama_mapel',$nama_mapel)->get(1);
         if($cek_data == null){
             return redirect()->back()->with('message', 'Nama Mapel Sudah Ada!');
@@ -80,6 +85,19 @@ class AdminController extends Controller
             ]);
             return redirect()->back()->with('message', 'Mapel Berhasil Ditambahkan!');
         }
+    }
+
+    public function hapus_mapel(Request $request){
+        $id = $request->input('id_mapel');
+        $id_detail_mapel = DB::table('sp_detail_mapel')->select('*')->where('id_mapel',$id)->get(1);
+        $id_jadwal = DB::table('sp_jadwal')->select('*')->where('id_detail_mapel',@$id_detail_mapel[0]->id)->get(1);
+        
+        DB::table('sp_absensi_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_jadwal_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_jadwal')->where('id_detail_mapel',$id)->delete();
+        DB::table('sp_mata_pelajaran')->where('id',$id)->delete();
+        return redirect()->back()->with('message', 'Data mata pelajaran berhasil dihapus!');
+
     }
 
     public function detail_mapel($id){ 
@@ -180,6 +198,14 @@ class AdminController extends Controller
             'jadwal_selesai' => $jadwal_selesai
         ]);
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
+    }
+
+    public function hapus_jadwal(Request $request){
+        $id = $request->input('id_jadwal');
+       DB::table('sp_jadwal')->where('id',$id)->delete();
+       DB::table('sp_jadwal_siswa')->where('id_jadwal',$id)->delete();
+       DB::table('sp_absensi_siswa')->where('id_jadwal',$id)->delete();
+    return redirect()->back()->with('message', 'Jadwal berhasil dihapus!');
     }
 
     public function report_jadwal_mapel()
@@ -521,6 +547,57 @@ class AdminController extends Controller
     public function program_belajar(){
         $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
         return view('admin/program_belajar',['data'=>$data]);
+    }
+
+    public function tambah_program(Request $request){
+       
+        DB::table('sp_program')->insert([
+            'nama_program'=> $request->input('nama_program'),
+           
+            'keterangan'=> $request->input('keterangan'),
+            'status'=> $request->input('status'),
+            'harga'=> $request->input('harga'),
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->email
+        ]);
+        
+       
+        return redirect()->back()->with('message', 'Data program berhasil ditambah!');
+    }
+
+    public function edit_program(Request $request){
+        $kode = $request->input('kode');
+        DB::table('sp_program')->where('kode',$kode)->update([
+            'nama_program'=> $request->input('nama_program'),
+           
+            'keterangan'=> $request->input('keterangan'),
+            'status'=> $request->input('status'),
+            'harga'=> $request->input('harga'),
+           
+        ]);
+        
+       
+        return redirect()->back()->with('message', 'Data program berhasil diedit!');
+    }
+
+    public function hapus_program(Request $request){
+        $kode = $request->input('kode');
+        DB::table('sp_program')->where('kode',$kode)->delete();
+        DB::table('sp_siswa')->where('kode_program',$kode)->update([
+            'kode_program'=> null,
+                    
+        ]);
+       
+        return redirect()->back()->with('message', 'Data program berhasil dihapus!');
+    }
+
+    public function report_program()
+    {
+        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_program', compact('data' ));
+        return $pdf->stream("Laporan_Program".'pdf');
     }
 
     public function ruang_kelas(){
@@ -932,6 +1009,9 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data agenda berhasil diedit!');
 
     }
+
+
+
 
 
 }

@@ -82,7 +82,7 @@
 
                             </div>
                             <div class="col-lg-4 my-2">
-                                <label for="simpleinput">Ruangan</label>
+                                <label for="simpleinput">Nama Kelas</label>
                                 <select class="form-control" id="example-select" name="kelas">
                                     @foreach(Helpers::get_kelas() as $kelas)
                                     <option value="{{$kelas->id}}">
@@ -135,6 +135,36 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="hapus_jadwals" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_jadwal')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Data absensi pada jadwal ini juga akan terhapus. Anda yakin?
+                                </h4>
+                                <input type="text" name="id_jadwal" hidden>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -146,7 +176,7 @@
                         <div class="col-lg-10">
                             <h4 class="header-title">Jadwal Mata Pelajaran</h4>
                         </div>
-                        @if(Auth::user()->role =='admin')
+                        @if(Auth::user()->role =='admin' && Request::segment(2) !='absensi')
                         <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
@@ -229,7 +259,12 @@
                                                         class="mdi mdi-eye">
                                                     </i>
                                                 </a>
+
                                                 @endif
+
+                                                <button onClick="hapus_jadwal('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
+                                                    </i></button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -258,3 +293,10 @@
 
 </div> <!-- End Content -->
 @endsection
+<script>
+function hapus_jadwal(id) {
+    $('#hapus_jadwals').modal('show');
+    $('input[name="id_jadwal"]').val(id);
+
+}
+</script>
