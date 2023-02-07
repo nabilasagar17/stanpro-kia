@@ -261,7 +261,12 @@
                                                 </a>
 
                                                 @else
-
+                                                <button type="button"
+                                                    onClick="edit_jadwal_mapel('{{ $datas->id}}','{{ $datas->nama_mapel}}','{{ $datas->jadwal_mulai}}' 
+                                                    ,'{{ $datas->jadwal_selesai}}','{{ $datas->id_ruang}}','{{ $datas->id_tentor}}','{{ $datas->kuota_kelas}}')"
+                                                    class="btn btn-success btn-sm" type="button" class="btn btn-primary"
+                                                    title="Edit"> <i class="mdi mdi-pen"> </i>
+                                                </button>
                                                 <button onClick="hapus_jadwal('{{ $datas->id}}')"
                                                     class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i>
@@ -272,6 +277,7 @@
                                                         class="mdi mdi-eye">
                                                     </i>
                                                 </a>
+
                                                 @endif
                                             </td>
                                         </tr>
@@ -305,5 +311,15 @@ function hapus_jadwal(id) {
     $('#hapus_jadwals').modal('show');
     $('input[name="id_jadwal"]').val(id);
 
+}
+
+function edit_jadwal_mapel(id, nama_mapel, jadwal_mulai, jadwal_selesai, id_ruang, id_tentor, kuota_kelas) {
+    $('#edit_jadwal_mapels').modal('show');
+    $('input[name="id_jadwal_mapel"]').val(id);
+    $('input[name="id_detail_mapel"]').val(nama_mapel);
+    $('input[name="jadwal_mulai"]').val(jadwal_mulai);
+    $('input[name="jadwal_selesai"]').val(jadwal_selesai);
+    $('input[name="id_ruang"]').val(id_ruang);
+    $('input[name="kuota_kelas"]').val(kuota_kelas);
 }
 </script>

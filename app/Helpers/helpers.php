@@ -48,6 +48,12 @@ class Helpers{
         return $jadwal;
     }
 
+    public function get_absensi_is_null($id_jadwal){
+        $jadwal = DB::table('sp_absensi_siswa')->select("*")->where('id_jadwal',$id_jadwal)->get();
+      
+        return $jadwal;
+    }
+
 }
 
  ?>

@@ -64,77 +64,90 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
-                            <div class="table-responsive-sm">
+                            <form action="{{url('admin/tambah_absensi_proses')}}" method="post">
+                                @csrf
+                                <div class="table-responsive-sm">
 
-                                <table class="table table-striped table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Email</th>
-                                            <th>Nama Mapel</th>
-                                            <th>Nama Tentor</th>
-                                            <th>Ruangan</th>
-                                            <th>Keterangan</th>
-                                            <th>Created At</th>
-                                            <th>Created By</th>
-                                            <th>Updated At</th>
-                                            <th>Updated By</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                    <table class="table table-striped table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Email</th>
+                                                <th>Nama Mapel</th>
+                                                <th>Nama Tentor</th>
+                                                <th>Ruangan</th>
+                                                <th>Keterangan</th>
+                                                <th>Created At</th>
+                                                <th>Created By</th>
+                                                <th>Updated At</th>
+                                                <th>Updated By</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
 
-                                        @foreach($data as $datas)
-                                        <tr data-row="{{ $no}}">
-                                            <td>{{ $no++ }}</td>
-                                            <td class="text-bold-500">{{$datas->nama}}
-                                                <input value="{{$datas->id_siswa}}" name="id_siswa[]" hidden>
-                                                <input value="{{$datas->id_jadwal}}" name="id_jadwal[]" hidden>
-                                            </td>
-                                            <td>{{$datas->email}}</td>
-                                            <td>{{$datas->nama_mapel}}</td>
-                                            <td class="text-bold-500">{{$datas->nama_tentor}}</td>
-                                            <td>{{$datas->nama_ruang}}</td>
-                                            <td>
-                                                <select class="form-control" id="example-select" name="keterangan[]">
-                                                    <option value="1" selected>Tidak Hadir</option>
-                                                    <option value="2">Hadir</option>
-                                                    <option value="3">Sakit</option>
-                                                    <option value="4">Izin</option>
+                                            @foreach($data as $datas)
+                                            <tr data-row="{{ $no}}">
+                                                <td>{{ $no++ }}</td>
+                                                <td class="text-bold-500">{{$datas->nama}}
+                                                    <input value="{{$datas->id_siswa}}" name="id_siswa[]" hidden>
+                                                    <input value="{{$datas->id_jadwal}}" name="id_jadwal[]" hidden>
+                                                </td>
+                                                <td>{{$datas->email}}</td>
+                                                <td>{{$datas->nama_mapel}}</td>
+                                                <td class="text-bold-500">{{$datas->nama_tentor}}</td>
+                                                <td>{{$datas->nama_ruang}}</td>
+                                                <td>
+                                                    <select class="form-control" id="example-select"
+                                                        name="keterangan[]">
+                                                        <option value="1" selected>Tidak Hadir</option>
+                                                        <option value="2">Hadir</option>
+                                                        <option value="3">Sakit</option>
+                                                        <option value="4">Izin</option>
 
-                                                </select>
+                                                    </select>
 
-                                            </td>
-                                            <td>{{$datas->created_at}}</td>
-                                            <td>{{$datas->created_by}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
-                                                    data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
-                                                    </i>
-                                                </a>
-                                                <a type="button"
-                                                    onClick="tambah_absen_siswa('{{ $datas->id_siswa}}','{{ $datas->id_jadwal}}')"
-                                                    class="btn btn-success"><i class="mdi mdi-pencil">
-                                                    </i>
-                                                </a>
-                                                <a type="button"
-                                                    onClick="hapus_jadwal_siswa('{{ $datas->id_siswa}}','{{ $datas->id_jadwal}}')"
-                                                    class="btn btn-danger"><i class=" dripicons-trash">
-                                                    </i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                                </td>
+                                                <td>{{$datas->created_at}}</td>
+                                                <td>{{$datas->created_by}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td><a href="{{url('admin/detail_mapel')}}" data-toggle="tooltip"
+                                                        data-placement="top" title="Detail Mapel"> <i class="bi bi-eye">
+                                                        </i>
+                                                    </a>
+                                                    <a type="button"
+                                                        onClick="tambah_absen_siswa('{{ $datas->id_siswa}}','{{ $datas->id_jadwal}}')"
+                                                        class="btn btn-success"><i class="mdi mdi-pencil">
+                                                        </i>
+                                                    </a>
+                                                    <a type="button"
+                                                        onClick="hapus_jadwal_siswa('{{ $datas->id_siswa}}','{{ $datas->id_jadwal}}')"
+                                                        class="btn btn-danger"><i class=" dripicons-trash">
+                                                        </i>
+                                                    </a>
+                                                </td> -->
+                                            </tr>
+                                            @endforeach
 
 
-                                    </tbody>
+                                        </tbody>
 
-                                </table>
+                                    </table>
 
-                            </div> <!-- end table-responsive-->
+                                </div> <!-- end table-responsive-->
+                                @if(Helpers::get_absensi_is_null(Request::segment(3))->isEmpty())
+                                <div class="row my-2">
+
+
+                                    <button type="submit" class="btn btn-success">Simpan
+                                    </button>
+
+                                </div>
+                                @endif
+                            </form>
                         </div> <!-- end preview-->
 
 

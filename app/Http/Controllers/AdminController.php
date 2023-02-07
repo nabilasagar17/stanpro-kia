@@ -803,7 +803,7 @@ class AdminController extends Controller
     {
         $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id)->get();
       
-        $date =  date('d-m-Y', strtotime($data[0]->tgl_ujian));
+        $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_nilai_skd', compact('data', 'date'));
@@ -967,7 +967,7 @@ class AdminController extends Controller
     {
         $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id)->get();
       
-        $date =  date('d-m-Y', strtotime($data[0]->tgl_ujian));
+        $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_nilai_utbk', compact('data', 'date'));
