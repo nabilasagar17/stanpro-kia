@@ -24,6 +24,31 @@ class AdminController extends Controller
             $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
+            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $skd_nilai = DB::table('view_nilai_skd')
+            ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+           
+            ->groupby('tgl_ujian')
+            ->orderby('tgl_ujian', 'asc')
+            ->get();
+            $utbk_nilai = DB::table('view_nilai_utbk')
+            ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+          
+            ->groupby('tgl_ujian')
+            ->orderby('tgl_ujian', 'asc')
+            ->get();
+            $chart_text = 'Siswa Yang Lulus';
+
+        }elseif(Auth::user()->role == 'siswa'){
+            $id_siswa = Helpers::get_siswa(Auth::user()->email,'id');
+            $judul_1 = 'Jadwal yang diikuti';
+            $judul_2 = 'Tentor';
+            $judul_3 = 'Siswa Lulus';
+            $angka_1 = DB::table('sp_jadwal_siswa')->select("*")->where('id_siswa',$id_siswa)->where('selesai',0)->count();
+            $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
+            $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
+            $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
             $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)->groupby('tgl_ujian')->get();
             $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->where('ket_tps',1)->where('ket_tbi',1)->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
@@ -40,28 +65,6 @@ class AdminController extends Controller
             ->get();
             $chart_text = 'Siswa Yang Lulus';
 
-        }elseif(Auth::user()->role == 'siswa'){
-            $id_siswa = Helpers::get_siswa(Auth::user()->email,'id');
-            $judul_1 = 'Jadwal yang diikuti';
-            $judul_2 = 'Tentor';
-            $judul_3 = 'Siswa Lulus';
-            $angka_1 = DB::table('sp_jadwal_siswa')->select("*")->where('id_siswa',$id_siswa)->where('selesai',0)->count();
-            $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
-            $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
-            $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
-            $skd = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id_siswa)->get();
-            $utbk = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id_siswa)->get();
-            $skd_nilai = DB::table('view_nilai_skd')
-            ->select(DB::raw('count(*) as nilai'))
-            ->where('id_siswa',$id_siswa)
-            ->orderby('tgl_ujian', 'asc')
-            ->get();
-            $utbk_nilai = DB::table('view_nilai_utbk')
-            ->select(DB::raw('count(*) as nilai'))
-            ->where('id_siswa',$id_siswa)
-            ->orderby('tgl_ujian', 'asc')
-            ->get();
-            $chart_text = 'Nilai';
         }else{
             $id_tentor = Helpers::get_tentor(Auth::user()->email,'id');
             $judul_1 = 'Jumlah Kelas';
@@ -71,25 +74,22 @@ class AdminController extends Controller
             $angka_2 = DB::table('sp_detail_mapel')->select("*")->where('id_tentor',$id_tentor)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
-            $chart_text = 'Siswa Yang Lulus';
-            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)->groupby('tgl_ujian')->get();
+            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->where('ket_tps',1)->where('ket_tbi',1)->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-            ->groupby('tgl_ujian')
-            ->orderby('tgl_ujian', 'asc')
-            ->get();
-         
-            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
-            $skd_nilai = DB::table('view_nilai_skd')
-            ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
             $utbk_nilai = DB::table('view_nilai_utbk')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
+            $chart_text = 'Siswa Yang Lulus';
+
 
         }
 
@@ -735,6 +735,7 @@ class AdminController extends Controller
 
     public function hapus_kelas(Request $request){
         $id = $request->input('id_kelas');
+
         $data = DB::table('sp_kelas')->where('id',$id)->delete();
         DB::table('sp_jadwal')->where('id_kelas',$id)->update([
             'id_kelas' => NULL

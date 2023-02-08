@@ -18,7 +18,7 @@
     </div>
     <!-- end page title -->
     <div class="row">
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-4 col-lg-6">
             <div class="card widget-flat">
                 <div class="card-body">
                     <div class="float-right">
@@ -31,7 +31,7 @@
             </div>
         </div> <!-- end col-->
 
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-4 col-lg-6">
             <div class="card widget-flat">
                 <div class="card-body">
                     <div class="float-right">
@@ -44,7 +44,7 @@
             </div>
         </div> <!-- end col-->
 
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-4 col-lg-6">
             <div class="card widget-flat">
                 <div class="card-body">
                     <div class="float-right">
@@ -60,66 +60,51 @@
 
     </div>
     <div class="row">
-        <div class="col-lg-12">
-            @if(Auth::user()->role == 'siswa')
-            <div class="col-lg-3">
-                <div class="card">
-                    <div id="skd_siswa"></div>
-                </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div id="skd"></div>
             </div>
-            <!-- end col-->
+        </div>
+        <!-- end col-->
 
-            <div class="col-lg-3">
-                <div class="card">
-                    <div id="utbk_siswa"></div>
-                </div> <!-- end card-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div id="utbk"></div>
+            </div> <!-- end card-->
 
-            </div> <!-- end col -->
-            @else
-            <div class="col-lg-3">
-                <div class="card">
-                    <div id="skd"></div>
-                </div>
-            </div>
-            <!-- end col-->
+        </div> <!-- end col -->
 
-            <div class="col-lg-3">
-                <div class="card">
-                    <div id="utbk"></div>
-                </div> <!-- end card-->
+        <div class="col-xl-4 col-lg-6 order-lg-1">
+            <div class="card">
+                <div class="card-body">
 
-            </div> <!-- end col -->
-            @endif
-            <div class="col-xl-3 col-lg-6 order-lg-1">
-                <div class="card">
-                    <div class="card-body">
+                    <h4 class="header-title mb-2">Agenda</h4>
 
-                        <h4 class="header-title mb-2">Agenda</h4>
+                    <div data-simplebar style="max-height: 424px;">
+                        @foreach($agenda as $agendas)
+                        <div class="timeline-alt pb-0">
+                            <div class="timeline-item">
+                                <i class="mdi mdi-upload bg-info-lighten text-info timeline-icon"></i>
+                                <div class="timeline-item-info">
+                                    <a href="#"
+                                        class="text-info font-weight-bold mb-1 d-block">{{$agendas->nama_agenda}}</a>
+                                    <small>{{$agendas->jadwal_mulai}}</small>
 
-                        <div data-simplebar style="max-height: 424px;">
-                            @foreach($agenda as $agendas)
-                            <div class="timeline-alt pb-0">
-                                <div class="timeline-item">
-                                    <i class="mdi mdi-upload bg-info-lighten text-info timeline-icon"></i>
-                                    <div class="timeline-item-info">
-                                        <a href="#"
-                                            class="text-info font-weight-bold mb-1 d-block">{{$agendas->nama_agenda}}</a>
-                                        <small>{{$agendas->jadwal_mulai}}</small>
-
-                                    </div>
                                 </div>
                             </div>
-                            @endforeach
-                            <!-- end timeline -->
-                        </div> <!-- end slimscroll -->
-                    </div>
-                    <!-- end card-body -->
+                        </div>
+                        @endforeach
+                        <!-- end timeline -->
+                    </div> <!-- end slimscroll -->
                 </div>
-                <!-- end card-->
+                <!-- end card-body -->
             </div>
-
-
+            <!-- end card-->
         </div>
+
+
+
 
     </div>
 
