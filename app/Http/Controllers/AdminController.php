@@ -105,15 +105,15 @@ class AdminController extends Controller
                 ->orwhere('email', 'like', '%' . $request->input('search'))
                 ->orwhere('role', 'like', '%' . $request->input('search'))
                 ->orderby('created_at','desc')
-                ->paginate(15);
+                ->paginate(10);
             }else{
-                $data = DB::table('users')->select("*")->orderby('created_at','desc')->paginate(15);
+                $data = DB::table('users')->select("*")->orderby('created_at','desc')->paginate(10);
             }
         }else{
             $data = DB::table('users')->select("*")
             ->where('email', Auth::user()->email)
             ->orderby('created_at','desc')
-            ->paginate(15);
+            ->paginate(10);
         }
         return view('admin/user_management',['data' => $data]);
     }
@@ -122,7 +122,7 @@ class AdminController extends Controller
 
 
     public function view_mapel(){
-        $data = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','DESC')->paginate(10);
         return view('admin/mata_pelajaran',['data'=>$data]);
     }
 
@@ -189,9 +189,9 @@ class AdminController extends Controller
         $mapel = DB::table('sp_mata_pelajaran')->select("*")->get();
         $tentor =  DB::table('sp_tentor')->select("*")->get();
         if(Auth::user()->role == 'admin' ){
-        $data= DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->paginate(15);
+        $data= DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->paginate(10);
         }else{
-            $data= DB::table('view_detail_mapel')->select("*")->where('id_tentor',$id)->paginate(15);
+            $data= DB::table('view_detail_mapel')->select("*")->where('id_tentor',$id)->paginate(10);
         }
         return view('admin/detail_mapel',['data'=>$data,'mapel'=>$mapel,'tentor'=>$tentor]);
     }
@@ -265,10 +265,10 @@ class AdminController extends Controller
             $data = DB::table('view_jadwal_mapel')->select("*")
             ->where('id_tentor',$id_tentor)
             ->orderby('created_at','DESC')
-            ->paginate(15);
+            ->paginate(10);
          
         }else{
-            $data= DB::table('view_jadwal_mapel')->select("*")->orderby('created_at','DESC')->paginate(15);
+            $data= DB::table('view_jadwal_mapel')->select("*")->orderby('created_at','DESC')->paginate(10);
         }
         return view('admin/jadwal_mapel',['data'=>$data]);
     }
@@ -327,7 +327,7 @@ class AdminController extends Controller
     }
 
     public function kelas(){
-        $data = DB::table('sp_kelas')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_kelas')->select("*")->orderby('created_at','DESC')->paginate(10);
 
         return view('admin/kelas',['data'=>$data]);
     }
@@ -413,7 +413,7 @@ class AdminController extends Controller
     }
 
     public function materi(){
-        $data = DB::table('sp_materi_mapel')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_materi_mapel')->select("*")->orderby('created_at','DESC')->paginate(10);
         $mapel = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','DESC')->get();
         return view('admin/materi',['data'=>$data,'mapel'=>$mapel]);
     }
@@ -477,13 +477,13 @@ class AdminController extends Controller
     }
 
     public function tentor(){
-        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(10);
         return view('admin/tentor',['data'=>$data]);
     }
 
     public function report_tentor()
     {
-        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_tentor')->select("*")->orderby('created_at','DESC')->paginate(10);
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_tentor', compact('data' ));
@@ -520,6 +520,7 @@ class AdminController extends Controller
             'nama'=> $request->input('nama'),
             'alamat'=> $request->input('alamat'),
             'telp'=> $request->input('telp'),
+            'pendidikan_terakhir' =>  $request->input('pendidikan_terakhir'),
             'updated_at'=> Carbon::now(),
             'updated_by'=> Auth::user()->email,
             'status'=>$request->input('status')
@@ -530,13 +531,13 @@ class AdminController extends Controller
     }
 
     public function admin(){
-        $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(10);
         return view('admin/admin',['data'=>$data]);
     }
 
     public function report_admin ()
     {
-        $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_admin')->select("*")->orderby('created_at','DESC')->paginate(10);
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_admin', compact('data' ));
@@ -597,14 +598,14 @@ class AdminController extends Controller
 
 
     public function siswa(){
-        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(10);
         $program = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->get();
         return view('admin/siswa',['data'=>$data,'program'=>$program]);
     }
 
     public function report_siswa ()
     {
-        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(10);
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_siswa', compact('data' ));
@@ -654,7 +655,7 @@ class AdminController extends Controller
     }
 
     public function program_belajar(){
-        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(10);
         return view('admin/program_belajar',['data'=>$data]);
     }
 
@@ -710,7 +711,7 @@ class AdminController extends Controller
     }
 
     public function ruang_kelas(){
-        $data = DB::table('sp_ruangan')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_ruangan')->select("*")->orderby('created_at','DESC')->paginate(10);
         return view('admin/ruang_kelas',['data'=>$data]);
     }
 
@@ -770,7 +771,7 @@ class AdminController extends Controller
 
     public function list_jadwal_skd(){
    
-        $data = DB::table('sp_jadwal_ujian_skd')->select('*')->paginate(15);
+        $data = DB::table('sp_jadwal_ujian_skd')->select('*')->paginate(10);
         return view('admin/jadwal_skd',['data'=>$data]);
     }
 
@@ -822,10 +823,10 @@ class AdminController extends Controller
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();    
         if(Auth::user()->role == 'siswa'){
             // $id = Helpers::get_siswa(Auth::user()->email,'id');
-            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(15);
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(10);
         }else{
             $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id_jadwal)->orderby('twk','desc')->orderby('tiu','desc')
-            ->orderby('tkp','desc')->paginate(15);           
+            ->orderby('tkp','desc')->paginate(10);           
         }
         return view('admin/nilai_skd',['data'=>$data, 'siswa'=>$siswa]);
     }
@@ -946,7 +947,7 @@ class AdminController extends Controller
 
     public function list_jadwal_utbk(){
      
-        $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->paginate(15);
+        $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->paginate(10);
         return view('admin/jadwal_utbk',['data'=>$data]);
     }
 
@@ -999,9 +1000,9 @@ class AdminController extends Controller
     public function nilai_utbk($id_jadwal){
         $siswa = DB::table('sp_siswa')->select("*")->where('status_siswa' , 0)->get();  
         if(Auth::user()->role == 'siswa'){
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(15);
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id_jadwal)->orderby('tgl_ujian','desc')->paginate(10);
         }else{
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id_jadwal)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(15);           
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id_jadwal)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->paginate(10);           
         }
         return view('admin/nilai_utbk',['data'=>$data,'siswa'=>$siswa]);
     }
@@ -1116,7 +1117,7 @@ class AdminController extends Controller
   
 
     public function agenda(){
-        $data = DB::table('sp_agenda')->select('*')->orderby('created_at','desc')->paginate(15);
+        $data = DB::table('sp_agenda')->select('*')->orderby('created_at','desc')->paginate(10);
         return view('admin/agenda',['data'=>$data]);
     }
 

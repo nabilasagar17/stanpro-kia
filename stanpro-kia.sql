@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2023 at 06:41 AM
+-- Generation Time: Feb 08, 2023 at 12:13 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -112,13 +112,14 @@ CREATE TABLE IF NOT EXISTS `sp_detail_mapel` (
   `created_by` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_detail_mapel`
 --
 
 INSERT INTO `sp_detail_mapel` (`id`, `id_mapel`, `id_tentor`, `created_at`, `created_by`, `status`) VALUES
+(14, 11, 4, '2023-02-08 18:30:42', 'admin@gmail.com', 1),
 (13, 10, 4, '2023-02-08 06:20:41', 'admin@gmail.com', 1),
 (12, 10, 6, '2023-02-08 06:20:34', 'admin@gmail.com', 1);
 
@@ -291,14 +292,15 @@ CREATE TABLE IF NOT EXISTS `sp_mata_pelajaran` (
   `updated_by` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_mata_pelajaran`
 --
 
 INSERT INTO `sp_mata_pelajaran` (`id`, `nama_mapel`, `lama_belajar`, `created_at`, `created_by`, `updated_at`, `updated_by`, `status`) VALUES
-(10, 'B.Inggris', NULL, '2023-02-08 04:05:21', 'admin@gmail.com', NULL, NULL, 1);
+(10, 'B.Inggris', NULL, '2023-02-08 04:05:21', 'admin@gmail.com', NULL, NULL, 1),
+(11, 'Matematika', NULL, '2023-02-08 18:30:31', 'admin@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -317,15 +319,7 @@ CREATE TABLE IF NOT EXISTS `sp_materi_mapel` (
   `nama_materi` varchar(200) DEFAULT NULL,
   `keterangan` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sp_materi_mapel`
---
-
-INSERT INTO `sp_materi_mapel` (`id`, `id_mapel`, `created_at`, `created_by`, `status`, `file_path`, `nama_materi`, `keterangan`) VALUES
-(1, 1, '2023-01-09 13:08:41', 'admin@gmail.com', 1, '1673269721.pdf', 'Hai', NULL),
-(2, 1, '2023-01-23 03:31:11', 'admin@gmail.com', 1, 'TIU_Ujian.pdf', 'Ujian', NULL);
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -496,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `sp_siswa` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_siswa`
@@ -505,7 +499,10 @@ CREATE TABLE IF NOT EXISTS `sp_siswa` (
 INSERT INTO `sp_siswa` (`id`, `email`, `nama`, `alamat`, `telp`, `pendidikan_terakhir`, `kode_program`, `status`, `status_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 'dimas@gmail.com', 'Dimas', 'jln.sutra', '081265558989', 'SMA', '1', 1, 0, '2023-01-04 02:08:22', 'admin@gmail.com', '2023-01-23 07:00:25', 'dimas@gmail.com'),
 (2, 'rukiah@gmail.com', 'Rukiah Nasution', NULL, '081265524545', 'SMA', '1', 1, 0, '2023-01-23 10:57:03', 'admin@gmail.com', '2023-02-05 21:25:13', 'admin@gmail.com'),
-(3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL);
+(3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL),
+(4, 'jane@gmail.com', 'Jane', 'keterangan', '081265525666', 'S1', '4', 1, 0, '2023-02-08 09:51:48', 'admin@gmail.com', NULL, NULL),
+(5, 'dea@gmail.com', 'dea', NULL, NULL, 'SMA', '6', 1, 0, '2023-02-08 10:02:13', 'admin@gmail.com', NULL, NULL),
+(6, 'yani@gmail.com', 'Yani', NULL, NULL, 'SMA', '6', 1, 0, '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -558,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_by` varchar(150) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -575,7 +572,10 @@ INSERT INTO `users` (`id`, `email`, `nama`, `password`, `role`, `created_at`, `c
 (10, 'nabila@gmail.com', 'Nabila', '$2y$10$UA7aDfS.T7JscUBUd9fn0ewUqqaIl21cgEblJvYnzw9XUWsJjAGuC', 'admin', '2023-01-29 05:21:15', 'admin@gmail.com', NULL, NULL, 1),
 (11, 'angel@gmail.com', 'angel@gmail.com', '$2y$10$NU2VY/gGTAId17ZNA2ORvu17p6MsQQClkhrH51jspOnCWZmwz488i', 'tentor', '2023-02-05 21:26:10', 'admin@gmail.com', NULL, NULL, 1),
 (12, 'vina@gmail.com', 'Vina', '$2y$10$eOllRRqeJ6rv53Fs7Ju/zu7GSCh9xF4bTxGZIQlDu6CRxJ1.Alw/6', 'tentor', '2023-02-05 21:33:01', 'admin@gmail.com', '2023-02-05 21:47:55', 'admin@gmail.com', 1),
-(13, NULL, NULL, '$2y$10$V4IuImN8XWG/v9hAy0t0c.QFZt.0Z5qZ8Z6Kvw5ovHX9q8U0Ca2VC', 'siswa', '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL, 1);
+(13, NULL, NULL, '$2y$10$V4IuImN8XWG/v9hAy0t0c.QFZt.0Z5qZ8Z6Kvw5ovHX9q8U0Ca2VC', 'siswa', '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL, 1),
+(14, 'jane@gmail.com', 'Jane', '$2y$10$mHsXOYQXAUuyfxmM.CmsVeJemhlDlgYIRI/vqhn.TRPHr4l/CJ20e', 'siswa', '2023-02-08 09:51:48', 'admin@gmail.com', NULL, NULL, 1),
+(15, 'dea@gmail.com', 'dea', '$2y$10$KAXCGy7P9.JDnUUu4Uz1Dub8KREK1YHhHtnMwqJU3C1v4bUvhqciS', 'siswa', '2023-02-08 10:02:14', 'admin@gmail.com', NULL, NULL, 1),
+(16, 'yani@gmail.com', 'Yani', '$2y$10$M5Tq8jfqyExutoxtuMuQ7.eLlbFb5vE.E0/aY1vOChQ2A4KjDkjyS', 'siswa', '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 

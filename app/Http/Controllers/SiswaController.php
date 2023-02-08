@@ -25,8 +25,16 @@ class SiswaController extends Controller
             'created_at' => Carbon::now(),
             'created_by' => Auth::user()->email
         ]);
+        $jumlah_sekarang = DB::table('sp_jadwal_siswa')->select("id_siswa")->where('id_jadwal',$request->input('id_mapel'))->count();
+       
+        $jumlah_kuota = DB::table('sp_jadwal')->select("kuota_kelas")->where('id',$request->input('id_mapel'))->get();
+      
+        $sisa = (int) $jumlah_kuota[0]->kuota_kelas - $jumlah_sekarang;
         DB::table('sp_jadwal')->where('id', $request->input('id_mapel'))->update([
-            
+           'kuota_tersedia' => $sisa,
+           'kuota_terisi' => $jumlah_sekarang,
+           'updated_at' => Carbon::now(),
+           'updated_by' => Auth::user()->email
         ]);
 
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
@@ -35,7 +43,7 @@ class SiswaController extends Controller
 
     public function jadwal_siswa(){
         $id_siswa = Helpers::get_siswa(Auth::user()->email,'id');
-        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa', $id_siswa)->paginate(15);
+        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa', $id_siswa)->paginate(10);
         return view('siswa/jadwal_siswa',['data' => $data]);
     }
 

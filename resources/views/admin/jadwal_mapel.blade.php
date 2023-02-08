@@ -207,7 +207,9 @@
                                             <th>Jadwal Selesai</th>
                                             <th>Ruangan </th>
                                             <th>Tentor</th>
+                                            <th>Kuota Kelas</th>
                                             <th>Kuota Tersedia</th>
+                                            <th>Kuota Terisi</th>
                                             <th>Nama Kelas</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
@@ -217,7 +219,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                        <?php  $no = 10 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
@@ -227,6 +229,8 @@
                                             <td>{{$datas->nama_ruang}}</td>
                                             <td>{{$datas->nama_tentor}} </td>
                                             <td>{{$datas->kuota_kelas}} </td>
+                                            <td>{{$datas->kuota_tersedia}} </td>
+                                            <td>{{$datas->kuota_terisi}} </td>
                                             <td>{{$datas->nama_kelas}} </td>
                                             <td>{{$datas->created_at}} </td>
                                             <td>{{$datas->created_by}} </td>

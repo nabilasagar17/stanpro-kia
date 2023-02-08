@@ -148,7 +148,18 @@
                                             </div>
 
                                         </div>
+                                        <div class="form-group m-form__group row">
 
+                                            <div class="col-lg-6 my-2">
+                                                <label for="simpleinput">Pendidikan Terakhir</label>
+                                                <select class="form-control" id="example-select"
+                                                    name="pendidikan_terakhir" required>
+                                                    <option value="SMA">SMA</option>
+                                                    <option value="S1">S1</option>
+                                                    <option value="S2">S2</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="modal-footer">
@@ -181,7 +192,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                        <?php  $no = 10 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
                                         @foreach($data as $datas)
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
@@ -201,7 +212,7 @@
                                             @endif
 
                                             <td><button
-                                                    onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}')"
+                                                    onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}','{{ $datas->pendidikan_terakhir}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
                                                     </i>
                                                 </button>
@@ -237,13 +248,13 @@
 
 
 <script>
-function edit_user(id, nama, alamat, telp, status) {
+function edit_user(id, nama, alamat, telp, status, pend) {
     $('#edit_tentors').modal('show');
     $('input[name="id_tentor"]').val(id);
     $('input[name="nama"]').val(nama);
     $('input[name="alamat"]').val(alamat);
     $('input[name="telp"]').val(telp);
     $('input[name="status"]').val(status);
-
+    $('input[name="pendidikan_terakhir"]').val(pendidikan_terakhir);
 }
 </script>

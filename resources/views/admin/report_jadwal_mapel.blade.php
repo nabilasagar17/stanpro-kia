@@ -59,12 +59,15 @@ use Illuminate\Support\Carbon;
                             <th>Jadwal Selesai</th>
                             <th>Ruangan </th>
                             <th>Tentor</th>
+                            <th>Kuota Kelas</th>
                             <th>Kuota Tersedia</th>
+                            <th>Kuota Terisi</th>
                             <th>Nama Kelas</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                        <?php  $no = 30 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
                         @foreach($data as $datas)
                         <tr data-row="{{ $no}}">
                             <td>{{ $no++ }}</td>
@@ -74,7 +77,10 @@ use Illuminate\Support\Carbon;
                             <td>{{$datas->nama_ruang}}</td>
                             <td>{{$datas->nama_tentor}} </td>
                             <td>{{$datas->kuota_kelas}} </td>
+                            <td>{{$datas->kuota_tersedia}} </td>
+                            <td>{{$datas->kuota_terisi}} </td>
                             <td>{{$datas->nama_kelas}} </td>
+
                         </tr>
                         @endforeach
 
