@@ -55,6 +55,12 @@ class Helpers{
         return $jadwal;
     }
 
+    public function get_jadwal_is_full($id_jadwal){
+        $jadwal = DB::table('sp_jadwal_siswa')->select("*")->where('id_jadwal',$id_jadwal)->count();
+      
+        return $jadwal;
+    }
+
 }
 
  ?>

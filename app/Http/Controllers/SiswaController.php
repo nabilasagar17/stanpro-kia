@@ -43,7 +43,7 @@ class SiswaController extends Controller
 
     public function jadwal_siswa(){
         $id_siswa = Helpers::get_siswa(Auth::user()->email,'id');
-        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa', $id_siswa)->paginate(10);
+        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa', $id_siswa)->paginate(15);
         return view('siswa/jadwal_siswa',['data' => $data]);
     }
 

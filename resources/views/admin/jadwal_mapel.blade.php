@@ -239,6 +239,11 @@
 
                                             <td>
                                                 @if(Auth::user()->role == 'siswa')
+                                                @if($datas->kuota_terisi == $datas->kuota_tersedia)
+                                                <button type="button" class="btn btn-success" title="Kuota Penuh">Kuota
+                                                    Penuh
+                                                </button>
+                                                @endif
                                                 @if(Helpers::cek_jadwal_is_null($datas->id,Helpers::get_siswa(Auth::user()->email,'id'))
                                                 ->isEmpty())
                                                 <button type="button" class="btn btn-primary" title="Ikuti Kelas"
