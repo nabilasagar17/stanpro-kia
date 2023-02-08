@@ -176,7 +176,7 @@ class AdminController extends Controller
         $id_jadwal = DB::table('sp_jadwal')->select('*')->where('id_detail_mapel',@$id_detail_mapel[0]->id)->get(1);
         
         DB::table('sp_absensi_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
-        DB::table('sp_detail_mapel')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_detail_mapel')->where('id_mapel',$id)->delete();
         DB::table('sp_jadwal_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
         DB::table('sp_jadwal')->where('id_detail_mapel',$id)->delete();
         DB::table('sp_mata_pelajaran')->where('id',$id)->delete();
