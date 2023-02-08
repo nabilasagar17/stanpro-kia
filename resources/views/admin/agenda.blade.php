@@ -66,12 +66,12 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Agenda</label>
-                                <input type="text" id="simpleinput" class="form-control" name="nama_agenda">
-                                <input type="text" id="simpleinput" class="form-control" name="id_agenda" hidden>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_agendas">
+                                <input type="text" id="simpleinput" class="form-control" name="id_agendas" hidden>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Jadwal Mulai</label>
-                                <input type="text" class="form-control" data-provide="datepicker" name="jadwal_mulai">
+                                <input type="text" class="form-control" data-provide="datepicker" name="jadwal_mulais">
 
                             </div>
 
@@ -186,6 +186,9 @@
                                 </table>
 
                             </div> <!-- end table-responsive-->
+                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix my-2">
+                                {!! $data->appends(Request::all())->links() !!}
+                            </div>
                         </div> <!-- end preview-->
                     </div> <!-- end tab-content-->
                 </div> <!-- end card body-->
@@ -202,9 +205,9 @@
 <script>
 function edit_agenda(id, nama_agenda, jadwal) {
     $('#edit_agendas').modal('show');
-    $('input[name="id_agenda"]').val(id);
-    $('input[name="nama_agenda"]').val(nama_agenda);
-    $('input[name="jadwal_mulai"]').val(jadwal);
+    $('input[name="id_agendas"]').val(id);
+    $('input[name="nama_agendas"]').val(nama_agenda);
+    $('input[name="jadwal_mulais"]').val(jadwal);
 }
 
 function hapus_agenda(id) {

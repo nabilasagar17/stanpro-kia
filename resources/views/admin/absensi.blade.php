@@ -86,7 +86,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php  $no = 15 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+                                            <?php  $no = 30 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
 
                                             @foreach($data as $datas)
                                             <tr data-row="{{ $no}}">

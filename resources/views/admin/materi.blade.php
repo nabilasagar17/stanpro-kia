@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/edit_materi_aja')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('admin/edit_materi')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
@@ -84,12 +84,19 @@
                                 <input type="text" id="simpleinput" class="form-control" name="id_materis" hidden>
                             </div>
 
-
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Nama Mata Pelajaran</label>
+                                <select class="form-control" id="example-select" name="id_mapels">
+                                    @foreach($mapel as $mapels)
+                                    <option value="{{$mapels->id}}">{{$mapels->nama_mapel}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">File Materi</label>
-                                <input type="file" id="example-fileinput" class="form-control-file" name="file_paths"
-                                    required>
+                                <input type="file" required id="example-fileinput" class="form-control-file"
+                                    name="file">
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Keterangan</label>
@@ -222,6 +229,9 @@
                                 </table>
 
                             </div> <!-- end table-responsive-->
+                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix my-2">
+                                {!! $data->appends(Request::all())->links() !!}
+                            </div>
                         </div> <!-- end preview-->
                     </div> <!-- end tab-content-->
                 </div> <!-- end card body-->

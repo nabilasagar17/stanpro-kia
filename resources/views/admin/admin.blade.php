@@ -34,11 +34,11 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Nama Admin</label>
-                                <input type="text" name="nama" id="simpleinput" class="form-control">
+                                <input type="text" name="nama" id="simpleinput" class="form-control" required>
                             </div>
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Telp</label>
-                                <input type="text" name="telp" id="simpleinput" class="form-control">
+                                <input type="text" name="telp" id="simpleinput" class="form-control" required>
                             </div>
                         </div>
 
@@ -46,11 +46,12 @@
 
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Email</label>
-                                <input type="email" id="email" name="email" class="form-control">
+                                <input type="email" id="email" name="email" class="form-control" required>
                             </div>
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Alamat</label>
-                                <textarea class="form-control" id="example-textarea" name="alamat" rows="2"></textarea>
+                                <textarea class="form-control" id="example-textarea" name="alamat" rows="2"
+                                    required></textarea>
                             </div>
 
                         </div>
@@ -82,12 +83,12 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Nama Admin</label>
-                                <input type="text" name="nama" id="simpleinput" class="form-control">
+                                <input type="text" name="nama" id="simpleinput" class="form-control" required>
                                 <input type="text" name="id_admin" id="simpleinput" class="form-control" hidden>
                             </div>
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Telp</label>
-                                <input type="text" name="telp" id="simpleinput" class="form-control">
+                                <input type="text" name="telp" id="simpleinput" class="form-control" required>
                             </div>
                         </div>
 
@@ -96,11 +97,12 @@
 
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Alamat</label>
-                                <textarea class="form-control" id="example-textarea" name="alamat" rows="2"></textarea>
+                                <textarea class="form-control" id="example-textarea" name="alamat" rows="2"
+                                    required></textarea>
                             </div>
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Status</label>
-                                <select class="form-control" id="example-select" name="status">
+                                <select class="form-control" id="example-select" name="status" required>
                                     <option value="1">Aktif</option>
                                     <option value="2">Deactive</option>
 
@@ -201,6 +203,9 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
+                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix my-2">
+                                {!! $data->appends(Request::all())->links() !!}
+                            </div>
                         </div> <!-- end preview-->
 
 

@@ -25,6 +25,9 @@ class SiswaController extends Controller
             'created_at' => Carbon::now(),
             'created_by' => Auth::user()->email
         ]);
+        DB::table('sp_jadwal')->where('id', $request->input('id_mapel'))->update([
+            
+        ]);
 
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     

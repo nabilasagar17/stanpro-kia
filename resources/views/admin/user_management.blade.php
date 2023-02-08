@@ -116,8 +116,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {!! $data->appends(Request::all())->links() !!}
+
                             </div> <!-- end table-responsive-->
+                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix my-2">
+                                {!! $data->appends(Request::all())->links() !!}
+                            </div>
                         </div> <!-- end preview-->
 
 

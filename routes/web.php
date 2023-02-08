@@ -49,7 +49,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/materi',[AdminController::class,'materi']);
     Route::get('/download_materi/{nama_file}',[AdminController::class,'download_materi']);
     Route::post('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
-    Route::post('/edit_materi_aja',[AdminController::class,'edit_materi_aja']);
+    Route::post('/edit_materi',[AdminController::class,'edit_materi']);
     Route::post('/hapus_materi',[AdminController::class,'hapus_materi']);
     Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
     Route::post('/tambah_ruang_proses',[AdminController::class,'tambah_ruang_proses']);

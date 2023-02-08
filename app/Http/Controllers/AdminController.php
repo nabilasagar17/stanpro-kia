@@ -246,7 +246,7 @@ class AdminController extends Controller
 
     public function report_detail_mapel($id)
     {
-        if(Auth::user()->email == 'tentor'){
+        if(Auth::user()->role == 'tentor'){
             $data = DB::table('view_detail_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
         }else{
             $data = DB::table('view_detail_mapel')->select("*")->where('id_mapel',$id)->orderby('created_at','desc')->get();
@@ -263,7 +263,7 @@ class AdminController extends Controller
         if(Auth::user()->role == 'tentor'){
             $id_tentor = Helpers::get_tentor(Auth::user()->email,'id');
             $data = DB::table('view_jadwal_mapel')->select("*")
-            ->where('email_tentor',Auth::user()->email)
+            ->where('id_tentor',$id_tentor)
             ->orderby('created_at','DESC')
             ->paginate(15);
          
@@ -313,6 +313,7 @@ class AdminController extends Controller
             $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa',$id)->orderby('created_at','desc')->get();
          
         }elseif(Auth::user()->role == 'tentor'){
+            $id =  Helpers::get_tentor(Auth::user()->email,'id');
             $data = DB::table('view_jadwal_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
  
         }else{
@@ -446,13 +447,12 @@ class AdminController extends Controller
     }
 
 
-    public function edit_materi_aja(Request $request){
+    public function edit_materi(Request $request){
         $nama_mapel = Helpers::get_mapel($request->input('id_mapels'), 'nama_mapel');
         $id = $request->input('id_materis');
+     
        
-        $request->validate([
-            'file_path' => 'required|mimes:pdf,xlx,csv|max:2048',
-        ]);
+       
         $file_name = $nama_mapel.'_'.$request->input('nama_materis').'.'.$request->file->extension();  
         $request->file->move(public_path('materi'), $file_name);
 
@@ -598,7 +598,7 @@ class AdminController extends Controller
 
     public function siswa(){
         $data = DB::table('sp_siswa')->select("*")->orderby('created_at','DESC')->paginate(15);
-        $program = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $program = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->get();
         return view('admin/siswa',['data'=>$data,'program'=>$program]);
     }
 
@@ -638,15 +638,15 @@ class AdminController extends Controller
     }
 
     public function edit_siswa(Request $request){
-        $id = $request->input('id_siswa');
+        $id = $request->input('id_siswas');
         DB::table('sp_siswa')->where('id',$id)->update([
-            'nama'=> $request->input('nama'),
+            'nama'=> $request->input('namas'),
            
-            'alamat'=> $request->input('alamat'),
-            'telp'=> $request->input('telp'),
+            'alamat'=> $request->input('alamats'),
+            'telp'=> $request->input('telps'),
             'updated_at'=> Carbon::now(),
             'updated_by'=> Auth::user()->email,
-            'status'=>$request->input('status')
+            'status'=>$request->input('statuss')
         ]);
         
        
@@ -702,7 +702,7 @@ class AdminController extends Controller
 
     public function report_program()
     {
-        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->paginate(15);
+        $data = DB::table('sp_program')->select("*")->orderby('created_at','DESC')->get();
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_program', compact('data' ));
@@ -770,7 +770,7 @@ class AdminController extends Controller
 
     public function list_jadwal_skd(){
    
-        $data = DB::table('sp_jadwal_ujian_skd')->select('*')->get(15);
+        $data = DB::table('sp_jadwal_ujian_skd')->select('*')->paginate(15);
         return view('admin/jadwal_skd',['data'=>$data]);
     }
 
@@ -946,7 +946,7 @@ class AdminController extends Controller
 
     public function list_jadwal_utbk(){
      
-        $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->get(15);
+        $data = DB::table('sp_jadwal_ujian_utbk')->select('*')->paginate(15);
         return view('admin/jadwal_utbk',['data'=>$data]);
     }
 
@@ -1138,12 +1138,12 @@ class AdminController extends Controller
 
     public function edit_agenda(Request $request){
 
-        $string = date("Y/m/d", strtotime($request->input('jadwal_mulai')));
+        $string = date("Y/m/d", strtotime($request->input('jadwal_mulais')));
         $jadwal_mulai =str_replace('/', '-', $string);
-        $id = $request->input('id_agenda');
+        $id = $request->input('id_agendas');
       
         DB::table('sp_agenda')->where('id',$id)->update([
-            'nama_agenda' => $request->input('nama_agenda'),
+            'nama_agenda' => $request->input('nama_agendas'),
             'jadwal_mulai' => $jadwal_mulai
         ]);
 

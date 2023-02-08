@@ -177,6 +177,7 @@
 
 
                             </div> <!-- end table-responsive-->
+
                         </div> <!-- end preview-->
 
 
