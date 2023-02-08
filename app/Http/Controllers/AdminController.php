@@ -49,17 +49,17 @@ class AdminController extends Controller
             $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
-            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)->groupby('tgl_ujian')->get();
-            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->where('ket_tps',1)->where('ket_tbi',1)->groupby('tgl_ujian')->get();
+            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
+           
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
             $utbk_nilai = DB::table('view_nilai_utbk')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
+          
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
@@ -74,17 +74,17 @@ class AdminController extends Controller
             $angka_2 = DB::table('sp_detail_mapel')->select("*")->where('id_tentor',$id_tentor)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
-            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)->groupby('tgl_ujian')->get();
-            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->where('ket_tps',1)->where('ket_tbi',1)->groupby('tgl_ujian')->get();
+            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
+           
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
             $utbk_nilai = DB::table('view_nilai_utbk')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
+          
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();

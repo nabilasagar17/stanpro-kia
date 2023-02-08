@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2023 at 02:17 AM
+-- Generation Time: Feb 08, 2023 at 03:23 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -179,8 +179,8 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
 --
 
 INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`, `id_kelas`) VALUES
-(3, '1', 2, NULL, 16, NULL, NULL, '2023-02-07 03:25:45', 'admin@gmail.com', NULL, NULL, '2022-11-28 10:25:00', '2022-11-28 10:25:00', 1),
-(5, '1', 10, NULL, 1, NULL, NULL, '2023-02-07 05:44:10', 'admin@gmail.com', NULL, NULL, '2022-11-28 12:44:00', '2022-11-28 12:44:00', 1);
+(3, '1', 2, NULL, 16, NULL, NULL, '2023-02-07 03:25:45', 'admin@gmail.com', NULL, NULL, '2022-11-28 10:25:00', '2022-11-28 10:25:00', NULL),
+(5, '1', 10, NULL, 1, NULL, NULL, '2023-02-07 05:44:10', 'admin@gmail.com', NULL, NULL, '2022-11-28 12:44:00', '2022-11-28 12:44:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -278,7 +278,6 @@ CREATE TABLE IF NOT EXISTS `sp_kelas` (
 --
 
 INSERT INTO `sp_kelas` (`id`, `nama_kelas`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Reguler (2H)', '2023-01-29', 'admin@gmail.com', '2023-02-05', 'admin@gmail.com'),
 (2, 'Reguler (2H)14', '2023-02-05', 'admin@gmail.com', '2023-02-05', 'admin@gmail.com'),
 (3, 'Reguler (2H)146', '2023-02-05', 'admin@gmail.com', NULL, NULL);
 
@@ -333,8 +332,7 @@ CREATE TABLE IF NOT EXISTS `sp_materi_mapel` (
 
 INSERT INTO `sp_materi_mapel` (`id`, `id_mapel`, `created_at`, `created_by`, `status`, `file_path`, `nama_materi`, `keterangan`) VALUES
 (1, 1, '2023-01-09 13:08:41', 'admin@gmail.com', 1, '1673269721.pdf', 'Hai', NULL),
-(2, 1, '2023-01-23 03:31:11', 'admin@gmail.com', 1, 'TIU_Ujian.pdf', 'Ujian', NULL),
-(3, 1, '2023-01-23 03:34:22', 'admin@gmail.com', 1, 'TIU_Dasar.pdf', 'Dasar', NULL);
+(2, 1, '2023-01-23 03:31:11', 'admin@gmail.com', 1, 'TIU_Ujian.pdf', 'Ujian', NULL);
 
 -- --------------------------------------------------------
 
@@ -477,7 +475,6 @@ CREATE TABLE IF NOT EXISTS `sp_ruangan` (
 --
 
 INSERT INTO `sp_ruangan` (`id`, `kode_ruang`, `nama_ruang`, `lokasi`, `created_at`, `created_by`, `kuota`, `status`) VALUES
-(1, 'A', 'Ruang A', NULL, '2023-01-02 21:24:43', 'System', 14, 1),
 (2, 'B', 'Ruang BB', NULL, '2023-01-02 21:24:43', 'System', 14, 1),
 (3, NULL, 'Ruang B24', NULL, '2023-01-09 13:24:10', 'admin@gmail.com', 3, 1),
 (4, NULL, 'H2', NULL, '2023-02-06 14:10:43', 'admin@gmail.com', NULL, 1);
@@ -776,7 +773,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_jadwal_mapel`;
 
 DROP VIEW IF EXISTS `view_jadwal_mapel`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by`,`sp_jadwal`.`id_kelas` AS `id_kelas`,`sp_kelas`.`nama_kelas` AS `nama_kelas` from (((`sp_jadwal` join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) join `sp_kelas` on((`sp_kelas`.`id` = `sp_jadwal`.`id_kelas`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by`,`sp_jadwal`.`id_kelas` AS `id_kelas`,`sp_kelas`.`nama_kelas` AS `nama_kelas` from (((`sp_jadwal` left join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) left join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) left join `sp_kelas` on((`sp_kelas`.`id` = `sp_jadwal`.`id_kelas`))) ;
 
 -- --------------------------------------------------------
 
