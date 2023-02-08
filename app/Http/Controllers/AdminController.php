@@ -675,7 +675,8 @@ class AdminController extends Controller
             'telp'=> $request->input('telps'),
             'updated_at'=> Carbon::now(),
             'updated_by'=> Auth::user()->email,
-            'status'=>$request->input('statuss')
+            'status'=>$request->input('statuss'),
+            'kode_program' =>$request->input('programs')
         ]);
         
        

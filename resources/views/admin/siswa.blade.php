@@ -138,6 +138,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-lg-6 my-2">
+                                <label for="simpleinput">Nama Program</label>
+                                <select class="form-control" id="example-select" name="programs" required>
+                                    @foreach($program as $programs)
+                                    <option value="{{$programs->kode}}">{{$programs->nama_program}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                         </div>
 
@@ -228,9 +236,9 @@
                                             <td><span class="badge badge-danger">Deactive</span></td>
                                             @endif
 
-                                            <td><button
-                                                    onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}','{{ $datas->pendidikan_terakhir}}')"
-                                                    class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                            <td><button onClick="edit_user('{{ $datas->id}}','{{ $datas->nama}}','{{ $datas->alamat}}','{{ $datas->telp}}','{{ $datas->status}}','{{ $datas->pendidikan_terakhir}}'
+                                                    ,'{{ $datas->kode_program}}')" class="btn btn-success btn-sm"> <i
+                                                        class="mdi mdi-pencil">
                                                     </i>
                                                 </button>
                                             </td>
@@ -274,5 +282,6 @@ function edit_user(id, nama, alamat, telp, status, pend) {
     $('input[name="telps"]').val(telp);
     $('input[name="statuss"]').val(status);
     $('input[name="pendidikan_terakhirs"]').val(pend);
+    $('input[name="programs"]').val(program);
 }
 </script>
