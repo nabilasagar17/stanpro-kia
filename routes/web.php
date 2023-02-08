@@ -39,6 +39,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
     Route::post('/hapus_jadwal',[AdminController::class,'hapus_jadwal']);
     Route::post('/tambah_jadwal_proses',[AdminController::class,'tambah_jadwal_proses']);
+    Route::post('/edit_jadwal_mapel',[AdminController::class,'edit_jadwal_mapel']);
     Route::get('/report_jadwal_mapel',[AdminController::class,'report_jadwal_mapel']);  
 
     /*Jadwal Siswa*/

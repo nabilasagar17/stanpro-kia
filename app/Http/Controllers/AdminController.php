@@ -298,6 +298,32 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
     }
 
+    public function edit_jadwal_mapel(Request $request){
+
+        $string = date("Y/m/d", strtotime($request->input('tanggals')));
+       
+        $id = $request->input('id_jadwal_mapels');
+        $tanggal =str_replace('/', '-', $string);
+        $dates = $tanggal;
+        $jam_mulai = $request->input('time_starts');
+        $jam_selesai = $request->input('time_ends');
+        $jadwal_mulai =  $dates . ' ' . $jam_mulai . ':00';
+        $jadwal_selesai =  $dates . ' ' . $jam_selesai . ':00';
+        // dd($jadwal_mulai);
+        DB::table('sp_jadwal')->where('id',$id)->update([
+            'kode_ruang' => $request->input('ruangans'),
+            'id_detail_mapel' => $request->input('detail_mapels'), 
+            'id_tentor' => $request->input('id_tentors'),
+            'kuota_kelas' => $request->input('kuotas'),
+            'id_kelas' => $request->input('kelass'),
+            'updated_at' => Carbon::now(),
+            'updated_by' => Auth::user()->email,
+            'jadwal_mulai' => $jadwal_mulai,
+            'jadwal_selesai' => $jadwal_selesai
+        ]);
+        return redirect()->back()->with('message', 'Jadwal Berhasil Diedit!');
+    }
+
     public function hapus_jadwal(Request $request){
         $id = $request->input('id_jadwal');
        DB::table('sp_jadwal')->where('id',$id)->delete();
