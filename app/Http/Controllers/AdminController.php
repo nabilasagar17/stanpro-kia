@@ -542,6 +542,7 @@ class AdminController extends Controller
 
     public function edit_tentor(Request $request){
         $id = $request->input('id_tentor');
+       
         DB::table('sp_tentor')->where('id',$id)->update([
             'nama'=> $request->input('nama'),
             'alamat'=> $request->input('alamat'),
@@ -666,6 +667,7 @@ class AdminController extends Controller
 
     public function edit_siswa(Request $request){
         $id = $request->input('id_siswas');
+       
         DB::table('sp_siswa')->where('id',$id)->update([
             'nama'=> $request->input('namas'),
            

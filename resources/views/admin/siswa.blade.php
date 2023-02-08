@@ -268,7 +268,7 @@
 <script>
 function edit_user(id, nama, alamat, telp, status, pend) {
     $('#edit_siswas').modal('show');
-    $('input[name="id_siswa"]').val(id);
+    $('input[name="id_siswas"]').val(id);
     $('input[name="namas"]').val(nama);
     $('input[name="alamats"]').val(alamat);
     $('input[name="telps"]').val(telp);

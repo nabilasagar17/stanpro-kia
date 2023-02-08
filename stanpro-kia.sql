@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2023 at 12:13 PM
+-- Generation Time: Feb 08, 2023 at 05:36 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -173,8 +173,7 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
 --
 
 INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`, `id_kelas`) VALUES
-(7, '5', 13, NULL, 16, NULL, NULL, '2023-02-08 06:21:07', 'admin@gmail.com', NULL, NULL, '2022-11-28 13:20:00', '2022-11-28 13:21:00', 2),
-(8, '5', 13, NULL, 1, NULL, NULL, '2023-02-08 06:34:47', 'admin@gmail.com', NULL, NULL, '2023-01-01 13:34:00', '2023-01-01 13:34:00', 3);
+(7, '5', 14, NULL, 18, 15, 1, '2023-02-08 06:21:07', 'admin@gmail.com', '2023-02-09 00:09:45', 'admin@gmail.com', '2023-02-02 00:09:00', '2023-02-02 00:12:00', 2);
 
 -- --------------------------------------------------------
 
@@ -193,14 +192,14 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_siswa` (
   `updated_by` varchar(100) DEFAULT NULL,
   `selesai` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_jadwal_siswa`
 --
 
 INSERT INTO `sp_jadwal_siswa` (`id`, `id_jadwal`, `id_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`, `selesai`) VALUES
-(7, 7, 1, '2023-02-08 06:22:41', 'dimas@gmail.com', NULL, NULL, NULL);
+(19, 7, 1, '2023-02-08 19:58:03', 'dimas@gmail.com', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -490,7 +489,7 @@ CREATE TABLE IF NOT EXISTS `sp_siswa` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_siswa`
@@ -502,7 +501,8 @@ INSERT INTO `sp_siswa` (`id`, `email`, `nama`, `alamat`, `telp`, `pendidikan_ter
 (3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL),
 (4, 'jane@gmail.com', 'Jane', 'keterangan', '081265525666', 'S1', '4', 1, 0, '2023-02-08 09:51:48', 'admin@gmail.com', NULL, NULL),
 (5, 'dea@gmail.com', 'dea', NULL, NULL, 'SMA', '6', 1, 0, '2023-02-08 10:02:13', 'admin@gmail.com', NULL, NULL),
-(6, 'yani@gmail.com', 'Yani', NULL, NULL, 'SMA', '6', 1, 0, '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL);
+(6, 'yani@gmail.com', 'Yani', NULL, NULL, 'SMA', '6', 1, 0, '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL),
+(7, 'david@gmail.com', 'david', 'jln.perint', '08125655545', 'SMA', '6', 1, 0, '2023-02-08 20:08:37', 'admin@gmail.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -555,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_by` varchar(150) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -575,7 +575,8 @@ INSERT INTO `users` (`id`, `email`, `nama`, `password`, `role`, `created_at`, `c
 (13, NULL, NULL, '$2y$10$V4IuImN8XWG/v9hAy0t0c.QFZt.0Z5qZ8Z6Kvw5ovHX9q8U0Ca2VC', 'siswa', '2023-02-08 04:32:24', 'admin@gmail.com', NULL, NULL, 1),
 (14, 'jane@gmail.com', 'Jane', '$2y$10$mHsXOYQXAUuyfxmM.CmsVeJemhlDlgYIRI/vqhn.TRPHr4l/CJ20e', 'siswa', '2023-02-08 09:51:48', 'admin@gmail.com', NULL, NULL, 1),
 (15, 'dea@gmail.com', 'dea', '$2y$10$KAXCGy7P9.JDnUUu4Uz1Dub8KREK1YHhHtnMwqJU3C1v4bUvhqciS', 'siswa', '2023-02-08 10:02:14', 'admin@gmail.com', NULL, NULL, 1),
-(16, 'yani@gmail.com', 'Yani', '$2y$10$M5Tq8jfqyExutoxtuMuQ7.eLlbFb5vE.E0/aY1vOChQ2A4KjDkjyS', 'siswa', '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL, 1);
+(16, 'yani@gmail.com', 'Yani', '$2y$10$M5Tq8jfqyExutoxtuMuQ7.eLlbFb5vE.E0/aY1vOChQ2A4KjDkjyS', 'siswa', '2023-02-08 10:03:21', 'admin@gmail.com', NULL, NULL, 1),
+(17, 'david@gmail.com', 'david', '$2y$10$wg6K/nNNy0ht7pKjP2tsT.B2YdUOPckusJmpXU/ndt41SEvKcXQ8m', 'siswa', '2023-02-08 20:08:37', 'admin@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -634,6 +635,8 @@ CREATE TABLE IF NOT EXISTS `view_jadwal_mapel` (
 ,`kode_ruang` char(4)
 ,`nama_ruang` varchar(100)
 ,`kuota_kelas` int(11)
+,`kuota_tersedia` int(11)
+,`kuota_terisi` int(11)
 ,`id_detail_mapel` int(11)
 ,`created_at` datetime
 ,`created_by` varchar(100)
@@ -771,7 +774,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `view_jadwal_mapel`;
 
 DROP VIEW IF EXISTS `view_jadwal_mapel`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by`,`sp_jadwal`.`id_kelas` AS `id_kelas`,`sp_kelas`.`nama_kelas` AS `nama_kelas` from (((`sp_jadwal` left join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) left join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) left join `sp_kelas` on((`sp_kelas`.`id` = `sp_jadwal`.`id_kelas`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jadwal_mapel`  AS  select `sp_jadwal`.`id` AS `id`,`view_detail_mapel`.`id_tentor` AS `id_tentor`,`view_detail_mapel`.`nama_tentor` AS `nama_tentor`,`view_detail_mapel`.`nama_mapel` AS `nama_mapel`,`view_detail_mapel`.`email_tentor` AS `email_tentor`,`sp_jadwal`.`kode_ruang` AS `kode_ruang`,`sp_ruangan`.`nama_ruang` AS `nama_ruang`,`sp_jadwal`.`kuota_kelas` AS `kuota_kelas`,`sp_jadwal`.`kuota_tersedia` AS `kuota_tersedia`,`sp_jadwal`.`kuota_terisi` AS `kuota_terisi`,`sp_jadwal`.`id_detail_mapel` AS `id_detail_mapel`,`sp_jadwal`.`created_at` AS `created_at`,`sp_jadwal`.`created_by` AS `created_by`,`sp_jadwal`.`jadwal_mulai` AS `jadwal_mulai`,`sp_jadwal`.`jadwal_selesai` AS `jadwal_selesai`,`sp_jadwal`.`updated_at` AS `updated_at`,`sp_jadwal`.`updated_by` AS `updated_by`,`sp_jadwal`.`id_kelas` AS `id_kelas`,`sp_kelas`.`nama_kelas` AS `nama_kelas` from (((`sp_jadwal` left join `view_detail_mapel` on((`view_detail_mapel`.`id` = `sp_jadwal`.`id_detail_mapel`))) left join `sp_ruangan` on((`sp_ruangan`.`id` = `sp_jadwal`.`kode_ruang`))) left join `sp_kelas` on((`sp_kelas`.`id` = `sp_jadwal`.`id_kelas`))) ;
 
 -- --------------------------------------------------------
 

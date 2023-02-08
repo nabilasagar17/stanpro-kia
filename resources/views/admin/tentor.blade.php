@@ -173,6 +173,15 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
+                            @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('message') }}
+                            </div>
+                            @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
