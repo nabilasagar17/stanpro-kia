@@ -35,6 +35,7 @@ Route::prefix('admin')->group(function () {
     
     Route::post('/tambah_detail_mapel_proses/{id}',[AdminController::class,'tambah_detail_mapel_proses']);
     Route::post('/edit_detail_mapel',[AdminController::class,'edit_detail_mapel']);
+    Route::post('/hapus_detail_mapel',[AdminController::class,'hapus_detail_mapel']);
     Route::get('/jadwal_mapel',[AdminController::class,'jadwal_mapel']);
     Route::post('/hapus_jadwal',[AdminController::class,'hapus_jadwal']);
     Route::post('/tambah_jadwal_proses',[AdminController::class,'tambah_jadwal_proses']);
@@ -59,6 +60,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/edit_kelas',[AdminController::class,'edit_kelas']);  
     Route::post('/hapus_kelas',[AdminController::class,'hapus_kelas']);   
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
+    Route::post('/tambah_program',[AdminController::class,'tambah_program']);
     Route::get('/jadwal_nilai_skd',[AdminController::class,'list_jadwal_skd']);
     Route::post('/tambah_jadwal_skd_proses',[AdminController::class,'tambah_jadwal_skd_proses']);
     Route::post('/edit_jadwal_skd',[AdminController::class,'edit_jadwal_skd']);
@@ -104,7 +106,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/report_program',[AdminController::class,'report_program']);
     Route::post('/tambah_agenda',[AdminController::class,'tambah_agenda']);
     Route::post('/edit_agenda',[AdminController::class,'edit_agenda']);
-
+    Route::post('/hapus_agenda',[AdminController::class,'hapus_agenda']);
     //tentor only
     Route::get('/nilai',[AdminController::class,'nilai_skd']);
 

@@ -83,7 +83,7 @@
                     <h4 class="modal-title" id="standard-modalLabel">Input Program Belajar</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <form action="{{url('admin/tambah_siswa_proses')}}" method="post">
+                <form action="{{url('admin/tambah_program')}}" method="post">
                     @csrf
                     <div class="modal-body">
 

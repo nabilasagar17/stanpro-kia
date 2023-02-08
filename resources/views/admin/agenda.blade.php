@@ -84,6 +84,37 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="hapus_agendas" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_agenda')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Hapus Agenda?
+                                </h4>
+                                <input type="text" name="id_agenda" hidden>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -143,6 +174,10 @@
                                                     class="btn btn-success btn-sm" title="Edit Ruang"> <i
                                                         class="mdi mdi-pencil">
                                                     </i></button>
+                                                <button onClick="hapus_agenda('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
+                                                    </i>
+                                                </button>
                                             </td>
                                             </td>
                                         </tr>
@@ -170,5 +205,11 @@ function edit_agenda(id, nama_agenda, jadwal) {
     $('input[name="id_agenda"]').val(id);
     $('input[name="nama_agenda"]').val(nama_agenda);
     $('input[name="jadwal_mulai"]').val(jadwal);
+}
+
+function hapus_agenda(id) {
+    $('#hapus_agendas').modal('show');
+    $('input[name="id_agenda"]').val(id);
+
 }
 </script>

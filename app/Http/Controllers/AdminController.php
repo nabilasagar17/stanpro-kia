@@ -218,7 +218,7 @@ class AdminController extends Controller
         
         $id_tentor = $request->input('id_tentor');
         $cek_data = DB::table('sp_detail_mapel')->select("*")->where('id',$id)->where('id_tentor',$id_tentor)->get();
-        dd($cek_data);
+        
         if($cek_data->isEmpty()){
             DB::table('sp_detail_mapel')->where('id',$id)->update([
                 'id_tentor' => $id_tentor
@@ -228,6 +228,20 @@ class AdminController extends Controller
         }else{
             return redirect()->back()->with('error', 'Data Tentor Dengan Mapel Ini Sudah Ada!');
         }
+    }
+
+    public function hapus_detail_mapel(Request $request){
+        $id = $request->input('id_detail_mapel');
+        $id_jadwal = DB::table('sp_jadwal')->select('*')->where('id_detail_mapel',$id)->get(1);
+        DB::table('sp_absensi_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_jadwal_siswa')->where('id_jadwal',@$id_jadwal[0]->id)->delete();
+        DB::table('sp_jadwal')->where('id_detail_mapel',$id)->delete();
+        DB::table('sp_detail_mapel')->where('id',$id)->delete();
+       
+        
+       
+        return redirect()->back()->with('message', 'Data Dengan Detail Mapel Ini Berhasil Dihapus!');
+       
     }
 
     public function report_detail_mapel($id)
@@ -718,7 +732,7 @@ class AdminController extends Controller
             'created_by' => Auth::user()->email
         ]);
 
-        return redirect()->back()->with('message', 'Data ruangan berhasil dihapus!');
+        return redirect()->back()->with('message', 'Data ruangan berhasil ditambah!');
     }
 
     public function edit_ruang(Request $request){
@@ -750,7 +764,7 @@ class AdminController extends Controller
             'id_kelas' => NULL
            
         ]);
-        return redirect()->back()->with('message', 'Data kelas berhasil diupdate!');
+        return redirect()->back()->with('message', 'Data kelas berhasil dihapus!');
     }
 
     public function list_jadwal_skd(){
@@ -1135,6 +1149,18 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Data agenda berhasil diedit!');
 
     }
+
+    public function hapus_agenda(Request $request){
+
+       
+        $id = $request->input('id_agenda');
+      
+        DB::table('sp_agenda')->where('id',$id)->delete();
+
+        return redirect()->back()->with('message', 'Data agenda berhasil dihapus!');
+
+    }
+
 
 
 
