@@ -308,10 +308,11 @@ class AdminController extends Controller
 
     public function report_jadwal_mapel()
     {
-        if(Auth::user()->email == 'siswa'){
+        if(Auth::user()->role == 'siswa'){
             $id =  Helpers::get_siswa(Auth::user()->email,'id');
             $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_siswa',$id)->orderby('created_at','desc')->get();
-        }elseif(Auth::user()->email == 'tentor'){
+         
+        }elseif(Auth::user()->role == 'tentor'){
             $data = DB::table('view_jadwal_mapel')->select("*")->where('id_tentor',$id)->orderby('created_at','desc')->get();
  
         }else{
