@@ -18,15 +18,14 @@
     </div>
     <!-- end page title -->
     <div class="row">
-
         <div class="col-xl-2 col-lg-6">
             <div class="card widget-flat">
                 <div class="card-body">
                     <div class="float-right">
                         <i class=" dripicons-user widget-icon bg-info rounded-circle text-white"></i>
                     </div>
-                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">Siswa Aktif</h5>
-                    <h3 class="mt-3 mb-3">{{$siswa_aktif}}</h3>
+                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">{{$judul_1}}</h5>
+                    <h3 class="mt-3 mb-3">{{$angka_1}}</h3>
 
                 </div>
             </div>
@@ -38,8 +37,8 @@
                     <div class="float-right">
                         <i class="dripicons-user-group widget-icon bg-info rounded-circle text-white"></i>
                     </div>
-                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">Tentor</h5>
-                    <h3 class="mt-3 mb-3">{{$tentor}}</h3>
+                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">{{$judul_2}}</h5>
+                    <h3 class="mt-3 mb-3">{{$angka_2}}</h3>
 
                 </div>
             </div>
@@ -51,30 +50,46 @@
                     <div class="float-right">
                         <i class=" dripicons-user-id widget-icon bg-info rounded-circle text-white"></i>
                     </div>
-                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">Siswa Lulus</h5>
-                    <h3 class="mt-3 mb-3">{{$siswa_lulus}}</h3>
+                    <h5 class="text-muted font-weight-normal mt-0" title="Revenue">{{$judul_3}}</h5>
+                    <h3 class="mt-3 mb-3">{{$angka_3}}</h3>
 
                 </div>
             </div>
         </div> <!-- end col-->
 
-        <div class="col-lg-3">
-            <div class="card">
-                <div id="skd"></div>
-            </div>
-        </div>
-        <!-- end col-->
-
-        <div class="col-lg-3">
-            <div class="card">
-                <div id="utbk"></div>
-            </div> <!-- end card-->
-
-        </div> <!-- end col -->
 
     </div>
     <div class="row">
         <div class="col-lg-12">
+            @if(Auth::user()->role == 'siswa')
+            <div class="col-lg-3">
+                <div class="card">
+                    <div id="skd_siswa"></div>
+                </div>
+            </div>
+            <!-- end col-->
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div id="utbk_siswa"></div>
+                </div> <!-- end card-->
+
+            </div> <!-- end col -->
+            @else
+            <div class="col-lg-3">
+                <div class="card">
+                    <div id="skd"></div>
+                </div>
+            </div>
+            <!-- end col-->
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div id="utbk"></div>
+                </div> <!-- end card-->
+
+            </div> <!-- end col -->
+            @endif
             <div class="col-xl-3 col-lg-6 order-lg-1">
                 <div class="card">
                     <div class="card-body">
@@ -119,7 +134,9 @@
 }
 
 #skd,
-#utbk {
+#utbk,
+#skd_siswa,
+#utbk_siswa {
     height: 350px;
 }
 
@@ -172,36 +189,22 @@ Highcharts.chart('utbk', {
     title: {
         text: 'Data UTBK'
     },
-    subtitle: {
-        text: 'Source: WorldClimate.com'
-    },
+
     xAxis: {
         categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
+            <?php foreach( $utbk  as $utbks ) { ?> '<?php echo $utbks->tgl_ujian; ?>',
+            <?php } ?>
         ],
         crosshair: true
     },
     yAxis: {
         min: 0,
-        title: {
-            text: 'Rainfall (mm)'
-        }
+
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -213,14 +216,17 @@ Highcharts.chart('utbk', {
         }
     },
     series: [{
-        name: 'Nilai',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-            194.1, 95.6, 54.4
+        name: '<?php echo $chart_text;?>',
+        data: [<?php foreach($utbk_nilai as $rows ) { ?> <?php echo $rows->nilai?>,
+            <?php } ?>
+
         ]
 
     }]
 });
 </script>
+
+
 
 <script type="text/javascript">
 Highcharts.chart('skd', {
@@ -230,36 +236,23 @@ Highcharts.chart('skd', {
     title: {
         text: 'Data SKD'
     },
-    subtitle: {
-        text: 'Source: WorldClimate.com'
-    },
+
     xAxis: {
         categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
+
+            <?php foreach( $skd as $skds ) { ?> '<?php echo $skds->tgl_ujian; ?>',
+            <?php } ?>
         ],
         crosshair: true
     },
     yAxis: {
         min: 0,
-        title: {
-            text: 'Rainfall (mm)'
-        }
+
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.0f} </b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -271,10 +264,71 @@ Highcharts.chart('skd', {
         }
     },
     series: [{
-        name: 'Nilai',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-            194.1, 95.6, 54.4
+        name: '<?php echo $chart_text;?>',
+        data: [<?php foreach($skd_nilai as $rows ) { ?> <?php echo $rows->nilai?>,
+            <?php } ?>
+
         ]
+
+    }]
+});
+</script>
+
+<script type="text/javascript">
+Highcharts.chart('skd_siswa', {
+
+    chart: {
+        type: 'column'
+    },
+
+    title: {
+        text: 'Data SKD',
+        align: 'left'
+    },
+
+    xAxis: {
+        categories: [<?php foreach( $skd as $skds ) { ?> '<?php echo $skds->tgl_ujian; ?>',
+            <?php } ?>
+        ]
+    },
+
+    yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+            text: 'Count medals'
+        }
+    },
+
+    tooltip: {
+        formatter: function() {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total: ' + this.point.stackTotal;
+        }
+    },
+
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
+
+    series: [{
+        name: 'Norway',
+        data: [148, 133, 124],
+
+    }, {
+        name: 'Germany',
+        data: [102, 98, 65],
+
+    }, {
+        name: 'United States',
+        data: [113, 122, 95],
+
+    }, {
+        name: 'Canada',
+        data: [77, 72, 80],
 
     }]
 });

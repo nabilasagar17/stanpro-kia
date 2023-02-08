@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 07, 2023 at 04:07 AM
+-- Generation Time: Feb 08, 2023 at 02:17 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -39,14 +39,14 @@ CREATE TABLE IF NOT EXISTS `sp_absensi_siswa` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_absensi_siswa`
 --
 
 INSERT INTO `sp_absensi_siswa` (`id`, `id_siswa`, `id_jadwal`, `keterangan`, `pembahasan_kelas`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 1, 1, NULL, '2023-01-23 08:50:55', 'audrey@gmail.com', NULL, NULL);
+(21, 1, 5, 1, NULL, '2023-02-07 23:35:47', 'audrey@gmail.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -120,18 +120,14 @@ CREATE TABLE IF NOT EXISTS `sp_detail_mapel` (
   `created_by` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_detail_mapel`
 --
 
 INSERT INTO `sp_detail_mapel` (`id`, `id_mapel`, `id_tentor`, `created_at`, `created_by`, `status`) VALUES
-(1, 1, 4, '2023-01-05 04:35:16', 'admin@gmail.com', 1),
-(2, 4, 4, '2023-01-23 11:53:08', 'admin@gmail.com', 1),
-(3, 8, 6, '2023-02-04 08:37:41', 'admin@gmail.com', 1),
-(4, 8, 6, '2023-02-04 08:38:18', 'admin@gmail.com', 1),
-(5, 8, 6, '2023-02-06 14:00:30', 'admin@gmail.com', 1);
+(10, 9, 4, '2023-02-07 05:43:43', 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -176,15 +172,15 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal` (
   `jadwal_selesai` datetime DEFAULT NULL,
   `id_kelas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_jadwal`
 --
 
 INSERT INTO `sp_jadwal` (`id`, `kode_ruang`, `id_detail_mapel`, `id_tentor`, `kuota_kelas`, `kuota_tersedia`, `kuota_terisi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `jadwal_mulai`, `jadwal_selesai`, `id_kelas`) VALUES
-(1, '1', 1, NULL, 1, NULL, NULL, '2023-01-08 06:44:19', 'admin@gmail.com', NULL, NULL, '2022-11-28 14:44:00', '2022-11-28 16:44:00', NULL),
-(3, '1', 2, NULL, 16, NULL, NULL, '2023-02-07 03:25:45', 'admin@gmail.com', NULL, NULL, '2022-11-28 10:25:00', '2022-11-28 10:25:00', 1);
+(3, '1', 2, NULL, 16, NULL, NULL, '2023-02-07 03:25:45', 'admin@gmail.com', NULL, NULL, '2022-11-28 10:25:00', '2022-11-28 10:25:00', 1),
+(5, '1', 10, NULL, 1, NULL, NULL, '2023-02-07 05:44:10', 'admin@gmail.com', NULL, NULL, '2022-11-28 12:44:00', '2022-11-28 12:44:00', 1);
 
 -- --------------------------------------------------------
 
@@ -203,15 +199,14 @@ CREATE TABLE IF NOT EXISTS `sp_jadwal_siswa` (
   `updated_by` varchar(100) DEFAULT NULL,
   `selesai` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_jadwal_siswa`
 --
 
 INSERT INTO `sp_jadwal_siswa` (`id`, `id_jadwal`, `id_siswa`, `created_at`, `created_by`, `updated_at`, `updated_by`, `selesai`) VALUES
-(1, 1, 1, '2023-01-23 04:39:43', 'dimas@gmail.com', '2023-01-23 06:35:45', 'dimas@gmail.com', 1),
-(2, 1, 2, '2023-01-23 10:58:12', 'rukiah@gmail.com', '2023-01-23 10:58:49', 'rukiah@gmail.com', 1);
+(4, 5, 1, '2023-02-07 05:47:08', 'dimas@gmail.com', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -304,15 +299,14 @@ CREATE TABLE IF NOT EXISTS `sp_mata_pelajaran` (
   `updated_by` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_mata_pelajaran`
 --
 
 INSERT INTO `sp_mata_pelajaran` (`id`, `nama_mapel`, `lama_belajar`, `created_at`, `created_by`, `updated_at`, `updated_by`, `status`) VALUES
-(1, 'TIU', NULL, '2023-01-02 14:07:29', 'admin@gmail.com', NULL, NULL, 1),
-(6, 'Matematika', NULL, '2023-02-04 08:31:51', 'admin@gmail.com', '2023-02-04 08:32:36', 'admin@gmail.com', 1);
+(9, 'Matematika', NULL, '2023-02-07 05:41:57', 'admin@gmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -364,7 +358,14 @@ CREATE TABLE IF NOT EXISTS `sp_nilai_skd` (
   `updated_by` varchar(100) DEFAULT NULL,
   `id_jadwal_skd` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sp_nilai_skd`
+--
+
+INSERT INTO `sp_nilai_skd` (`id`, `id_siswa`, `twk`, `ket_twk`, `tiu`, `ket_tiu`, `tkp`, `ket_tkp`, `created_at`, `created_by`, `updated_at`, `updated_by`, `id_jadwal_skd`) VALUES
+(6, 1, '50', 0, '60', 0, '50', 0, '2023-02-08 01:14:57', 'audrey@gmail.com', NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -389,14 +390,15 @@ CREATE TABLE IF NOT EXISTS `sp_nilai_utbk` (
   `avg` decimal(10,6) DEFAULT NULL,
   `id_jadwal_utbk` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sp_nilai_utbk`
 --
 
 INSERT INTO `sp_nilai_utbk` (`id`, `id_siswa`, `benar_tps`, `persen_tps`, `ket_tps`, `benar_tbi`, `persen_tbi`, `ket_tbi`, `created_at`, `created_by`, `updated_at`, `updated_by`, `avg`, `id_jadwal_utbk`) VALUES
-(6, 2, 60, '100.000000', 1, 50, '250.000000', 1, '2023-02-06 09:22:25', 'audrey@gmail.com', NULL, NULL, '175.000000', 2);
+(7, 1, 50, '83.333333', 1, 60, '300.000000', 1, '2023-02-08 01:13:13', 'audrey@gmail.com', NULL, NULL, '191.666667', 1),
+(6, 2, 40, '66.666667', 1, 50, '250.000000', 1, '2023-02-06 09:22:25', 'audrey@gmail.com', '2023-02-08 01:17:16', 'audrey@gmail.com', '158.333333', 2);
 
 -- --------------------------------------------------------
 

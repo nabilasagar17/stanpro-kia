@@ -173,6 +173,14 @@
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 {{ session()->get('message') }}
                             </div>
+                            @elseif(session()->has('error'))
+                            <div class="alert alert-danger alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Error !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('error') }}
+                            </div>
                             @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">

@@ -263,7 +263,7 @@
                                                 @else
                                                 <button type="button"
                                                     onClick="edit_jadwal_mapel('{{ $datas->id}}','{{ $datas->nama_mapel}}','{{ $datas->jadwal_mulai}}' 
-                                                    ,'{{ $datas->jadwal_selesai}}','{{ $datas->id_ruang}}','{{ $datas->id_tentor}}','{{ $datas->kuota_kelas}}')"
+                                                    ,'{{ $datas->jadwal_selesai}}','{{ $datas->kode_ruang}}','{{ $datas->id_tentor}}','{{ $datas->kuota_kelas}}')"
                                                     class="btn btn-success btn-sm" type="button" class="btn btn-primary"
                                                     title="Edit"> <i class="mdi mdi-pen"> </i>
                                                 </button>
