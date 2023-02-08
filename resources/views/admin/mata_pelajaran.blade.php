@@ -120,7 +120,7 @@
                             <h4 class="header-title">Table Mata Pelajaran </h4>
                         </div>
                         @if(Auth::user()->role == 'admin')
-                        <div class="col-lg-2 float-right">
+                        <div class="col-lg-auto float-right">
                             <button class="btn btn-success btn-sm header-title" data-toggle="modal"
                                 data-target="#tambah_data" type="button" class="btn btn-primary float-right"
                                 title="Detail"><i class="mdi mdi-plus "></i>
@@ -128,6 +128,12 @@
                             </button>
                         </div>
                         @endif
+                        <div class="col-lg-auto float-right">
+                            <a class="btn btn-primary  btn-sm header-title" type="button" title="Detail"
+                                href="{{url('admin/report_mapel')}}"><i class="mdi mdi-printer "></i>
+                                <span>Print</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="tab-content">

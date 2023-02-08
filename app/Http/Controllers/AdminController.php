@@ -126,6 +126,15 @@ class AdminController extends Controller
         return view('admin/mata_pelajaran',['data'=>$data]);
     }
 
+    public function report_mapel()
+    {
+        $data = DB::table('sp_mata_pelajaran')->select("*")->orderby('created_at','desc')->get();
+     
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_mapel', compact('data'));
+        return $pdf->stream("Laporan_Mapel".'pdf');
+    }
+
     public function tambah_mapel_proses(Request $request){
         $nama_mapel = $request->input('nama_mapel');
         $cek_data = DB::table('sp_mata_pelajaran')->select('nama_mapel')->where('nama_mapel',$nama_mapel)->get(1);
@@ -906,10 +915,15 @@ class AdminController extends Controller
 
     public function report_nilai_skd ($id)
     {
+        if(Auth::user()->role =='siswa'){
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->get();
+      
+            $date =  Helpers::get_siswa(Auth::user()->email,'nama');
+        }else{
         $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id)->get();
       
         $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
-     
+        }
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_nilai_skd', compact('data', 'date'));
         return $pdf->stream("Laporan_SKD-".$date.'pdf');
@@ -1070,9 +1084,15 @@ class AdminController extends Controller
 
     public function report_nilai_utbk($id)
     {
+        if(Auth::user()->role =='siswa'){
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->get();
+      
+            $date =  Helpers::get_siswa(Auth::user()->email,'nama');
+        }else{
         $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id)->get();
       
         $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
+        }
      
         $pdf = PDF::setPaper('A4', 'potrait');
         $pdf->loadView('admin.report_nilai_utbk', compact('data', 'date'));

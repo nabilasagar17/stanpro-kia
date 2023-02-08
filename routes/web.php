@@ -25,6 +25,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard',[AdminController::class,'dashboard']);
     /*Mapel*/
     Route::get('/view_mapel',[AdminController::class,'view_mapel']);
+    Route::get('/report_mapel',[AdminController::class,'report_mapel']);
     Route::post('/tambah_mapel_proses',[AdminController::class,'tambah_mapel_proses']);
     Route::post('/hapus_mapel',[AdminController::class,'hapus_mapel']);
     Route::post('/edit_mapel_proses',[AdminController::class,'edit_mapel_proses']);
