@@ -47,12 +47,16 @@ Route::prefix('admin')->group(function () {
     Route::get('/materi',[AdminController::class,'materi']);
     Route::get('/download_materi/{nama_file}',[AdminController::class,'download_materi']);
     Route::post('/tambah_materi_proses',[AdminController::class,'tambah_materi_proses']);
+    Route::post('/edit_materi_aja',[AdminController::class,'edit_materi_aja']);
+    Route::post('/hapus_materi',[AdminController::class,'hapus_materi']);
     Route::get('/ruang_kelas',[AdminController::class,'ruang_kelas']);
     Route::post('/tambah_ruang_proses',[AdminController::class,'tambah_ruang_proses']);
     Route::post('/edit_ruang',[AdminController::class,'edit_ruang']);
+    Route::post('/hapus_ruang',[AdminController::class,'hapus_ruang']);
     Route::get('/kelas',[AdminController::class,'kelas']);
     Route::post('/tambah_kelas_proses',[AdminController::class,'tambah_kelas_proses']);
-    Route::post('/edit_kelas',[AdminController::class,'edit_kelas']);   
+    Route::post('/edit_kelas',[AdminController::class,'edit_kelas']);  
+    Route::post('/hapus_kelas',[AdminController::class,'hapus_kelas']);   
     Route::get('/program_belajar',[AdminController::class,'program_belajar']);
     Route::get('/jadwal_nilai_skd',[AdminController::class,'list_jadwal_skd']);
     Route::post('/tambah_jadwal_skd_proses',[AdminController::class,'tambah_jadwal_skd_proses']);

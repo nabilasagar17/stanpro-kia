@@ -65,40 +65,74 @@
     </div><!-- /.modal -->
 
 
-    <div class="modal fade" id="edit_materi" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    <div class="modal fade" id="edit_materis" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Edit Detail Mapel</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Materi</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{url('admin/edit_materi')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{url('admin/edit_materi_aja')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Materi</label>
-                                <input type="text" id="simpleinput" class="form-control" name="nama_materi">
-                                <input type="text" id="simpleinput" class="form-control" name="id_materi" hidden>
+                                <input type="text" id="simpleinput" class="form-control" name="nama_materis">
+                                <input type="text" id="simpleinput" class="form-control" name="id_materis" hidden>
                             </div>
 
 
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">File Materi</label>
-                                <input type="file" id="example-fileinput" class="form-control-file" name="file">
+                                <input type="file" id="example-fileinput" class="form-control-file" name="file_paths"
+                                    required>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Keterangan</label>
                                 <textarea class="form-control" id="example-textarea" rows="2"
-                                    name="keterangan"></textarea>
+                                    name="keterangans"></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success  float-right">Save </button>
                     </form>
                 </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="hapus_materis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_materi')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Hapus materi ini?
+                                </h4>
+                                <input type="text" name="id_materi" hidden>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -124,6 +158,23 @@
 
                     <div class="tab-content">
                         <div class="tab-pane show active" id="striped-rows-preview">
+                            @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Sukses !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('message') }}
+                            </div>
+                            @elseif(session()->has('error'))
+                            <div class="alert alert-danger alert-dismissible">
+                                <button tyWarning alert preview. This alert is dismissable.pe="button" class="close"
+                                    data-dismiss="alert" aria-hidden="true"></button>
+                                <h4><i class="icon fa fa-check"></i> Error !</h4>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ session()->get('error') }}
+                            </div>
+                            @endif
                             <div class="table-responsive-sm">
                                 <table class="table table-striped table-centered mb-0">
                                     <thead>
@@ -157,8 +208,11 @@
                                             <td>
                                                 @if(Auth::user()->role == 'admin')
                                                 <button
-                                                    onClick="edit_detail_mapel( '{{ $datas->id}}','{{ $datas->id_mapel}}','{{ $datas->file_path}}','{{ $datas->nama_materi}}')"
+                                                    onClick="edit_materi_aja('{{ $datas->id}}','{{ $datas->id_mapel}}','{{ $datas->file_path}}','{{ $datas->nama_materi}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                                    </i></button>
+                                                <button onClick="hapus_materi('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i></button>
                                                 @endif
                                             </td>
@@ -182,15 +236,18 @@
 @endsection
 
 <script>
-function edit_detail_mapel(id, id_mapel, file_path, nama_materi) {
-    $('#edit_detail_mapels').modal('show');
+function edit_materi_aja(id, id_mapel, file_path, nama_materi) {
+    $('#edit_materis').modal('show');
+    $('input[name="id_materis"]').val(id);
+    $('input[name="id_mapels"]').val(id_mapel);
+    $('input[name="file_paths"]').val(file_path);
+    $('input[name="nama_materis"]').val(nama_materi);
+
+}
+
+function hapus_materi(id) {
+    $('#hapus_materis').modal('show');
     $('input[name="id_materi"]').val(id);
-    $('input[name="id_mapel"]').val(id_mapel);
-    $('input[name="file_path"]').val(file_path);
-    $('input[name="nama_materi"]').val(nama_materi);
-    $('#nama_tentor').text(nama);
-
-
 
 }
 </script>

@@ -24,15 +24,17 @@ class AdminController extends Controller
             $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
-            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
-            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
+            $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)->groupby('tgl_ujian')->get();
+            $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->where('ket_tps',1)->where('ket_tbi',1)->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
             $utbk_nilai = DB::table('view_nilai_utbk')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
+            ->where('ket_twk',1)->where('ket_tiu',1)->where('ket_tkp',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
@@ -420,24 +422,34 @@ class AdminController extends Controller
     }
 
 
-    public function edit_materi(Request $request){
-        $nama_mapel = Helpers::get_mapel($request->input('id_mapel'), 'nama_mapel');
-        $id = $request->input('id_materi');
+    public function edit_materi_aja(Request $request){
+        $nama_mapel = Helpers::get_mapel($request->input('id_mapels'), 'nama_mapel');
+        $id = $request->input('id_materis');
+       
         $request->validate([
-            'file' => 'required|mimes:pdf,xlx,csv|max:2048',
+            'file_path' => 'required|mimes:pdf,xlx,csv|max:2048',
         ]);
-        $file_name = $nama_mapel.'_'.$request->input('nama_materi').'.'.$request->file->extension();  
+        $file_name = $nama_mapel.'_'.$request->input('nama_materis').'.'.$request->file->extension();  
         $request->file->move(public_path('materi'), $file_name);
 
         DB::table('sp_materi_mapel')->where('id',$id)->update([
             'file_path' => $file_name,
-            'id_mapel' => $request->input('id_mapel'),
-            'nama_materi' => $request->input('nama_materi'),
+            'id_mapel' => $request->input('id_mapels'),
+            'nama_materi' => $request->input('nama_materis'),
             'status' => 1,
             'created_at' => Carbon::now(),
             'created_by' => Auth::user()->email
         ]);
-        return redirect()->back()->with('message', 'Jadwal Berhasil Ditambahkan!');
+        return redirect()->back()->with('message', 'Materi Berhasil Diedit!');
+    }
+
+    public function hapus_materi(Request $request){
+       
+        $id = $request->input('id_materi');
+       
+
+        DB::table('sp_materi_mapel')->where('id',$id)->delete();
+        return redirect()->back()->with('message', 'Materi Berhasil Dihapus!');
     }
 
     public function tentor(){
@@ -678,6 +690,16 @@ class AdminController extends Controller
         return view('admin/ruang_kelas',['data'=>$data]);
     }
 
+    public function hapus_ruang(Request $request){
+        $id = $request->input('id_ruang');
+        DB::table('sp_ruangan')->where('kode_ruang',$id)->update([
+           'kode_ruang' =>NULL,
+           
+        ]);
+        $data = DB::table('sp_ruangan')->where('id',$id)->delete();
+        return view('admin/ruang_kelas',['data'=>$data]);
+    }
+
     public function tambah_ruang_proses(Request $request){
         DB::table('sp_ruangan')->insert([
             'nama_ruang' => $request->input('nama_ruangan'),
@@ -687,7 +709,7 @@ class AdminController extends Controller
             'created_by' => Auth::user()->email
         ]);
 
-        return redirect()->back()->with('message', 'Data ruangan berhasil ditambahkan!');
+        return redirect()->back()->with('message', 'Data ruangan berhasil dihapus!');
     }
 
     public function edit_ruang(Request $request){
@@ -707,6 +729,16 @@ class AdminController extends Controller
             'nama_kelas' => $request->input('nama_kelas'),
             'updated_at' => Carbon::now(),
             'updated_by' => Auth::user()->email
+        ]);
+        return redirect()->back()->with('message', 'Data kelas berhasil diupdate!');
+    }
+
+    public function hapus_kelas(Request $request){
+        $id = $request->input('id_kelas');
+        $data = DB::table('sp_kelas')->where('id',$id)->delete();
+        DB::table('sp_jadwal')->where('id_kelas',$id)->update([
+            'id_kelas' => NULL
+           
         ]);
         return redirect()->back()->with('message', 'Data kelas berhasil diupdate!');
     }

@@ -75,6 +75,39 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="hapus_ruangs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_ruang')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Data ruangan pada jadwal mata pelajaran akan terhapus, Anda yakin?
+                                </h4>
+                                <input type="text" name="id_ruang" hidden>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -136,6 +169,9 @@
                                                     class="btn btn-success btn-sm" title="Edit Ruang"> <i
                                                         class="mdi mdi-pencil">
                                                     </i></button>
+                                                <button onClick="hapus_ruang('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
+                                                    </i></button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -168,6 +204,12 @@ function edit_ruangan(id, nama_ruang) {
     $('#edit_ruang').modal('show');
     $('input[name="id_ruang"]').val(id);
     $('input[name="nama_ruang"]').val(nama_ruang);
+
+}
+
+function hapus_ruang(id) {
+    $('#hapus_ruangs').modal('show');
+    $('input[name="id_ruang"]').val(id);
 
 }
 </script>

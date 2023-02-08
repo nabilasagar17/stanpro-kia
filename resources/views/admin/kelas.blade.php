@@ -78,6 +78,39 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="hapus_kelass" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="standard-modalLabel">Pesan Konfirmasi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <form action="{{url('admin/hapus_kelas')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12 my-2">
+                                <h4> Data kelas pada jadwal mata pelajaran akan terhapus, Anda yakin?
+                                </h4>
+                                <input type="text" name="id_kelas" hidden>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya, Saya Yakin!</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
 
     <div class="row">
@@ -137,6 +170,9 @@
                                             <td><button
                                                     onClick="edit_kelas('{{ $datas->id}}','{{ $datas->nama_kelas}}')"
                                                     class="btn btn-success btn-sm"> <i class="mdi mdi-pencil">
+                                                    </i></button>
+                                                <button onClick="hapus_kelas('{{ $datas->id}}')"
+                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
                                                     </i></button>
 
                                             </td>
