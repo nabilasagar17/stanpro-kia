@@ -716,12 +716,12 @@ class AdminController extends Controller
 
     public function hapus_ruang(Request $request){
         $id = $request->input('id_ruang');
-        DB::table('sp_ruangan')->where('kode_ruang',$id)->update([
+        DB::table('sp_jadwal')->where('kode_ruang',$id)->update([
            'kode_ruang' =>NULL,
            
         ]);
         $data = DB::table('sp_ruangan')->where('id',$id)->delete();
-        return view('admin/ruang_kelas',['data'=>$data]);
+        return redirect()->back()->with('message', 'Data ruangan berhasil ditambah!');
     }
 
     public function tambah_ruang_proses(Request $request){

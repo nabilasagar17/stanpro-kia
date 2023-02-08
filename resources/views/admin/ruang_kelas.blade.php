@@ -142,7 +142,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Ruangan</th>
-                                            <th>Kuota</th>
+                                            <!-- <th>Kuota</th> -->
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
@@ -155,7 +155,7 @@
                                         <tr data-row="{{ $no}}">
                                             <td>{{ $no++ }}</td>
                                             <td>{{$datas->nama_ruang}}</td>
-                                            <td>{{$datas->kuota}}</td>
+                                            <!-- <td>{{$datas->kuota}}</td> -->
                                             @if($datas->status == 1)
                                             <td><span class="badge badge-success">Aktif</span></td>
                                             @else
