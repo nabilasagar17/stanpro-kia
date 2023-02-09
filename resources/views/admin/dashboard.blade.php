@@ -184,7 +184,9 @@ Highcharts.chart('utbk', {
     },
     yAxis: {
         min: 0,
-
+        title: {
+            text: 'Angka'
+        }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -232,7 +234,9 @@ Highcharts.chart('skd', {
     },
     yAxis: {
         min: 0,
-
+        title: {
+            text: 'Angka'
+        }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',

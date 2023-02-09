@@ -20,7 +20,7 @@ class AdminController extends Controller
             $judul_1 = 'Siswa Aktif';
             $judul_2 = 'Tentor';
             $judul_3 = 'Siswa Lulus';
-            $angka_1 = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',NULL)->count();
+            $angka_1 = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',0)->count();
             $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
@@ -55,7 +55,8 @@ class AdminController extends Controller
             $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-           
+            ->where('ket_ujian',1)
+            
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
@@ -80,7 +81,7 @@ class AdminController extends Controller
             $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-           
+            ->where('ket_ujian',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
@@ -988,11 +989,13 @@ class AdminController extends Controller
     public function report_nilai_skd ($id)
     {
         if(Auth::user()->role =='siswa'){
-            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->get();
+            $data = DB::table('view_nilai_skd')->select("*")->where('id_siswa',$id)->orderby('twk','desc')->orderby('tiu','desc')
+            ->orderby('tkp','desc')->get();
       
             $date =  Helpers::get_siswa(Auth::user()->email,'nama');
         }else{
-        $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id)->get();
+        $data = DB::table('view_nilai_skd')->select("*")->where('id_jadwal_skd',$id)->orderby('twk','desc')->orderby('tiu','desc')
+        ->orderby('tkp','desc')->get();
       
         $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
         }
@@ -1157,11 +1160,11 @@ class AdminController extends Controller
     public function report_nilai_utbk($id)
     {
         if(Auth::user()->role =='siswa'){
-            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->get();
+            $data = DB::table('view_nilai_utbk')->select("*")->where('id_siswa',$id)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->get();
       
             $date =  Helpers::get_siswa(Auth::user()->email,'nama');
         }else{
-        $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id)->get();
+        $data = DB::table('view_nilai_utbk')->select("*")->where('id_jadwal_utbk',$id)->orderby('benar_tps','desc')->orderby('benar_tbi','desc')->get();
       
         $date =  date('d-m-Y', strtotime(@$data[0]->tgl_ujian));
         }

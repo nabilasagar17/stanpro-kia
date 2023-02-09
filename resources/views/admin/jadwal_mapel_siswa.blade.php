@@ -36,7 +36,7 @@
 
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
-                                <h4> Hapus DatadasD?
+                                <h4> Hapus Data?
                                 </h4>
                                 <input type="text" name="id_siswa" hidden>
                                 <input type="text" name="id_jadwal" hidden>
