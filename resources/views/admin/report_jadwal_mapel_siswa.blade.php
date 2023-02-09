@@ -44,8 +44,7 @@ use Illuminate\Support\Carbon;
 
             <div class="text-center" style="margin-top: 20px;">
 
-                <H1 class="uppercase mr-5">Daftar Mata Pelajaran</h1>
-
+                <H1 class="uppercase mr-5">Laporan Detail Mapel</h1>
 
             </div>
             <div class="" style="margin-top: 20px;">
@@ -53,25 +52,45 @@ use Illuminate\Support\Carbon;
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Nama Siswa</th>
+                            <th>Email</th>
                             <th>Nama Mapel</th>
-                            <th>Status</th>
+                            <th>Nama Tentor</th>
+                            <th>Ruangan</th>
 
+                            <th>Created At</th>
+                            <th>Created By</th>
+                            <th>Updated At</th>
+                            <th>Updated By</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php  $no = 30 * ( (Request::input('page') != '' ? Request::input('page') : 1) - 1) + 1; ?>
+
                         @foreach($data as $datas)
                         <tr data-row="{{ $no}}">
                             <td>{{ $no++ }}</td>
-                            <td class="text-bold-500">{{$datas->nama_mapel}}</td>
-                            @if($datas->status == 1)
-                            <td><span class="badge badge-success">Aktif</span></td>
-                            @else
-                            <td><span class="badge badge-danger">Deactive</span></td>
-                            @endif
+                            <td class="text-bold-500">{{$datas->nama}}
+                                <input value="{{$datas->id_siswa}}" name="id_siswa[]" hidden>
+                                <input value="{{$datas->id_jadwal}}" name="id_jadwal[]" hidden>
+                            </td>
+                            <td>{{$datas->email}}</td>
+                            <td>{{$datas->nama_mapel}}</td>
+                            <td class="text-bold-500">{{$datas->nama_tentor}}</td>
+                            <td>{{$datas->nama_ruang}}</td>
 
+                            <td>{{$datas->created_at}}</td>
+                            <td>{{$datas->created_by}}</td>
+                            <td></td>
+                            <td></td>
+                            <td><button onClick="hapus_absensi_siswa('{{ $datas->id_siswa}}','{{ $datas->id_jadwal}}')"
+                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
+                                    </i></button>
+                            </td>
                         </tr>
                         @endforeach
+
 
                     </tbody>
                 </table>

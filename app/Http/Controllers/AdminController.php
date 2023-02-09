@@ -20,7 +20,7 @@ class AdminController extends Controller
             $judul_1 = 'Siswa Aktif';
             $judul_2 = 'Tentor';
             $judul_3 = 'Siswa Lulus';
-            $angka_1 = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',0)->count();
+            $angka_1 = DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',NULL)->count();
             $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
@@ -28,13 +28,14 @@ class AdminController extends Controller
             $utbk = DB::table('view_nilai_utbk')->select("tgl_ujian")->groupby('tgl_ujian')->get();
             $skd_nilai = DB::table('view_nilai_skd')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-           
+            ->where('ket_ujian',1)
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
+            
             $utbk_nilai = DB::table('view_nilai_utbk')
             ->select(DB::raw('count(*) as nilai, tgl_ujian'))
-          
+            
             ->groupby('tgl_ujian')
             ->orderby('tgl_ujian', 'asc')
             ->get();
@@ -43,10 +44,11 @@ class AdminController extends Controller
         }elseif(Auth::user()->role == 'siswa'){
             $id_siswa = Helpers::get_siswa(Auth::user()->email,'id');
             $judul_1 = 'Jadwal yang diikuti';
-            $judul_2 = 'Tentor';
+            $judul_2 = 'Jadwal Selesai';
             $judul_3 = 'Siswa Lulus';
-            $angka_1 = DB::table('sp_jadwal_siswa')->select("*")->where('id_siswa',$id_siswa)->where('selesai',0)->count();
-            $angka_2 = DB::table('sp_tentor')->select("*")->where('status',1)->count();
+            $angka_1 = DB::table('sp_jadwal_siswa')->select("*")->where('id_siswa',$id_siswa)->where('selesai',NULL)->count();
+          
+            $angka_2 = DB::table('sp_jadwal_siswa')->select("*")->where('id_siswa',$id_siswa)->where('selesai',1)->count();
             $angka_3 =  DB::table('sp_siswa')->select("*")->where('status',1)->where('status_siswa',1)->count();
             $agenda = DB::table('sp_agenda')->select("*")->where('status',1)->orderby('jadwal_mulai','asc')->get();
             $skd = DB::table('view_nilai_skd')->select("tgl_ujian")->groupby('tgl_ujian')->get();
@@ -375,8 +377,22 @@ class AdminController extends Controller
         return view('admin/absensi',['data'=>$data]);
     }
 
+    public function jadwal_mapel_siswa($id){
+        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_jadwal',$id)->get();
+        return view('admin/jadwal_mapel_siswa',['data'=>$data]);
+    }
+
+    public function report_jadwal_mapel_siswa($id){
+        $data = DB::table('view_jadwal_mapel_siswa')->select("*")->where('id_jadwal',$id)->get();
+        
+        $pdf = PDF::setPaper('A4', 'potrait');
+        $pdf->loadView('admin.report_jadwal_mapel_siswa', compact('data', 'date'));
+        return $pdf->stream("Laporan_Daftar_Siswa-".$data[0]->nama_mapel.'-'.$data[0]->nama_kelas."-".$date.'pdf');
+        return view('admin/jadwal_mapel_siswa',['data'=>$data]);
+    }
+
     public function laporan_absensi($id){
-        $data = DB::table('view_absensi_siswa')->select("*")->where('id_jadwal',$id)->get();
+        $data = DB::table('view_absensi_siswa')->select("*")->where('id_jadwal',$id)->paginate(10);
         return view('admin/laporan_absensi',['data'=>$data]);
     }
 
@@ -411,9 +427,9 @@ class AdminController extends Controller
     public function hapus_jadwal_siswa(Request $request){
         $id_siswa = $request->input('id_siswa');
         $id_jadwal = $request->input('id_jadwal');
-       
-        DB::table('sp_jadwal_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id)->delete();
-        DB::table('sp_absensi_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id)->delete();
+        DB::table('sp_absensi_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id_jadwal)->delete();
+        DB::table('sp_jadwal_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id_jadwal)->delete();
+        
         return redirect()->back()->with('message', 'Data Berhasil Dihapus!');
     }
 
@@ -901,6 +917,17 @@ class AdminController extends Controller
                 'id_jadwal_skd' => $id_jadwal,
                 'created_at' => Carbon::now(),
                 'created_by' => Auth::user()->email,
+            ]);
+            $data  =  DB::table('sp_nilai_skd')->select("*")->where('id_siswa',$id_siswa)->where('id_jadwal_skd',$id_jadwal)->get();
+
+            //update lulus
+            if($data[0]->ket_twk == 1 && $data[0]->ket_tiu == 1 && $data[0]->ket_tkp == 1){
+                $ket_ujian = 1;
+            }else{
+                $ket_ujian = 0;
+            }
+            DB::table('sp_nilai_skd')->where('id_siswa',$id_siswa)->where('id_jadwal_skd',$id_jadwal)->update([
+                'ket_ujian' => $ket_ujian
             ]);
 
             return redirect()->back()->with('message', 'Data Nilai SKD Siswa Berhasil Ditambahkan!');

@@ -60,7 +60,7 @@ use Illuminate\Support\Carbon;
                             <th>Ket.TIU</th>
                             <th>TKP</th>
                             <th>Ket.TKP</th>
-
+                            <th>Ket.Ujian</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,7 +87,11 @@ use Illuminate\Support\Carbon;
                             @else
                             <td><span class="badge badge-danger">Tidak Lulus</span></td>
                             @endif
-
+                            @if($datas->ket_ujian == 1)
+                            <td><span class="badge badge-success">Lulus</span></td>
+                            @else
+                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

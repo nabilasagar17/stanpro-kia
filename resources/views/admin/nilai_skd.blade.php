@@ -105,7 +105,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Input Data SKD</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Edit Data SKD</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -194,6 +194,7 @@
                                             <th>Ket.TIU</th>
                                             <th>TKP</th>
                                             <th>Ket.TKP</th>
+                                            <th>Ket.Ujian</th>
                                             <th>Created At</th>
                                             <th>Created By</th>
                                             <th>Updated At</th>
@@ -221,6 +222,11 @@
                                             @endif
                                             <td>{{ $datas->tkp}}</td>
                                             @if($datas->ket_tkp == 1)
+                                            <td><span class="badge badge-success">Lulus</span></td>
+                                            @else
+                                            <td><span class="badge badge-danger">Tidak Lulus</span></td>
+                                            @endif
+                                            @if($datas->ket_ujian == 1)
                                             <td><span class="badge badge-success">Lulus</span></td>
                                             @else
                                             <td><span class="badge badge-danger">Tidak Lulus</span></td>

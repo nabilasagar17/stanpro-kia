@@ -269,7 +269,7 @@
                             </button>
                         </div>
                         @endif
-                        @if(Request::segment(2) != 'absensi')
+                        @if(Request::segment(2) != 'absensi' && Auth::user()->role != 'siswa')
                         <div class="col-lg-auto float-right">
                             <a class="btn btn-primary  btn-sm header-title" type="button" title="Detail"
                                 href="{{url('admin/report_jadwal_mapel')}}"><i class="mdi mdi-printer "></i>
@@ -323,55 +323,66 @@
 
                                             <td>
                                                 @if(Auth::user()->role == 'siswa')
-                                                @if($datas->kuota_terisi == $datas->kuota_tersedia)
-                                                <button type="button" class="btn btn-success" title="Kuota Penuh">Kuota
-                                                    Penuh
-                                                </button>
-                                                @endif
+
                                                 @if(Helpers::cek_jadwal_is_null($datas->id,Helpers::get_siswa(Auth::user()->email,'id'))
-                                                ->isEmpty())
-                                                <button type="button" class="btn btn-primary" title="Ikuti Kelas"
-                                                    onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
-                                                </button>
-                                                @else
-                                                <button type="button" class="btn btn-success"
-                                                    title="Sedang Mengikuti">Sedang Mengikuti
-                                                </button>
-                                                @endif
-                                                @elseif(Auth::user()->role == 'tentor')
-                                                @if(Request::segment(2) != 'jadwal_mapel')
-                                                <a type="button" href="{{url('admin/detail_absensi'.'/'.($datas->id))}}"
-                                                    class="btn btn-success btn-sm" title="Input Absensi"> <i
-                                                        class="mdi mdi-pen">
-                                                    </i>
-                                                </a>
-                                                @endif
-                                                <a type="button"
-                                                    href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
-                                                    class="btn btn-primary btn-sm" title="Lihat Absen"> <i
-                                                        class="mdi mdi-eye">
-                                                    </i>
-                                                </a>
+                                                ->isEmpty() && $datas->kuota_terisi < $datas->kuota_kelas)
+                                                    <button type="button" class="btn btn-primary" title="Ikuti Kelas"
+                                                        onClick="tambah_jadwal_siswa('{{ $datas->id}}' )">Ikuti
+                                                    </button>
+                                                    @elseif(Helpers::cek_jadwal_is_null($datas->id,Helpers::get_siswa(Auth::user()->email,'id'))
+                                                    ->isEmpty() && $datas->kuota_terisi == $datas->kuota_kelas)
+                                                    <button disabled class="btn btn-secondary" title="Kuota Penuh">Kuota
+                                                        Penuh
+                                                    </button>
+                                                    @else
+                                                    <button disabled class="btn btn-success"
+                                                        title="Sedang Mengikuti">Sedang
+                                                        Mengikuti
+                                                    </button>
+                                                    @endif
+                                                    @elseif(Auth::user()->role == 'tentor')
+                                                    @if(Request::segment(2) != 'jadwal_mapel')
+                                                    <a type="button"
+                                                        href="{{url('admin/detail_absensi'.'/'.($datas->id))}}"
+                                                        class="btn btn-success btn-sm" title="Input Absensi"> <i
+                                                            class="mdi mdi-pen">
+                                                        </i>
+                                                    </a>
+                                                    @endif
+                                                    <a type="button"
+                                                        href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
+                                                        class="btn btn-primary btn-sm" title="Lihat Absen"> <i
+                                                            class="mdi mdi-eye">
+                                                        </i>
+                                                    </a>
 
-                                                @else
-                                                <button type="button"
-                                                    onClick="edit_jadwal_mapel('{{ $datas->id}}','{{ $datas->nama_mapel}}','{{ date('m/d/Y', strtotime($datas->jadwal_mulai)) }}','{{ $datas->jadwal_mulai}}' 
+                                                    @else
+                                                    <button type="button"
+                                                        onClick="edit_jadwal_mapel('{{ $datas->id}}','{{ $datas->nama_mapel}}','{{ date('m/d/Y', strtotime($datas->jadwal_mulai)) }}','{{ $datas->jadwal_mulai}}' 
                                                     ,'{{ $datas->jadwal_selesai}}','{{ $datas->kode_ruang}}','{{ $datas->id_tentor}}','{{ $datas->kuota_kelas}}')"
-                                                    class="btn btn-success btn-sm" type="button" class="btn btn-primary"
-                                                    title="Edit"> <i class="mdi mdi-pen"> </i>
-                                                </button>
-                                                <button onClick="hapus_jadwal('{{ $datas->id}}')"
-                                                    class="btn btn-danger btn-sm"> <i class="mdi mdi-trash-can-outline">
-                                                    </i>
-                                                </button>
-                                                <a type="button"
-                                                    href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
-                                                    class="btn btn-primary btn-sm" title="Lihat Absen"> <i
-                                                        class="mdi mdi-eye">
-                                                    </i>
-                                                </a>
+                                                        class="btn btn-success btn-sm" type="button"
+                                                        class="btn btn-primary" title="Edit"> <i class="mdi mdi-pen">
+                                                        </i>
+                                                    </button>
+                                                    <button onClick="hapus_jadwal('{{ $datas->id}}')"
+                                                        class="btn btn-danger btn-sm"> <i
+                                                            class="mdi mdi-trash-can-outline">
+                                                        </i>
+                                                    </button>
+                                                    <a type="button"
+                                                        href="{{url('admin/laporan_absensi'.'/'.($datas->id))}}"
+                                                        class="btn btn-primary btn-sm" title="Lihat Absen"> <i
+                                                            class="mdi mdi-eye">
+                                                        </i>
+                                                    </a>
+                                                    <a type="button"
+                                                        href="{{url('admin/jadwal_mapel_siswa'.'/'.($datas->id))}}"
+                                                        class="btn btn-info btn-sm" title="Lihat Jadwal Siswa"> <i
+                                                            class="mdi mdi-clipboard-list-outline">
+                                                        </i>
+                                                    </a>
 
-                                                @endif
+                                                    @endif
                                             </td>
                                         </tr>
                                         @endforeach
