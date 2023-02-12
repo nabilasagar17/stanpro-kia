@@ -123,6 +123,7 @@
                                             <th>Email</th>
                                             <th>Nama Mapel</th>
                                             <th>Nama Tentor</th>
+                                            <th>Nama Kelas</th>
                                             <th>Ruangan</th>
                                             <th>Keterangan</th>
                                             <th>Created At</th>
@@ -145,6 +146,8 @@
                                             <td>{{$datas->email}}</td>
                                             <td>{{$datas->nama_mapel}}</td>
                                             <td class="text-bold-500">{{$datas->nama_tentor}}</td>
+                                            <td class="text-bold-500">
+                                                {{Helpers::get_kelas_jadwal($datas->id_jadwal,"nama_kelas")}}</td>
                                             <td>{{$datas->nama_ruang}}</td>
                                             @if($datas->keterangan == 1)
                                             <td><span class="badge badge-danger">Tidak Hadir</span></td>

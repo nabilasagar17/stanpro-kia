@@ -60,7 +60,12 @@ class Helpers{
       
         return $jadwal;
     }
-
+    
+    public function get_kelas_jadwal($id_jadwal,$field){
+        $jadwal = DB::table('view_jadwal_mapel')->select($field)->where('id',$id_jadwal)->get(1);
+      
+        return @$jadwal->$field;
+    }
 }
 
  ?>

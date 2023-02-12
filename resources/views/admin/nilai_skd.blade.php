@@ -69,7 +69,7 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Nama Siswa</label>
-                                <select class="form-control select2" data-toggle="select2" name="id_siswa">
+                                <select class="form-control select2" data-toggle="select2" name="id_siswa" required>
                                     <option>Select</option>
                                     @foreach($siswa as $siswas)
                                     <option value="{{$siswas->id}}">{{$siswas->id .'-' . $siswas->nama}}</option>
@@ -80,15 +80,15 @@
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TWK</label>
-                                <input type="number" id="simpleinput" class="form-control" name="twk">
+                                <input type="number" id="simpleinput" class="form-control" name="twk" required>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TIU</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tiu">
+                                <input type="number" id="simpleinput" class="form-control" name="tiu" required>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TKP</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tkp">
+                                <input type="number" id="simpleinput" class="form-control" name="tkp" required>
                             </div>
 
                         </div>
@@ -117,15 +117,15 @@
                             <input type="text" id="simpleinput" class="form-control" name="id_nilai_skd" hidden>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TWK</label>
-                                <input type="number" id="simpleinput" class="form-control" name="twk">
+                                <input type="number" id="simpleinput" class="form-control" name="twk" required>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TIU</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tiu">
+                                <input type="number" id="simpleinput" class="form-control" name="tiu" required>
                             </div>
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">TKP</label>
-                                <input type="number" id="simpleinput" class="form-control" name="tkp">
+                                <input type="number" id="simpleinput" class="form-control" name="tkp" required>
                             </div>
 
                         </div>
