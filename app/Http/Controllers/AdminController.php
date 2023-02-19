@@ -709,7 +709,7 @@ class AdminController extends Controller
        
         DB::table('sp_program')->insert([
             'nama_program'=> $request->input('nama_program'),
-           
+            'kuota_jadwal' => $request->input('kuota_belajar'),
             'keterangan'=> $request->input('keterangan'),
             'status'=> $request->input('status'),
             'harga'=> $request->input('harga'),

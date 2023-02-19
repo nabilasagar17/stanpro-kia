@@ -101,12 +101,11 @@
 
                         <div class="form-group m-form__group row">
 
-
                             <div class="col-lg-6 my-2">
-                                <label for="simpleinput">Keterangan</label>
-                                <textarea class="form-control" id="example-textarea" name="keterangan"
-                                    rows="2"></textarea>
+                                <label for="simpleinput">Kuota Belajar</label>
+                                <input type="number" name="kuota_belajar" id="simpleinput" class="form-control">
                             </div>
+
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Status</label>
                                 <select class="form-control" id="example-select" name="status">
@@ -115,6 +114,15 @@
 
                                 </select>
 
+                            </div>
+
+                        </div>
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-12 my-2">
+                                <label for="simpleinput">Keterangan</label>
+                                <textarea class="form-control" id="example-textarea" name="keterangan"
+                                    rows="2"></textarea>
                             </div>
 
                         </div>
@@ -201,6 +209,7 @@
 
                                             <th>Nama</th>
                                             <th>Keterangan</th>
+                                            <th>Kuota Belajar</th>
                                             <th>Harga</th>
                                             <th>Status</th>
                                             <th>Created At</th>
@@ -216,6 +225,7 @@
 
                                             <td class="text-bold-500">{{$datas->nama_program}}</td>
                                             <td>{{$datas->keterangan}}</td>
+                                            <td>{{number_format($datas->kuota_jadwal)}}</td>
                                             <td>Rp. {{number_format($datas->harga)}}</td>
                                             @if($datas->status == 1)
                                             <td><span class="badge badge-success">Aktif</span></td>
