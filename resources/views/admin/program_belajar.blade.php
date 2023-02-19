@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Harga</label>
-                                <input type="number" name="harga" id="simpleinput" class="form-control">
+                                <input type="number" name="harga" required id="simpleinput" class="form-control">
                             </div>
                         </div>
 
@@ -103,12 +103,13 @@
 
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Kuota Belajar</label>
-                                <input type="number" name="kuota_belajar" id="simpleinput" class="form-control">
+                                <input type="number" name="kuota_belajar" required id="simpleinput"
+                                    class="form-control">
                             </div>
 
                             <div class="col-lg-6 my-2">
                                 <label for="simpleinput">Status</label>
-                                <select class="form-control" id="example-select" name="status">
+                                <select class="form-control" id="example-select" required name="status">
                                     <option value="1">Aktif</option>
                                     <option value="2">Deactive</option>
 
@@ -121,7 +122,7 @@
 
                             <div class="col-lg-12 my-2">
                                 <label for="simpleinput">Keterangan</label>
-                                <textarea class="form-control" id="example-textarea" name="keterangan"
+                                <textarea class="form-control" id="example-textarea" required name="keterangan"
                                     rows="2"></textarea>
                             </div>
 

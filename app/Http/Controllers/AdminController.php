@@ -430,6 +430,12 @@ class AdminController extends Controller
         $id_jadwal = $request->input('id_jadwal');
         DB::table('sp_absensi_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id_jadwal)->delete();
         DB::table('sp_jadwal_siswa')->where('id_siswa',$id_siswa)->where('id_jadwal',$id_jadwal)->delete();
+        $kuota_terisi = DB::table('sp_jadwal')->select('kuota_terisi')->where('id',$id_jadwal)->get(1);
+        $kuota_tersedia = DB::table('sp_jadwal')->select('kuota_tersedia')->where('id',$id_jadwal)->get(1);
+        DB::table('sp_jadwal')->where('id',$id_jadwal)->update([
+            'kuota_tersedia' => $kuota_tersedia[0]->kuota_tersedia + 1,
+            'kuota_terisi' => $kuota_terisi[0]->kuota_terisi - 1
+        ]);
         
         return redirect()->back()->with('message', 'Data Berhasil Dihapus!');
     }
